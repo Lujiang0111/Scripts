@@ -51,6 +51,7 @@ wipefs -a /dev/nvme0n1
 1. 创建Btrfs文件系统
 
     ```shell
+    wipefs -a /dev/nvme0n1p1
     mkfs.btrfs /dev/nvme0n1p1
     ```
 
