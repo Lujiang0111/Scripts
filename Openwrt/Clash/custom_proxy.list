@@ -5,6 +5,9 @@ IP-CIDR,1.1.1.1/32,no-resolve
 IP-CIDR,8.8.4.4/32,no-resolve
 IP-CIDR,8.8.8.8/32,no-resolve
 
+# IPv6
+DOMAIN-SUFFIX,byr.pt
+
 DOMAIN-SUFFIX,nuget.org
 DOMAIN-SUFFIX,rutracker.org
 DOMAIN-SUFFIX,yandex.com
