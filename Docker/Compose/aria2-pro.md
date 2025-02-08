@@ -11,8 +11,8 @@ mkdir -p /opt/docker/aria2-pro/config
 chmod 777 /opt/docker/aria2-pro/config
 
 # data dir
-mkdir -p /mnt/ssd/download/aria2
-chmod 777 /mnt/ssd/download/aria2
+mkdir -p /mnt/ssd/download/aria2-pro
+chmod 777 /mnt/ssd/download/aria2-pro
 ```
 
 ## 配置docker容器
@@ -21,7 +21,7 @@ chmod 777 /mnt/ssd/download/aria2
 
 ```yml
 services:
-  aria2-Pro:
+  aria2-pro:
     container_name: aria2-pro
     image: p3terx/aria2-pro:latest
     environment:
@@ -37,7 +37,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /opt/docker/aria2-pro/config:/config
-      - /mnt/ssd/download/aria2:/downloads
+      - /mnt/ssd/download/aria2-pro:/downloads
     networks:
       macvlan_enp6s18:
         ipv4_address: 192.168.8.43
@@ -47,7 +47,24 @@ services:
       driver: json-file
       options:
         max-size: 1m
+  ariang:
+    container_name: ariang
+    image: p3terx/ariang:latest
+    command: --port 6880 --ipv6
+    ports:
+      - 56880:6880
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
 networks:
   macvlan_enp6s18:
     external: true
+```
+
+## ariang地址
+
+```shell
+http://IP:56880/
 ```
