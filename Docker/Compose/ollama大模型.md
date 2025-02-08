@@ -41,9 +41,9 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-  ollama-webui:
+  open-webui:
     image: ghcr.io/open-webui/open-webui:main
-    container_name: ollama-webui
+    container_name: open-webui
     volumes:
       - /mnt/ssd/docker/open-webui:/app/backend/data
     ports:
@@ -56,7 +56,9 @@ services:
     restart: unless-stopped
 ```
 
-## 部署模型(deepseek-r1:14b)
+## 部署模型
+
++ 在<https://ollama.com>上查阅模型列表，这里以`deepseek-r1:14b`为例：
 
 ```shell
 docker exec -it ollama ollama run deepseek-r1:14b
