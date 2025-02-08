@@ -3,7 +3,7 @@
 ## 安装apcupsd
 
 ```shell
-apt install apcupsd
+apt install -y apcupsd
 ```
 
 ## 配置apcupsd

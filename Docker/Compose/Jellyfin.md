@@ -22,7 +22,7 @@ chmod 777 /opt/docker/jellyfin/media
 ### 安装`cifs-utils`软件包
 
 ```shell
-apt install cifs-utils
+apt install -y cifs-utils
 ```
 
 ### 测试挂载
