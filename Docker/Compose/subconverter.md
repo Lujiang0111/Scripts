@@ -23,17 +23,13 @@ networks:
 
 ## 测试服务器
 
-```shell
-http://192.168.8.42:25500/version
-```
+<http://192.168.8.42:25500/version>
 
 ## 清空缓存
 
-```shell
-http://192.168.8.42:25500/flushcache?token=password
-```
+<http://192.168.8.42:25500/flushcache?token=password>
 
-## Unraid WebUI
+## Unraid WebUI配置
 
 ```shell
 http://[IP]:[PORT:25500]/version
