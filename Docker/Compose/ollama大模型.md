@@ -58,10 +58,10 @@ services:
 
 ## 部署模型
 
-+ 在<https://ollama.com>上查阅模型列表，这里以`deepseek-r1:14b`为例：
++ 在<https://ollama.com>上查阅模型列表，这里以`deepseek-r1:32b-qwen-distill-q4_K_M`为例：
 
 ```shell
-docker exec -it ollama ollama run deepseek-r1:14b
+docker exec -it ollama ollama run deepseek-r1:32b-qwen-distill-q4_K_M
 ```
 
 ## open-webui地址
