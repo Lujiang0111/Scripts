@@ -18,17 +18,3 @@
 # 为上午4:31然后再执行cron的重启任务.
 30 4 * * * sleep 70 && touch /etc/banner && reboot
 ```
-
-## network配置示例
-
-```shell
-config interface 'lan'
-	option device 'br-lan'
-	option proto 'static'
-	option ipaddr '192.168.8.11'
-	option netmask '255.255.255.0'
-	option ip6assign '64'
-	option gateway '192.168.8.1'
-	list dns '223.5.5.5'
-	option ip6ifaceid '::11'
-```

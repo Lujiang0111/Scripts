@@ -22,6 +22,20 @@
   qm importdisk 111 /root/openwrt-x86-64-generic-squashfs-combined-efi.qcow2 local-lvm
   ```
 
+## /etc/config/network配置示例
+
+```shell
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.8.11'
+	option netmask '255.255.255.0'
+	option ip6assign '64'
+	option gateway '192.168.8.1'
+	list dns '223.5.5.5'
+	option ip6ifaceid '::11'
+```
+
 ## 网络配置
 
 + 系统 -> 系统
