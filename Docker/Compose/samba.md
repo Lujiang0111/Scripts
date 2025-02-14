@@ -44,7 +44,6 @@ services:
     volumes:
       - /mnt/ssd/fastshare:/shares/fastshare
       - /mnt/ssd/download:/shares/download
-      - /mnt/ssd/xvideos:/shares/xvideos
       - /mnt/ssd/storage:/shares/storage
     ports:
       - 445:445
