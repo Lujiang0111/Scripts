@@ -10,8 +10,6 @@ mkdir -p /mnt/ssd/fastshare
 chmod 777 /mnt/ssd/fastshare
 mkdir -p /mnt/ssd/download
 chmod 777 /mnt/ssd/download
-mkdir -p /mnt/ssd/xvideos
-chmod 777 /mnt/ssd/xvideos
 mkdir -p /mnt/ssd/storage
 chmod 777 /mnt/ssd/storage
 ```
@@ -37,10 +35,6 @@ services:
         create mask = 0664; directory mask = 0775
       SAMBA_VOLUME_CONFIG_download: >
         [download]; path=/shares/download;
-        guest ok = no; read only = no; browseable = yes;
-        create mask = 0664; directory mask = 0775
-      SAMBA_VOLUME_CONFIG_xvideos: >
-        [xvideos]; path=/shares/xvideos;
         guest ok = no; read only = no; browseable = yes;
         create mask = 0664; directory mask = 0775
       SAMBA_VOLUME_CONFIG_storage: >
