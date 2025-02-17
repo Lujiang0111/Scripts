@@ -1,6 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set lib_src_base=..\..\..\
+set trd_base=..\..\3rd\vs2022
 set bin_base=..\..\bin\
 
 if not exist %bin_base% (
@@ -8,13 +10,13 @@ if not exist %bin_base% (
     goto :error
 )
 
-set src_base=..\..\..\
-
 set lib_name=libflow
-if exist %src_base%%lib_name% (
-    xcopy %src_base%%lib_name%\bin %bin_base% /S /Y /C
+if exist %lib_src_base%%lib_name% (
+    xcopy %lib_src_base%%lib_name%\bin %bin_base% /S /Y /C
+) else if exist %trd_base%%lib_name% (
+    xcopy %trd_base%%lib_name%\lib %bin_base% /S /Y /C
 ) else (
-    echo please put https://github.com/Lujiang0111/%lib_name% in %src_base%
+    echo please put https://github.com/Lujiang0111/%lib_name% sourece in %lib_src_base%%lib_name% or lib in %trd_base%%lib_name%
     goto :error
 )
 
