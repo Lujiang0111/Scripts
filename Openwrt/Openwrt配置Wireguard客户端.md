@@ -47,3 +47,47 @@
     + `Address` - `192.165.23.123/16`
     + `Interface` - `wireguard-lan`
 1. 测试ping`192.165.23.45`，查看是否连接成功。
+
+## 配置断线自动重连
+
+1. 在`/etc/uci-defaults/`下创建一个名为`wireguard_check.sh`的脚本。
+
+    ```shell
+    vim /etc/uci-defaults/wireguard_check.sh
+    ```
+
+1. 编辑`wireguard_check.sh`文件，修改`wg_interface`和`ping_target`为自己的：
+
+    ```shell
+    #!/bin/bash
+    wg_interface=Wireguard
+    ping_target=192.168.8.1
+
+    fail_cnt=0
+    for i in {1..3}; do
+        if ! ping -c 1 -W 3 ${ping_target} >/dev/null 2>&1; then
+            fail_cnt=$((fail_cnt + 1))
+        fi
+    done
+
+    if [ ${fail_cnt} -ge 3 ]; then
+        logger -t wireguard_check "wireGuard peer ping fail, reconnect"
+        ifdown ${wg_interface}
+        sleep 10
+        ifup ${wg_interface}
+    fi
+    ```
+
+1. 保存脚本并给它执行权限。
+
+    ```shell
+    chmod +x /etc/uci-defaults/wireguard_check.sh
+    ```
+
+1. luci界面配置定时任务
+
+    ```shell
+    */30 * * * * /etc/uci-defaults/wireguard_check.sh
+    ```
+
+    这会让cron每30分钟执行一次脚本，检查WireGuard的连接状态，并在失效时重启接口。
