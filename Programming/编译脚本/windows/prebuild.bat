@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 set lib_src_base=..\..\..\
-set trd_base=..\..\3rd\vs2022
+set trd_base=..\..\3rd\vs2022\
 set dep_base=dep\
 set bin_base=..\..\bin\
 
