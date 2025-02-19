@@ -1,6 +1,6 @@
-mkdir build
+mkdir 3rd
+mkdir build\vs2022
+mkdir build\debian\x86
 mkdir include
 mkdir internal
 mkdir src
-mkdir 3rd
-mkdir 3rd/vs2022
