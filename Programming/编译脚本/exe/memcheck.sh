@@ -4,7 +4,7 @@ shell_path=$(
     pwd
 )/
 lib_path=${shell_path}lib/
-project=example_lib_test
+project=lccl_test
 
 ulimit -n 65536
 export LD_LIBRARY_PATH=${lib_path}:${LD_LIBRARY_PATH}
@@ -35,10 +35,10 @@ function TrapSigint() {
 }
 trap TrapSigint 2
 
-echo -e "${project}-debug start at $(date)" >>runlog
+echo -e "${project}-memcheck start at $(date)" >>runlog
 
 cd "${shell_path}" || exit
 chmod +x ${project}
-gdb --args ${project} "$@"
+valgrind --time-stamp=yes --log-file=${project}_memcheck.log --leak-check=full --show-leak-kinds=all --tool=memcheck ./${project} "$@"
 
-echo -e "${project}-debug stop at $(date)" >>runlog
+echo -e "${project}-memcheck stop at $(date)" >>runlog

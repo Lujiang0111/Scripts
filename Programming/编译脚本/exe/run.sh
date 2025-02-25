@@ -4,7 +4,7 @@ shell_path=$(
     pwd
 )/
 lib_path=${shell_path}lib/
-project=example_lib_test
+project=lccl_test
 
 ulimit -n 65536
 export LD_LIBRARY_PATH=${lib_path}:${LD_LIBRARY_PATH}
