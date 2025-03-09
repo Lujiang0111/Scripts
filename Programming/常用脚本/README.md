@@ -27,3 +27,8 @@ python3 request_cyclically.py http://192.165.153.207:5656/v0.0/combination '{"2"
   + `bash patch.sh [update|rollback]`
   + update : 备份并升级
   + rollback : 回滚
+
+## 删除文件的第x-y个字节
+
++ `trim_file.py`
+  + 使用方式：见脚本说明
