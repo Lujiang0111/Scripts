@@ -8,6 +8,7 @@ fi
 
 # Define GRUB configuration file path
 GRUB_FILE="/etc/default/grub"
+echo -e "grub file=${GRUB_FILE}"
 
 # Check if the file exists
 if [ ! -f "${GRUB_FILE}" ]; then
