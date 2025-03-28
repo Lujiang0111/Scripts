@@ -37,9 +37,7 @@ CHANGES_MADE=0
 
 # Check and handle isolcpus parameter
 if grep -q "isolcpus=" "${GRUB_FILE}"; then
-    echo "${TARGET_VAR} already contains isolcpus parameter"
-    echo "Current isolcpus configuration:"
-    grep "${TARGET_VAR}" "${GRUB_FILE}" | grep "isolcpus"
+    echo "file ${GRUB_FILE} line ${TARGET_VAR} already contains isolcpus parameter"
 else
     echo "isolcpus not found, adding isolation: ${ISOLATE_CORES}"
     if grep -q "^${TARGET_VAR}=" "${GRUB_FILE}"; then
@@ -50,9 +48,7 @@ fi
 
 # Check and handle rcu_nocbs_poll parameter
 if grep -q "rcu_nocbs_poll" "${GRUB_FILE}"; then
-    echo "${TARGET_VAR} already contains rcu_nocbs_poll parameter"
-    echo "Current rcu_nocbs_poll configuration:"
-    grep "${TARGET_VAR}" "${GRUB_FILE}" | grep "rcu_nocbs_poll"
+    echo "file ${GRUB_FILE} line ${TARGET_VAR} already contains rcu_nocbs_poll parameter"
 else
     echo "rcu_nocbs_poll not found, adding it"
     if grep -q "^${TARGET_VAR}=" "${GRUB_FILE}"; then
@@ -66,7 +62,12 @@ if [ "${CHANGES_MADE}" -eq 1 ]; then
     if command -v update-grub >/dev/null 2>&1; then
         update-grub
     elif command -v grub2-mkconfig >/dev/null 2>&1; then
-        grub2-mkconfig -o /boot/grub2/grub.cfg
+        GRUB_CFG="/boot/grub2/grub.cfg"
+        if [ -d /sys/firmware/efi ]; then
+            GRUB_CFG=$(find /boot/efi -name "grub.cfg" 2>/dev/null | head -n 1)
+        fi
+        echo -e "grub.cfg name=${GRUB_CFG}"
+        grub2-mkconfig -o "${GRUB_CFG}"
     else
         echo "Error: Could not find GRUB update command"
         exit 1
