@@ -39,3 +39,9 @@ vim /etc/resolv.conf
 ```conf
 nameserver 192.168.1.12
 ```
+
+## 查看当前grub参数
+
+```shell
+cat /proc/cmdline
+```
