@@ -29,3 +29,14 @@ bash ssh_keep_alive.sh 30
 ```shell
 python3 record_pid_top_stats.py 5515 5
 ```
+
+## 隔离特定CPU核
+
++ 文件名 : ```iisolate_core.sh```
++ 使用方式：
+  + ```bash isolate_core.sh```
+  + 脚本内写的是隔离最后两个核，可根据不同情况修改。
+
+```shell
+bash isolate_core.sh
+```
