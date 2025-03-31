@@ -7,3 +7,9 @@
 ```plain
 lscr.io/linuxserver/qbittorrent:4.5.5
 ```
+
+## docker模板存放位置
+
+```shell
+/boot/config/plugins/dockerMan/templates-user
+```
