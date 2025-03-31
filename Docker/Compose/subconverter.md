@@ -1,10 +1,8 @@
-# Docker配置subconverter
+# subconverter
 
 > 参考资料：<https://github.com/tindy2013/subconverter/blob/master/README-docker.md>
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yml
 services:

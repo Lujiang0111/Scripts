@@ -1,4 +1,4 @@
-# Docker配置samba服务器
+# samba服务器
 
 > 参考资料：<https://github.com/ServerContainers/samba/tree/master>
 
@@ -14,9 +14,7 @@ mkdir -p /mnt/ssd/storage
 chmod 777 /mnt/ssd/storage
 ```
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yml
 services:

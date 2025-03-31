@@ -1,4 +1,4 @@
-# Docker配置aria2_pro服务器
+# aria2 pro
 
 > 参考资料：<https://github.com/P3TERX/Aria2-Pro-Docker>
 
@@ -15,9 +15,7 @@ mkdir -p /mnt/ssd/download/aria2-pro
 chmod 777 /mnt/ssd/download/aria2-pro
 ```
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yml
 services:

@@ -1,4 +1,4 @@
-# Docker配置ollama大模型
+# ollama大模型
 
 > 参考资料：
 >
@@ -18,9 +18,7 @@ mkdir -p /mnt/ssd/docker/open-webui
 chmod 777 /mnt/ssd/docker/open-webui
 ```
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yaml
 services:

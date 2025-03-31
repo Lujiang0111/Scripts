@@ -1,4 +1,4 @@
-# Docker配置jellyfin服务器
+# Jellyfin
 
 > 参考资料：<https://hub.docker.com/r/nyanmisaka/jellyfin>
 
@@ -50,9 +50,7 @@ EOF
 mount -a
 ```
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yaml
 services:

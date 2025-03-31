@@ -1,4 +1,4 @@
-# Docker配置qbittorrent
+# qbittorrent
 
 > 参考资料：<https://hub.docker.com/r/linuxserver/qbittorrent>
 
@@ -15,9 +15,7 @@ mkdir -p /mnt/ssd/download/qbittorrent
 chmod 777 /mnt/ssd/download/qbittorrent
 ```
 
-## 配置docker容器
-
-+ `docker_compose.yml`
+## Docker compose
 
 ```yml
 services:
