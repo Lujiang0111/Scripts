@@ -1,0 +1,23 @@
+# CDN or SDWAN
+include:aws-cn
+include:baijiayun
+include:bootcdn
+include:bootcss
+include:cloudflare-cn
+include:dwion
+include:maocloud
+include:pkoplink
+include:qingcloud
+include:qiniu
+include:snodehome
+include:ucloud
+include:upai
+include:wangsu
+include:yunfanjiasu
+
+# Cloud
+include:baidu
+include:115
+include:aliyun
+include:qcloud
+include:huaweicloud

@@ -13,6 +13,8 @@ DOMAIN-SUFFIX,nodenet.cloud
 
 DOMAIN-SUFFIX,todesk.com
 DOMAIN-SUFFIX,speedtest.net
+DOMAIN-SUFFIX,patch-dl.ffxiv.com
+
 DOMAIN-KEYWORD,sonkwo
 
 PROCESS-NAME,uugamebooster
