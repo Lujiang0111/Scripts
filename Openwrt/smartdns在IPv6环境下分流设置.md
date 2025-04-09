@@ -128,3 +128,17 @@
     | 追加上游DNS | ❌ |
     | 追加默认DNS | ❌ |
     | Fallback-Filter | ✔ |
+
++ OpenClash可以配置定时任务，防止拉取订阅超时
+
+    ```shell
+    curl -sL -m 60 $url -o /dev/null
+    ```
+
+  + 可以写在脚本里，实现定时运行(脚本需要有运行权限)
+
+    ```shell
+    50 3 * * 1 /etc/scripts/custom.sh
+    ```
+
+    完成后，系统会在每周一的3:50自动运行该脚本
