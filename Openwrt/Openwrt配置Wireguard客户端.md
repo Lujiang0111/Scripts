@@ -50,10 +50,11 @@
 
 ## 配置断线自动重连
 
-1. 在`/etc/uci-defaults/`下创建一个名为`wireguard_check.sh`的脚本。
+1. 在`/etc/scripts/`下创建一个名为`wireguard_check.sh`的脚本。
 
     ```shell
-    vim /etc/uci-defaults/wireguard_check.sh
+    mkdir -p /etc/scripts
+    vim /etc/scripts/wireguard_check.sh
     ```
 
 1. 编辑`wireguard_check.sh`文件，修改`wg_interface`和`ping_target`为自己的：
@@ -81,13 +82,13 @@
 1. 保存脚本并给它执行权限。
 
     ```shell
-    chmod +x /etc/uci-defaults/wireguard_check.sh
+    chmod +x /etc/scripts/wireguard_check.sh
     ```
 
 1. luci界面配置定时任务
 
     ```shell
-    */30 * * * * /etc/uci-defaults/wireguard_check.sh
+    */30 * * * * /etc/scripts/wireguard_check.sh
     ```
 
     这会让cron每30分钟执行一次脚本，检查WireGuard的连接状态，并在失效时重启接口。
