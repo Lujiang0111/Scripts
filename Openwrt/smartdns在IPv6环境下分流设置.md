@@ -129,16 +129,42 @@
     | 追加默认DNS | ❌ |
     | Fallback-Filter | ✔ |
 
-+ OpenClash可以配置定时任务，防止拉取订阅超时
+#### OpenClash配置定时任务，防止拉取订阅超时
+
+1. 在`/etc/scripts/`下创建一个名为`openclash_predownload.sh`的脚本。
 
     ```shell
-    curl -sL -m 60 $url -o /dev/null
+    mkdir -p /etc/scripts
+    vim /etc/scripts/openclash_predownload.sh
     ```
 
-  + 可以写在脚本里，实现定时运行(脚本需要有运行权限)
+1. 编辑`openclash_predownload.sh`文件，修改`urls`为自己的url：
 
     ```shell
-    50 3 * * 1 /etc/scripts/custom.sh
+    #!/bin/bash
+
+    urls=(
+        "https://192.168.0.100/file1.txt"
+        "https://192.168.0.100/file2.pdf"
+        "https://192.168.0.100/file3.jpg"
+    )
+
+    for url in "${urls[@]}"; do
+        curl -sL -m 60 "${url}" -o /dev/null
+        sleep 1
+    done
     ```
 
-    完成后，系统会在每周一的3:50自动运行该脚本
+1. 保存脚本并给它执行权限。
+
+    ```shell
+    chmod +x /etc/scripts/openclash_predownload.sh
+    ```
+
+1. luci界面配置定时任务
+
+    ```shell
+    50 3 * * 5 /bin/bash /etc/scripts/openclash_predownload.sh
+    ```
+
+    完成后，系统会在每周五的3:50自动运行该脚本。

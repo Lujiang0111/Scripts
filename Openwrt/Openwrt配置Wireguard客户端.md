@@ -88,7 +88,7 @@
 1. luci界面配置定时任务
 
     ```shell
-    */30 * * * * /etc/scripts/wireguard_check.sh
+    */30 * * * * /bin/bash /etc/scripts/wireguard_check.sh
     ```
 
     这会让cron每30分钟执行一次脚本，检查WireGuard的连接状态，并在失效时重启接口。
