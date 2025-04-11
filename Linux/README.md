@@ -14,32 +14,6 @@ nohup sh run.sh > /dev/null 2>&1 &
 nohup python3 -u record_pid_top_stats.py 5524 1 &
 ```
 
-## 临时添加/删除默认网关
-
-```shell
-route add default gw 192.168.1.1
-route del default gw 192.168.1.1
-```
-
-## 配置http、ftp代理
-
-```shell
-export http_proxy=http://username:password@ip:port
-export ftp_proxy=http://username:password@ip:port
-```
-
-## 配置DNS服务器
-
-```shell
-vim /etc/resolv.conf
-```
-
-添加相应DNS服务器
-
-```conf
-nameserver 192.168.1.12
-```
-
 ## 监控CPU频率
 
 ```shell
