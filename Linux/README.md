@@ -39,3 +39,9 @@ vim /etc/resolv.conf
 ```conf
 nameserver 192.168.1.12
 ```
+
+## 监控CPU频率
+
+```shell
+watch -n 1 "grep -E 'processor|cpu MHz' /proc/cpuinfo | paste - -"
+```
