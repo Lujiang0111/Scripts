@@ -19,3 +19,9 @@ nohup python3 -u record_pid_top_stats.py 5524 1 &
 ```shell
 watch -n 1 "grep -E 'processor|cpu MHz' /proc/cpuinfo | paste - -"
 ```
+
+## 查看进程上下文切换开销
+
+```shell
+pidstat -w -p ${pid} ${interval}
+```
