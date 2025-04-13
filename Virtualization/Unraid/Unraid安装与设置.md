@@ -73,10 +73,10 @@
 
 2. 手动将 NTP 服务器调整为以下一项或多项。
 
+    + ntp.ntsc.ac.cn
     + cn.ntp.org.cn
     + cn.pool.ntp.org
-    + ntp.aliyun.com
-    + ntp.tencent.com
+    + pool.ntp.org
 
 3. 点击```APPLY```，观察**New date and time**是否改变。
 
