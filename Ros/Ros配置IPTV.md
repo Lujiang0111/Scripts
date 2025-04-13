@@ -14,7 +14,7 @@
 + ROS LAN 网段 - `192.168.8.1/24`
 + 旁路由
   + 没有WAN接口，LAN接口为`br-lan`
-  + LAN接口IP - `192.168.8.11`
+  + LAN接口IP - `192.168.8.21`
 
 ## 光猫设置
 
@@ -109,14 +109,14 @@
   + Bind IP/Interface - `br-lan`
   + 端口 - `23234`
   + Source IP/Interface - `留空`
-  + udpxy状态页面：<http://192.168.8.11:23234/status>
+  + udpxy状态页面：<http://192.168.8.21:23234/status>
 
 + 系统 -> 计划任务
   + 添加Keep alive保活，防止组播信号丢失
   + 端口选一个其他的，防止实际下载文件
 
   ```shell
-  */2 * * * * curl -s --max-time 3 -o /tmp/iptv-keepalive http://192.168.8.11:23234/rtp/239.3.1.241:18800
+  */2 * * * * curl -s --max-time 3 -o /tmp/iptv-keepalive http://192.168.8.21:23234/rtp/239.3.1.241:18800
   ```
 
 ## VLC设置

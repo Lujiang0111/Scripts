@@ -144,7 +144,7 @@ vim /etc/network/interfaces
 ```config
 auto vmbr0
 iface vmbr0 inet static
-	address 192.168.8.6/24
+	address 192.168.8.12/24
 	gateway 192.168.8.1
 	bridge-ports enp8s0
 	bridge-stp off
@@ -152,7 +152,7 @@ iface vmbr0 inet static
 
 # IPv6 config
 iface vmbr0 inet6 static
-	address fd08::6/64
+	address fd08::12/64
 	gateway fd08::1
 ```
 

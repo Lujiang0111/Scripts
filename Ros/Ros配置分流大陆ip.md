@@ -26,7 +26,7 @@ curl -s https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.t
 
 ## ros配置
 
-假设**192.168.8.1**是ros的IP，**192.168.8.11**是旁路由的IP，其余IP是需要翻墙的内网ip。
+假设**192.168.8.1**是ros的IP，**192.168.8.21**是旁路由的IP，其余IP是需要翻墙的内网ip。
 
 ### 导入大陆IP列表
 
@@ -99,10 +99,10 @@ import fqip.rsc
 
 ### 添加IP分流策略路由
 
-点击**Ip**->**Routes**，新建一个Route，Dst. Address填写`0.0.0.0/0`，Gateway填写`192.168.8.11`，Routing Table选择`rtab-fq`。
+点击**Ip**->**Routes**，新建一个Route，Dst. Address填写`0.0.0.0/0`，Gateway填写`192.168.8.21`，Routing Table选择`rtab-fq`。
 
 ```shell
-/ip/route/add dst-address=0.0.0.0/0 routing-table="rtab-fq" gateway=192.168.8.11 comment="routing to openwrt"
+/ip/route/add dst-address=0.0.0.0/0 routing-table="rtab-fq" gateway=192.168.8.21 comment="routing to openwrt"
 ```
 
 ### 给需要翻墙的内网ip添加标记
@@ -136,21 +136,21 @@ import fqip.rsc
 ### 设置Netwatch，根据旁路由启停状况自动切换配置
 
 + 点击**Tools**->**Netwatch**，点击+号，添加一个新的Netwatch Host。
-  + 选择**Host**选项卡。Host填写`192.168.8.11`，Type选择`icmp`。
+  + 选择**Host**选项卡。Host填写`192.168.8.21`，Type选择`icmp`。
   + 选择**Up**选项卡，设定IP上线时的操作(On Up)：
 
     ```shell
-    /log/info message="192.168.8.11 up!"
+    /log/info message="192.168.8.21 up!"
     /ip/route/enable [find where comment="routing to openwrt"]
     /ip/firewall/mangle/enable [find where comment="mark routing !CNIP"]
-    /ip/dns/set servers=192.168.8.11
+    /ip/dns/set servers=192.168.8.21
     /ip/dns/cache/flush
     ```
 
   + 选择**Down**选项卡，设定IP下线时的操作(On Down)：
 
     ```shell
-    /log/info message="192.168.8.11 down!"
+    /log/info message="192.168.8.21 down!"
     /ip/route/disable [find where comment="routing to openwrt"]
     /ip/firewall/mangle/disable [find where comment="mark routing !CNIP"]
     /ip/dns/set servers=223.5.5.5,119.29.29.29,114.114.114.114

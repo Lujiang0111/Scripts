@@ -7,19 +7,19 @@
   + `iso`目录下：
 
     ```shell
-    qm importdisk 111 /var/lib/vz/template/iso/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
+    qm importdisk 121 /var/lib/vz/template/iso/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
     ```
 
   + `root`目录下
 
     ```shell
-    qm importdisk 111 /root/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
+    qm importdisk 121 /root/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
     ```
 
 + `qcow2`镜像：
 
   ```shell
-  qm importdisk 111 /root/openwrt-x86-64-generic-squashfs-combined-efi.qcow2 local-lvm
+  qm importdisk 121 /root/openwrt-x86-64-generic-squashfs-combined-efi.qcow2 local-lvm
   ```
 
 ## /etc/config/network配置示例
@@ -28,12 +28,12 @@
 config interface 'lan'
 	option device 'br-lan'
 	option proto 'static'
-	option ipaddr '192.168.8.11'
+	option ipaddr '192.168.8.21'
 	option netmask '255.255.255.0'
 	option ip6assign '64'
 	option gateway '192.168.8.1'
 	list dns '223.5.5.5'
-	option ip6ifaceid '::11'
+	option ip6ifaceid '::21'
 ```
 
 ## 网络配置
@@ -45,12 +45,12 @@ config interface 'lan'
   + 设置密码
 + 网络 -> 接口 -> LAN：
   + 基本设置
-    + IPv4地址 - `192.168.8.11`
+    + IPv4地址 - `192.168.8.21`
     + IPv4网关 - `192.168.8.1`
     + IPv4广播 - `192.168.8.255`
     + DNS服务器 - `223.5.5.5`
     + IPv6分配长度 - `64`
-    + IPv6后缀 - `::11`
+    + IPv6后缀 - `::21`
   + DHCP服务器：
     + 禁用v4和v6所有设置
   + 物理设置
