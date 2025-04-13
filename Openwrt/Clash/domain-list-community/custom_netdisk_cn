@@ -1,5 +1,2 @@
 include:baidu
 include:115
-include:aliyun
-include:qcloud
-include:huaweicloud
