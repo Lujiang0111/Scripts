@@ -25,3 +25,9 @@ watch -n 1 "grep -E 'processor|cpu MHz' /proc/cpuinfo | paste - -"
 ```shell
 pidstat -w -p ${pid} ${interval}
 ```
+
+## 测试NTP服务器是否可用
+
+```shell
+ntpdate -d ${ntp_server}
+```
