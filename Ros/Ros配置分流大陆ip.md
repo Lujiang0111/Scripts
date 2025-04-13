@@ -46,6 +46,7 @@ import cnip.rsc
 
 ```shell
 /ip firewall address-list
+remove [/ip firewall address-list find list=FQIP]
 add address=192.168.8.2 list=FQIP
 add address=192.168.8.3 list=FQIP
 add address=192.168.8.4 list=FQIP
@@ -66,12 +67,14 @@ cat <<- EOF > ${fqip_file}
 remove [/ip firewall address-list find list=FQIP]
 EOF
 
-for ((i=2; i<=10; i++))
+for ((i=2; i<=20; i++))
 do
     echo -e "add address=192.168.8.${i} list=FQIP" >> ${fqip_file}
 done
 
-for ((i=12; i<=239; i++))
+# skip 192.168.8.21
+
+for ((i=22; i<=239; i++))
 do
     echo -e "add address=192.168.8.${i} list=FQIP" >> ${fqip_file}
 done
