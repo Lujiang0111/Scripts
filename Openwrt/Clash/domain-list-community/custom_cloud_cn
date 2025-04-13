@@ -14,10 +14,3 @@ include:ucloud
 include:upai
 include:wangsu
 include:yunfanjiasu
-
-# Cloud
-include:baidu
-include:115
-include:aliyun
-include:qcloud
-include:huaweicloud
