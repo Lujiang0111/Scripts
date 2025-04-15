@@ -3,7 +3,7 @@
 ## 目标环境
 
 + 黑群晖版本：SA6400
-+ VM ID：101
++ VM ID：123
 + CPU数量32，需要使用custom内核
 + SN640直通，纯固态NAS
 + SRIOV直通核显
@@ -14,7 +14,7 @@
 
     | 名称 | 设置值 |
     | - | - |
-    | 名称 | DSM |
+    | 名称 | dsm |
     | 开机自启动 | ✔ |
 
 + 操作系统
@@ -63,7 +63,7 @@
 1. 运行如下命令，将img镜像导入虚拟机
 
 ```shell
-qm importdisk 122 rr.img local-lvm
+qm importdisk 123 rr.img local-lvm
 ```
 
 1. 点击**对应虚拟机** -> **硬件**，双击`未使用的磁盘0`，总线改为`SATA`，点击添加。
