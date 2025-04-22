@@ -58,6 +58,9 @@ firewall-cmd --permanent --add-service=http #http换成想要开放的service
 
         <!-- custom -->
         <port protocol="tcp" port="5656" />
+        <port protocol="tcp" port="5657" />
+        <port protocol="tcp" port="5658" />
+        <port protocol="tcp" port="5659" />
 
         <!-- rtsp -->
         <port protocol="tcp" port="554" />
