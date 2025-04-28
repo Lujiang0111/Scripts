@@ -12,17 +12,17 @@ install_project_path=${install_root_path}${project}/
 install_version_path=${install_project_path}${full_version}/
 
 #$1: os version
-os_version_default=linux/centos7.1/
+os_version_default=centos7.1
 os_version=
 if [ -n "$1" ]; then
-	os_version=linux/$1/
+	os_version=$1
 else
 	if grep "Ubuntu" /etc/os-release; then
-		os_version=linux/ubuntu22.04/
+		os_version=ubuntu22.04
 	elif grep "Kylin" /etc/os-release; then
-		os_version=linux/KylinV10/
+		os_version=KylinV10
 	elif grep "openEuler" /etc/os-release; then
-		os_version=linux/openeuler22.03/
+		os_version=openeuler22.03
 	else
 		os_version=${os_version_default}
 	fi
@@ -57,11 +57,11 @@ echo -e "done!"
 echo -e "\n\033[33m============= installing =============\033[0m\n"
 
 cd "${src_path}" || exit
-rm -rf "build/${os_version}"
-mkdir -p "build/${os_version}"
+rm -rf "build/${os_version}/"
+mkdir -p "build/${os_version}/"
 
 cd "build/${os_version}/" || exit
-cmake -DCMAKE_INSTALL_PREFIX=${install_version_path} ../../../
+cmake -DCMAKE_INSTALL_PREFIX=${install_version_path} ../../
 make clean && make V=1 -j"$(nproc)" && make install
 
 echo -e "done!"
