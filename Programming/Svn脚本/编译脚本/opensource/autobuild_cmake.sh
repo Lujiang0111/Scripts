@@ -21,6 +21,8 @@ else
 		os_version=linux/ubuntu22.04/
 	elif grep "Kylin" /etc/os-release; then
 		os_version=linux/KylinV10/
+	elif grep "openEuler" /etc/os-release; then
+		os_version=linux/openeuler22.03/
 	else
 		os_version=${os_version_default}
 	fi
