@@ -45,7 +45,6 @@ fi
 echo -e "os_arch=\033[34m${os_arch}\033[0m"
 
 src_path=${shell_path}../../../../src/
-dst_path=${shell_path}../../../../../../../../Versions/Baselib/${project}/v${version}/${os_version}${os_arch}/
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
@@ -91,14 +90,7 @@ make clean && make V=1 -j"$(nproc)" && make install
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
 
-rm -rf "${dst_path}"
-mkdir -p "${dst_path}"include
-mkdir -p "${dst_path}"lib
-
-\cp -rf ${install_version_path}include/srt/* "${dst_path}"include/
-\cp -rf ${install_version_path}lib64/* "${dst_path}"lib/
-
-cd "${dst_path}"lib/ || exit
+cd ${install_version_path}lib64/ || exit
 for src_file in *.so*; do
 	if [ -f "${src_file}" ]; then
 		dst_file=$(readlink "${src_file}")
@@ -112,4 +104,3 @@ echo -e "done!"
 echo -e "\n\033[33m========= install successful =========\033[0m\n"
 
 echo -e "${project}-${full_version} has been installed on \033[33m${install_version_path}\033[0m"
-echo -e "${project}-${full_version} has been copied to \033[33m${dst_path}\033[0m"
