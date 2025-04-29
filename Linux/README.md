@@ -14,6 +14,21 @@ nohup sh run.sh > /dev/null 2>&1 &
 nohup python3 -u record_pid_top_stats.py 5524 1 &
 ```
 
+## 使用通配符`*`时打印文件名
+
+```shell
+for file in *; do
+    if [[ -f "${file}" ]]; then
+        output=$(${your_command} 2>&1 | grep ${your_grep})
+        if [ -n "$output" ]; then
+            echo -e "File: ${file}"
+            echo -e "${output}"
+            echo "----------------"
+        fi
+    fi
+done
+```
+
 ## 监控CPU频率
 
 ```shell
