@@ -20,7 +20,7 @@ nohup python3 -u record_pid_top_stats.py 5524 1 &
 for file in *; do
     if [[ -f "${file}" ]]; then
         output=$(${your_command} 2>&1 | grep ${your_grep})
-        if [ -n "$output" ]; then
+        if [ -n "${output}" ]; then
             echo -e "File: ${file}"
             echo -e "${output}"
             echo "----------------"
