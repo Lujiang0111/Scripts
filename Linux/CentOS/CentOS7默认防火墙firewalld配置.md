@@ -64,7 +64,6 @@ firewall-cmd --permanent --add-service=http #http换成想要开放的service
 
         <!-- rtsp -->
         <port protocol="tcp" port="554" />
-        <port protocol="udp" port="554" />
 
         <!-- dash -->
         <port protocol="tcp" port="1901" />
@@ -88,9 +87,11 @@ firewall-cmd --permanent --add-service=http #http换成想要开放的service
         <!-- sd-wan -->
         <port protocol="tcp" port="59300" />
 
-        <!-- custom list -->
-        <port protocol="tcp" port="17000-30000" />
-        <port protocol="udp" port="17000-30000" />
+        <!-- custom tcp list -->
+        <port protocol="tcp" port="17000-20000" />
+
+        <!-- all udp port -->
+        <port protocol="udp" port="1-65535" />
     </service>
     ```
 
