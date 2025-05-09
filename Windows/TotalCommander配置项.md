@@ -17,3 +17,15 @@ path27=%commander_path%\Tools\
 iconic27=0
 menu27=校验和计算
 ```
+
+## wincmd.ini
+
+### 关闭时最小化
+
++ 必须配合**同一时间只能打开一个Toal Commander**（`onlyonce=1`）使用。
+
+```ini
+[Configuration]
+onlyonce=1
+MinimizeOnClose=1
+```
