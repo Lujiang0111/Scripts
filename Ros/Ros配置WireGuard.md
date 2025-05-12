@@ -74,7 +74,7 @@
 ```ini
 [Interface]
 PrivateKey = private-key-peer
-Address = 192.168.9.33/32
+Address = 192.168.9.2/32
 [peer]
 PublicKey = public-key-lan
 Endpoint = 123.45.67.89:52321
