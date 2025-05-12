@@ -14,6 +14,53 @@
     | Google | 8.8.8.8 | 853 | tls | overseas | ✔ |
     | Cloudflare | 1.1.1.1 | 853 | tls | overseas | ✔ |
 
++ 或者直接修改smartdns配置文件：
+  + ```vim /etc/config/smartdns```
+  + 添加内容
+
+    ```config
+    config server
+    	option enabled '1'
+    	option name 'Ali'
+    	option ip '223.5.5.5'
+    	option port '53'
+    	option type 'udp'
+
+    config server
+    	option enabled '1'
+    	option name 'Tencent'
+    	option ip '119.29.29.29'
+    	option port '53'
+    	option type 'udp'
+
+    config server
+    	option enabled '1'
+    	option name '114dns'
+    	option ip '114.114.114.114'
+    	option port '53'
+    	option type 'udp'
+
+    config server
+    	option enabled '1'
+    	option name 'Google'
+    	option ip '8.8.8.8'
+    	option port '853'
+    	option type 'tls'
+    	option server_group 'overseas'
+    	option exclude_default_group '1'
+
+    config server
+    	option enabled '1'
+    	option name 'Cloudflare'
+    	option ip '1.1.1.1'
+    	option port '853'
+    	option type 'tls'
+    	option server_group 'overseas'
+    	option exclude_default_group '1'
+    ```
+
+  + 重启系统生效。
+
 ### 配置主DNS服务器
 
 + 点击**常规设置**选项卡，按下表所示配置。
