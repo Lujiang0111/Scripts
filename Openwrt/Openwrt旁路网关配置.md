@@ -41,8 +41,10 @@ config interface 'lan'
 + 系统 -> 系统
   + 设置时区
   + 设置NTP服务器地址。
-+ 系统 -> 管理权：
++ 系统 -> 管理权 -> 路由器密码：
   + 设置密码
++ 系统 -> 管理权 -> SSH访问：
+  + 允许root用户凭密码登录 - ✔
 + 网络 -> 接口 -> LAN：
   + 基本设置
     + IPv4地址 - `192.168.8.21`
@@ -65,3 +67,15 @@ config interface 'lan'
   + 区域
     + 全选择`接受`
     + lan => wan IP动态伪装 - ✔
+
+## 配置定期重启
+
+> 参考资料：<https://openwrt.org/zh/docs/guide-user/base-system/cron>
+
+```shell
+# 每周一上午5:30执行重启
+# 注意: 为了防止循环重启的怪圈，需要推迟70秒钟执行重启
+# 在/etc目录下touch修改一个文件的时间属性，并且设置
+# 为上午5:31然后再执行cron的重启任务.
+30 5 * * 1 sleep 70 && touch /etc/banner && reboot
+```
