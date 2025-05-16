@@ -62,10 +62,10 @@ target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/dep/
 # 链接库
 target_link_libraries(${PROJECT_NAME} PRIVATE lccl)
 
-set(prebuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../../version/lib")
+set(prebuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 set(prebuild_libs "lccl 1.0")
 
-set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../../version/lib")
+set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 set(postbuild_libs "lccl 1.0")
 
 # 系统自定义参数
