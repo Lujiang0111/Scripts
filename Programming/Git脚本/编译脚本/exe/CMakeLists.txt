@@ -73,12 +73,29 @@ if(os_name MATCHES "windows")
     # 兼容fmt库
     target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
 
+    # 屏蔽特定告警
+    target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
+
     # 添加特定库
-    set(postbuild_libs
-        "${postbuild_libs} \
-        zlib 1.3.1"
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}/dep/include/zlib
     )
+
+    set(prebuild_libs
+        ${prebuild_libs}
+        "zlib 1.3.1"
+    )
+
+    set(postbuild_libs
+        ${postbuild_libs}
+        "zlib 1.3.1"
+    )
+
+    # 链接特定库
+    target_link_libraries(${PROJECT_NAME} PRIVATE zlib)
 else()
+    # 链接特定库
+    target_link_libraries(${PROJECT_NAME} PRIVATE z)
 endif()
 
 # 编译前操作

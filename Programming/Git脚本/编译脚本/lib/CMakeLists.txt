@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(lccl VERSION 1.0)
+project(libexample VERSION 1.0)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
@@ -59,15 +59,17 @@ message(STATUS "os name=${os_name}, os version=${os_version}, os arch=${os_arch}
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/internal
+    ${CMAKE_CURRENT_BINARY_DIR}/dep/include/lccl
 )
 
 # 链接库目录
 target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/dep/lib)
 
 # 链接库
+target_link_libraries(${PROJECT_NAME} PRIVATE lccl)
 
 set(prebuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
-set(prebuild_libs "")
+set(prebuild_libs "lccl 1.0")
 
 set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 
@@ -86,6 +88,7 @@ if(os_name MATCHES "windows")
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/dep/include/zlib
     )
+
     set(prebuild_libs
         ${prebuild_libs}
         "zlib 1.3.1"
@@ -94,7 +97,6 @@ if(os_name MATCHES "windows")
     # 链接特定库
     target_link_libraries(${PROJECT_NAME} PRIVATE zlib)
 else()
-
     # 链接特定库
     target_link_libraries(${PROJECT_NAME} PRIVATE z)
 endif()
