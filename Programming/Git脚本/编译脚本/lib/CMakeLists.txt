@@ -90,8 +90,8 @@ if(os_name MATCHES "windows")
     )
 
     set(prebuild_libs
-        ${prebuild_libs}
-        "zlib 1.3.1"
+        "${prebuild_libs} \
+        zlib 1.3.1"
     )
 
     # 链接特定库

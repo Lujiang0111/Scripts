@@ -82,13 +82,13 @@ if(os_name MATCHES "windows")
     )
 
     set(prebuild_libs
-        ${prebuild_libs}
-        "zlib 1.3.1"
+        "${prebuild_libs} \
+        zlib 1.3.1"
     )
 
     set(postbuild_libs
-        ${postbuild_libs}
-        "zlib 1.3.1"
+        "${postbuild_libs} \
+        zlib 1.3.1"
     )
 
     # 链接特定库
