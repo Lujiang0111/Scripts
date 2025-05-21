@@ -5,7 +5,7 @@ project(libexample VERSION 1.0)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 # 设置依赖，确保编译顺序
-add_dependencies(libexample_test libexample)
+add_dependencies(libexample_test_prebuild libexample)
 
 # 设置 C++ 标准
 set(CMAKE_CXX_STANDARD 11)
