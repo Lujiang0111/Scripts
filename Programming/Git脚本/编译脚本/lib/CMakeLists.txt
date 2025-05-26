@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(libexample VERSION 1.0)
+project(example VERSION 1.0)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 # 设置依赖，确保编译顺序
-add_dependencies(libexample_test_prebuild libexample)
+add_dependencies(example_test_prebuild example)
 
 # 设置 C++ 标准
 set(CMAKE_CXX_STANDARD 11)
