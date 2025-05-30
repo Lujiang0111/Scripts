@@ -2,6 +2,7 @@
 
 mkdir 3rd
 mkdir conf
+mkdir doc
 mkdir include
 mkdir src
 
