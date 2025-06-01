@@ -17,4 +17,6 @@ DOMAIN-SUFFIX,patch-dl.ffxiv.com
 
 DOMAIN-KEYWORD,sonkwo
 
+DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.com$
+
 PROCESS-NAME,uugamebooster
