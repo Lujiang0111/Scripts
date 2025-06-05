@@ -57,7 +57,7 @@
   + Interface - `wireguard-lan`
   + Public Key - `public-key-peer`
   + Allowed Address - `192.168.9.2/32`、`192.165.0.0/16`
-  + Persistent Keepalive - `00:00:25`
+  + Persistent Keepalive - **不设置，否则断连后会打很多日志**
 
 + 如果要设置多个peer，必须要保证`Allowed Address`不重复。
 
