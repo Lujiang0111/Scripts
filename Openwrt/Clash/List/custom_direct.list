@@ -11,12 +11,11 @@ DOMAIN-SUFFIX,nexconvert.com
 # Foosber
 DOMAIN-SUFFIX,nodenet.cloud
 
-DOMAIN-SUFFIX,todesk.com
-DOMAIN-SUFFIX,speedtest.net
-DOMAIN-SUFFIX,patch-dl.ffxiv.com
-
+# Game
 DOMAIN-KEYWORD,sonkwo
-
-DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.com$
-
+DOMAIN-SUFFIX,steamserver.net
+DOMAIN-SUFFIX,patch-dl.ffxiv.com
 PROCESS-NAME,uugamebooster
+
+# Pikpak
+DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.com$
