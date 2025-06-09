@@ -29,18 +29,6 @@ for file in *; do
 done
 ```
 
-## 监控CPU频率
-
-```shell
-watch -n 1 "grep -E 'processor|cpu MHz' /proc/cpuinfo | paste - -"
-```
-
-## 查看进程上下文切换开销
-
-```shell
-pidstat -w -p ${pid} ${interval}
-```
-
 ## 测试NTP服务器是否可用
 
 ```shell
