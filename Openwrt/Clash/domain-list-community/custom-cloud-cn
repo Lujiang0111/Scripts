@@ -1,3 +1,5 @@
+include:category-netdisk-cn
+
 # CDN or SDWAN
 include:aws-cn
 include:baijiayun
