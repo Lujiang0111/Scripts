@@ -8,9 +8,8 @@
 
     | 名称 | IP | 端口 | 协议类型 | 服务器组 | 从默认服务器组排除 |
     | - | - | - | - | - | - |
-    | Ali | 223.5.5.5 | 53 | udp | | |
-    | Tencent | 119.29.29.29 | 53 | udp | | |
-    | 114dns | 114.114.114.114 | 53 | udp | | |
+    | LocalMajor | 123.123.123.123 | 53 | udp | | |
+    | LocalMinor | 123.123.123.124 | 53 | udp | | |
     | Google | 8.8.8.8 | 853 | tls | overseas | ✔ |
     | Cloudflare | 1.1.1.1 | 853 | tls | overseas | ✔ |
 
@@ -21,22 +20,15 @@
     ```config
     config server
     	option enabled '1'
-    	option name 'Ali'
-    	option ip '223.5.5.5'
+    	option name 'LocalMajor'
+    	option ip '123.123.123.123'
     	option port '53'
     	option type 'udp'
 
     config server
     	option enabled '1'
-    	option name 'Tencent'
-    	option ip '119.29.29.29'
-    	option port '53'
-    	option type 'udp'
-
-    config server
-    	option enabled '1'
-    	option name '114dns'
-    	option ip '114.114.114.114'
+    	option name 'LocalMinor'
+    	option ip '123.123.123.124'
     	option port '53'
     	option type 'udp'
 
