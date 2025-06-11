@@ -14,7 +14,11 @@
     | Cloudflare | 1.1.1.1 | 853 | tls | overseas | ✔ |
 
 + 或者直接修改smartdns配置文件：
-  + ```vim /etc/config/smartdns```
+
+    ```shell
+    vim /etc/config/smartdns
+    ```
+
   + 添加内容
 
     ```config
