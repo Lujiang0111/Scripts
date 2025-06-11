@@ -54,10 +54,16 @@
 
     ```shell
     mkdir -p /etc/scripts
+    cd /etc/scripts
+    ```
+
+1. 编辑`wireguard_check.sh`文件
+
+    ```shell
     vim /etc/scripts/wireguard_check.sh
     ```
 
-1. 编辑`wireguard_check.sh`文件，修改`wg_interface`和`ping_target`为自己的：
+    添加以下内容，修改`wg_interface`和`ping_target`为自己设置的值：
 
     ```shell
     #!/bin/bash
