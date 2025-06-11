@@ -178,10 +178,16 @@
 
     ```shell
     mkdir -p /etc/scripts
+    cd /etc/scripts
+    ```
+
+1. 编辑`openclash_predownload.sh`文件
+
+    ```shell
     vim /etc/scripts/openclash_predownload.sh
     ```
 
-1. 编辑`openclash_predownload.sh`文件，修改`urls`为自己的url：
+    添加以下内容，修改`urls`为自己的url：
 
     ```shell
     #!/bin/bash
