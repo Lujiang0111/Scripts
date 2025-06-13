@@ -2,14 +2,14 @@
 shell_path=$(
 	cd "$(dirname "$0")" || exit
 	pwd
-)/
+)
 project=opencv
 version=4.11.0
 full_version=v${version}-release
 
-install_root_path=/home/install/
-install_project_path=${install_root_path}${project}/
-install_version_path=${install_project_path}${full_version}/
+install_root_path=/home/install
+install_project_path=${install_root_path}/${project}
+install_version_path=${install_project_path}/${full_version}
 
 #$1: os version
 os_version_default=centos7.1
@@ -46,7 +46,7 @@ else
 fi
 echo -e "os_arch=\033[34m${os_arch}\033[0m"
 
-src_path=${shell_path}../../../../src/
+src_path=${shell_path}/../../../../src
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
@@ -57,17 +57,17 @@ echo -e "done!"
 echo -e "\n\033[33m============= installing =============\033[0m\n"
 
 cd "${src_path}" || exit
-rm -rf "build/${os_version}/"
-mkdir -p "build/${os_version}/"
+rm -rf "build/${os_version}"
+mkdir -p "build/${os_version}"
 
-cd "build/${os_version}/" || exit
-cmake -DCMAKE_INSTALL_PREFIX=${install_version_path} ../../
+cd "build/${os_version}" || exit
+cmake -DCMAKE_INSTALL_PREFIX=${install_version_path} ../..
 make clean && make V=1 -j"$(nproc)" && make install
 
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
 
-cd ${install_version_path}lib64/ || exit
+cd ${install_version_path}/lib64 || exit
 for src_file in *.so*; do
 	if [ -f "${src_file}" ]; then
 		dst_file=$(readlink "${src_file}")

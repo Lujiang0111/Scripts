@@ -8,8 +8,7 @@ fi
 sleep_pid=
 running=true
 
-function TrapSigint()
-{
+function TrapSigint() {
     running=false
     if [[ "x" != "${sleep_pid}x" ]]; then
         kill -9 "${sleep_pid}"
@@ -23,7 +22,7 @@ while [ "$running" = true ]; do
     echo -e "\033[33mcycle ${cycle_time}, keep alive\033[0m"
 
     if [ "$running" = true ]; then
-        sleep ${sleep_duration} &
+        sleep "${sleep_duration}" &
         sleep_pid=$!
         wait ${sleep_pid}
         sleep_pid=

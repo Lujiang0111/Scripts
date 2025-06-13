@@ -32,8 +32,7 @@ exe_file_pid=
 sleep_pid=
 running=true
 
-function TrapSigint()
-{
+function TrapSigint() {
     running=false
     if [[ "x" != "${sleep_pid}x" ]]; then
         kill -9 "${sleep_pid}"
