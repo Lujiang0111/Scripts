@@ -6,8 +6,8 @@ shell_path=$(
 
 # 定义变量（注意dir变量要以/结尾）
 target_dir="/path/to/target/"     # 目标目录
-source_dir="${shell_path}source/" # 替换文件所在目录
-backup_dir="${shell_path}backup/" # 备份目录
+source_dir="${shell_path}/source" # 替换文件所在目录
+backup_dir="${shell_path}/backup" # 备份目录
 
 help() {
     echo "使用方法: bash $0 [backup|update|rollback]"
@@ -32,8 +32,8 @@ backup_files() {
 
     while IFS= read -r -d '' file; do
         relative_path="${file#"${source_dir}"}"
-        target_file="${target_dir}${relative_path}"
-        backup_file="${backup_dir}${relative_path}"
+        target_file="${target_dir}/${relative_path}"
+        backup_file="${backup_dir}/${relative_path}"
 
         if [[ -f "${target_file}" ]]; then
             mkdir -p "$(dirname "${backup_file}")"
@@ -51,7 +51,7 @@ replace_files() {
 
     while IFS= read -r -d '' file; do
         relative_path="${file#"${source_dir}"}"
-        target_file="${target_dir}${relative_path}"
+        target_file="${target_dir}/${relative_path}"
 
         mkdir -p "$(dirname "${target_file}")"
         \cp -rf "${file}" "${target_file}"
@@ -67,7 +67,7 @@ rollback_files() {
 
     while IFS= read -r -d '' file; do
         relative_path="${file#"${backup_dir}"}"
-        target_file="${target_dir}${relative_path}"
+        target_file="${target_dir}/${relative_path}"
 
         if [[ -f "${file}" ]]; then
             \cp -rf "${file}" "${target_file}"
