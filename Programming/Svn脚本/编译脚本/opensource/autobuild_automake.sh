@@ -91,7 +91,7 @@ make clean && make V=1 -j"$(nproc)" && make install
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
 
-cd ${install_version_path}lib || exit
+cd ${install_version_path}/lib || exit
 for src_file in *.so*; do
 	if [ -f "${src_file}" ]; then
 		dst_file=$(readlink "${src_file}")
