@@ -4,10 +4,10 @@ shell_path=$(
     pwd
 )/
 
-# 定义变量（注意dir变量要以/结尾）
-target_dir="/path/to/target/"     # 目标目录
-source_dir="${shell_path}/source" # 替换文件所在目录
-backup_dir="${shell_path}/backup" # 备份目录
+# 定义变量
+target_path="/path/to/target"      # 目标路径
+source_path="${shell_path}/source" # 替换文件所在路径
+backup_path="${shell_path}/backup" # 备份路径
 
 help() {
     echo "使用方法: bash $0 [backup|update|rollback]"
@@ -27,20 +27,20 @@ fi
 backup_files() {
     echo "Starting backup..."
 
-    rm -rf "${backup_dir}"
-    mkdir -p "${backup_dir}"
+    rm -rf "${backup_path}"
+    mkdir -p "${backup_path}"
 
     while IFS= read -r -d '' file; do
-        relative_path="${file#"${source_dir}"}"
-        target_file="${target_dir}/${relative_path}"
-        backup_file="${backup_dir}/${relative_path}"
+        relative_path="${file#"${source_path}"}"
+        target_file="${target_path}/${relative_path}"
+        backup_file="${backup_path}/${relative_path}"
 
         if [[ -f "${target_file}" ]]; then
             mkdir -p "$(dirname "${backup_file}")"
             cp "${target_file}" "${backup_file}"
             echo "Backed up: ${target_file} -> ${backup_file}"
         fi
-    done < <(find "${source_dir}" -type f -print0)
+    done < <(find "${source_path}" -type f -print0)
 
     echo "Backup completed."
 }
@@ -50,13 +50,13 @@ replace_files() {
     echo "Starting file replacement..."
 
     while IFS= read -r -d '' file; do
-        relative_path="${file#"${source_dir}"}"
-        target_file="${target_dir}/${relative_path}"
+        relative_path="${file#"${source_path}"}"
+        target_file="${target_path}/${relative_path}"
 
         mkdir -p "$(dirname "${target_file}")"
         \cp -rf "${file}" "${target_file}"
         echo "Replaced: ${file} -> ${target_file}"
-    done < <(find "${source_dir}" -type f -print0)
+    done < <(find "${source_path}" -type f -print0)
 
     echo "File replacement completed."
 }
@@ -66,8 +66,8 @@ rollback_files() {
     echo "Starting rollback..."
 
     while IFS= read -r -d '' file; do
-        relative_path="${file#"${backup_dir}"}"
-        target_file="${target_dir}/${relative_path}"
+        relative_path="${file#"${backup_path}"}"
+        target_file="${target_path}/${relative_path}"
 
         if [[ -f "${file}" ]]; then
             \cp -rf "${file}" "${target_file}"
@@ -75,7 +75,7 @@ rollback_files() {
         else
             echo "File not found in backup: ${file}"
         fi
-    done < <(find "${backup_dir}" -type f -print0)
+    done < <(find "${backup_path}" -type f -print0)
 
     echo "Rollback completed."
 }
