@@ -35,6 +35,9 @@ services:
       macvlan_enp6s18:
         ipv4_address: 192.168.8.41
         ipv6_address: fd08::41
+    dns:
+      - 123.123.123.123
+      - 123.123.123.124
     restart: unless-stopped
 networks:
   macvlan_enp6s18:
