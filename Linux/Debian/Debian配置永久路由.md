@@ -10,12 +10,12 @@
 
     ```shell
     iface eth0 inet static
-        address 192.168.1.100
-        netmask 255.255.255.0
-        gateway 192.168.1.1
-        # 添加、删除静态路由
-        up ip route add 192.166.0.0/16 via 192.165.52.1
-        down ip route del 192.166.0.0/16 via 192.165.52.1
+    	address 192.168.1.100
+    	netmask 255.255.255.0
+    	gateway 192.168.1.1
+    	# 添加、删除静态路由
+    	up ip route add 192.166.0.0/16 via 192.165.52.1
+    	down ip route del 192.166.0.0/16 via 192.165.52.1
     ```
 
 1. 重启网络服务以应用新配置：
