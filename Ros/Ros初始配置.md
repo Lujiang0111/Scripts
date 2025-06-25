@@ -185,11 +185,11 @@
 ## 设置DNS地址与DNS缓存
 
 + 点击**IP**->**DNS**：
-  + **Server** - `223.5.5.5`,`119.29.29.29`,`114.114.114.114`
+  + **Server** - `123.123.123.123`,`123.123.123.124`
   + **Allow Remote Requests** - ✔
 
 ```shell
-/ip/dns/set servers=223.5.5.5,119.29.29.29,114.114.114.114
+/ip/dns/set servers=123.123.123.123,123.123.123.124
 /ip/dns/set allow-remote-requests=yes
 /ip/dns/cache/flush
 ```

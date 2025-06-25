@@ -32,7 +32,7 @@ config interface 'lan'
 	option netmask '255.255.255.0'
 	option gateway '192.168.8.1'
 	option ip6assign '64'
-	list dns '223.5.5.5'
+	list dns '123.123.123.123'
 	option ip6ifaceid '::21'
 ```
 
@@ -51,7 +51,7 @@ config interface 'lan'
     + IPv4地址 - `192.168.8.21`
     + IPv4网关 - `192.168.8.1`
     + IPv4广播 - `192.168.8.255`
-    + DNS服务器 - `223.5.5.5`
+    + DNS服务器 - `123.123.123.123`
     + IPv6分配长度 - `64`
     + IPv6后缀 - `::21`
   + DHCP服务器：
