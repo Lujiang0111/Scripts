@@ -79,7 +79,12 @@
 
     if [ ${fail_cnt} -ge 3 ]; then
         logger -t wireguard_check "wireGuard peer ping fail, reconnect"
-        ifdown ${wg_interface}
+
+        wg_state=$(ifstatus ${wg_interface} | jsonfilter -e '@.up')
+        if [ "${wg_state}" = "true" ]; then
+            ifdown ${wg_interface}
+        fi
+
         sleep 10
         ifup ${wg_interface}
     fi
