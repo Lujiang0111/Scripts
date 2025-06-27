@@ -1,15 +1,24 @@
 # python常用函数
 
-## 判断文件或目录是否存在
-
-```python
-pathlib.Path(file_name).exists()
-```
-
-## 删除文件或目录
+## 获取脚本所在目录
 
 ```python
 from pathlib import Path
+
+env_dir = Path(__file__).resolve().parent
+```
+
+## 文件操作
+
+```python
+from pathlib import Path
+
+# 检查是否有特定的文件或目录
+pathlib.Path(file_name).exists()
+
+# 检查是否有匹配通配符的文件或目录
+pattern = "path/to/files/*.txt"
+matches = list(Path().glob(pattern))
 
 # 删除文件或目录
 def rm_path(file_name: str) -> None:
