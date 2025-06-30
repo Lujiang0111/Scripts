@@ -43,3 +43,9 @@ networks:
   macvlan_enp6s18:
     external: true
 ```
+
+## webui地址
+
+```shell
+http://192.168.8.41:58080
+```

@@ -50,6 +50,5 @@ services:
       - /mnt/ssd/fastshare:/shares/fastshare
       - /mnt/ssd/storage:/shares/storage
       - /mnt/ssd/xvideos:/shares/xvideos
-    ports:
-      - 445:445
+    network_mode: host
 ```
