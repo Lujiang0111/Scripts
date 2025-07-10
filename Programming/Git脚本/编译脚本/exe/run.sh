@@ -3,6 +3,7 @@ shell_path=$(
     cd "$(dirname "$0")" || exit
     pwd
 )
+shell_path=$(realpath "${shell_path}")
 
 project=lccl_test
 lib_path=${shell_path}/lib

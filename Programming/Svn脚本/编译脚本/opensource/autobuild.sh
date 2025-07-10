@@ -3,6 +3,8 @@ shell_path=$(
 	cd "$(dirname "$0")" || exit
 	pwd
 )
+shell_path=$(realpath "${shell_path}")
+
 project=srt
 version=1.5.3
 full_version=v${version}-release

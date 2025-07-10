@@ -3,6 +3,8 @@ shell_path=$(
 	cd "$(dirname "$0")" || exit
 	pwd
 )
+shell_path=$(realpath "${shell_path}")
+
 project=opencv
 version=4.11.0
 full_version=v${version}-release
