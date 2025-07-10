@@ -2,7 +2,7 @@
 shell_path=$(
     cd "$(dirname "$0")" || exit
     pwd
-)/
+)
 
 # 定义变量
 target_path="/path/to/target"      # 目标路径
