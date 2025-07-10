@@ -15,19 +15,20 @@ def extract_functions(file_path):
     matches = []
     for header_file in header_files:
         header_file_path = os.path.join(file_path, header_file)
-        with open(header_file_path, "r", errors="ignore") as file:
+        with open(header_file_path, "r", encoding="utf-8") as file:
             for line in file:
                 line = line.strip()
                 matches.extend(re.findall(pattern, line))
 
     return matches
 
+
 if __name__ == "__main__":
     param_cnt = len(sys.argv) - 1
     if param_cnt < 2:
         raise SystemExit("param cnt={} too less".format(param_cnt))
-    
-    project=sys.argv[1]
+
+    project = sys.argv[1]
     include_path = sys.argv[2]
 
     def_file = open(f"{project}.def", "w")
