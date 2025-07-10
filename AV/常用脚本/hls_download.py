@@ -90,8 +90,8 @@ class HlsDownload:
         parsed_url = urllib.parse.urlparse(url)
         save_path = self.__save_dir / f".{parsed_url.path}"
         save_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(save_path, "w", encoding="utf-8") as f:
-            f.write(url_content)
+        with open(save_path, "w", encoding="utf-8") as file:
+            file.write(url_content)
 
         combined_save_path = (
             save_path.parent / f"{save_path.stem}_combined{save_path.suffix}"
@@ -136,8 +136,8 @@ class HlsDownload:
 
                         print(f"save to {segment_save_path}")
                         segment_save_path.parent.mkdir(parents=True, exist_ok=True)
-                        with open(segment_save_path, "wb") as f:
-                            f.write(segment_bytes)
+                        with open(segment_save_path, "wb", encoding="utf-8") as file:
+                            file.write(segment_bytes)
 
                         combined_save_file.write(f"{curr_extinf_line}\n")
                         combined_save_file.write(f"{line}\n")

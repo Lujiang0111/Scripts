@@ -7,7 +7,7 @@ import re
 
 def record_top_stats(pid, interval) -> None:
     output_file = f"{pid}_top_stats.csv"
-    with open(output_file, "a") as file:
+    with open(output_file, "a", encoding="utf-8") as file:
         print(f"record pid={pid} interval={interval} start!")
         if os.stat(output_file).st_size <= 0:
             file.write("Time, PID, VIRT, RES, %CPU, %MEM\n")
