@@ -1,6 +1,8 @@
 # subconverter
 
 > 参考资料：<https://github.com/tindy2013/subconverter/blob/master/README-docker.md>
+>
+> 参考资料：<https://github.com/asdlokj1qpi233/subconverter/blob/master/README-docker.md>
 
 ## Docker compose
 
@@ -8,7 +10,7 @@
 services:
   subconverter:
     restart: unless-stopped
-    image: tindy2013/subconverter:latest
+    image: asdlokj1qpi23/subconverter:latest
     container_name: subconverter
     networks:
       macvlan_enp6s18:
@@ -26,6 +28,12 @@ networks:
 ## 清空缓存
 
 <http://192.168.8.42:25500/flushcache?token=password>
+
+## 订阅模板
+
+```html
+http://192.168.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.githubusercontent.com%2FLujiang0111%2FScripts%2Frefs%2Fheads%2Fmain%2FOpenwrt%2FClash%2Frules_mini.ini&filename=%FILE_NAME%&emoji=true&udp=true
+```
 
 ## Unraid 模板
 
