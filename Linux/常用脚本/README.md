@@ -34,9 +34,12 @@ python3 record_pid_top_stats.py 5515 5
 
 + 文件名 : `iisolate_core.sh`
 + 使用方式：
-  + `bash isolate_core.sh`
-  + 脚本内写的是隔离最后2个核，可根据不同情况修改。
+  + 隔离核：
+    + `bash isolate_core.sh install isolate_cores`
+      + isolate_cores：隔离哪些核，用逗号分隔
+  + 卸载隔离核：
+    + `bash isolate_core.sh uninstall`
 
 ```shell
-bash isolate_core.sh
+bash isolate_core.sh install 14,15
 ```
