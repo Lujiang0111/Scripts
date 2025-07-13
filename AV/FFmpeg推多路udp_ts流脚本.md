@@ -10,7 +10,7 @@ setlocal enabledelayedexpansion
 
 set INPUT_FILE=.\H264_420_8_AAC_CBR_37M_GHY.ts
 set OUTPUT_CNT=2
-set OUTPUT_IP=192.168.3.21
+set OUTPUT_IP=172.28.3.21
 set OUTPUT_START_PORT=18000
 
 for /L %%i in (1,1,!OUTPUT_CNT!) do (

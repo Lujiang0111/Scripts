@@ -2,8 +2,8 @@
 
 > 参考资料：<https://www.truenasscale.com/2022/04/30/1032.html>
 
-+ 内网网段：`192.168.8.0/24`
-+ WireGuard网段：`192.168.9.0/24`
++ 内网网段：`172.28.8.0/24`
++ WireGuard网段：`172.28.9.0/24`
 
 ## 生成Peer公钥
 
@@ -47,7 +47,7 @@
 ### 为WireGuard设置IP
 
 + 点击**IP**->**Addresses**，点击+号。
-  + Address - `192.168.9.1/24`
+  + Address - `172.28.9.1/24`
   + Interface - `wireguard-lan`
 
 ### 设置Peer
@@ -56,7 +56,7 @@
   + Name - `wireguard-peer`
   + Interface - `wireguard-lan`
   + Public Key - `public-key-peer`
-  + Allowed Address - `192.168.9.2/32`、`192.165.0.0/16`
+  + Allowed Address - `172.28.9.43/32`、`192.165.0.0/16`
   + Persistent Keepalive - **不设置，否则断连后会打很多日志**
 
 + 如果要设置多个peer，必须要保证`Allowed Address`不重复。
@@ -74,10 +74,10 @@
 ```ini
 [Interface]
 PrivateKey = private-key-peer
-Address = 192.168.9.2/32
+Address = 172.28.9.43/32
 [peer]
 PublicKey = public-key-lan
 Endpoint = 123.45.67.89:52321
-AllowedIPs = 192.168.8.0/24, 192.168.9.0/24, 192.168.100.0/24
+AllowedIPs = 172.28.0.0/16
 PersistentKeepalive = 25
 ```

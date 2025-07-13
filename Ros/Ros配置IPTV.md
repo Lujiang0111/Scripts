@@ -10,11 +10,11 @@
                         +------ 其他设备
 ```
 
-+ 光猫网段 - `192.168.100.1/24`
-+ ROS LAN 网段 - `192.168.8.1/24`
++ 光猫网段 - `172.28.100.1/24`
++ ROS LAN 网段 - `172.28.8.1/24`
 + 旁路由
   + 没有WAN接口，LAN接口为`br-lan`
-  + LAN接口IP - `192.168.8.21`
+  + LAN接口IP - `172.28.8.21`
 
 ## 光猫设置
 
@@ -80,7 +80,7 @@
 
 + IP -> Address
   + 添加Address
-    + Address - `192.168.101.1/24`（选一个没人用的网段，后续不需要此地址）
+    + Address - `172.28.101.1/24`（选一个没人用的网段，后续不需要此地址）
     + Interface - `vlan-iptv`
 
 + Routing -> IGMP Proxy
@@ -109,14 +109,14 @@
   + Bind IP/Interface - `br-lan`
   + 端口 - `23234`
   + Source IP/Interface - `留空`
-  + udpxy状态页面：<http://192.168.8.21:23234/status>
+  + udpxy状态页面：<http://172.28.8.21:23234/status>
 
 + 系统 -> 计划任务
   + 添加Keep alive保活，防止组播信号丢失
   + 端口选一个其他的，防止实际下载文件
 
   ```shell
-  */2 * * * * curl -s --max-time 3 -o /tmp/iptv-keepalive http://192.168.8.21:23234/rtp/239.3.1.241:18800
+  */2 * * * * curl -s --max-time 3 -o /tmp/iptv-keepalive http://172.28.8.21:23234/rtp/239.3.1.241:18800
   ```
 
 ## VLC设置

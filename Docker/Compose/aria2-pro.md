@@ -38,7 +38,7 @@ services:
       - /mnt/ssd/download/aria2-pro:/downloads
     networks:
       macvlan_enp6s18:
-        ipv4_address: 192.168.8.43
+        ipv4_address: 172.28.8.43
         ipv6_address: fd08::43
     restart: unless-stopped
     logging:
@@ -78,7 +78,7 @@ http://IP:56880/
   <Repository>p3terx/aria2-pro:latest</Repository>
   <Registry />
   <Network>br0</Network>
-  <MyIP>192.168.8.43,fd08::43</MyIP>
+  <MyIP>172.28.8.43,fd08::43</MyIP>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support />

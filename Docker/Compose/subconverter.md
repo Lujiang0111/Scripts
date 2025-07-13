@@ -14,7 +14,7 @@ services:
     container_name: subconverter
     networks:
       macvlan_enp6s18:
-        ipv4_address: 192.168.8.42
+        ipv4_address: 172.28.8.42
         ipv6_address: fd08::42
 networks:
   macvlan_enp6s18:
@@ -23,16 +23,16 @@ networks:
 
 ## 测试服务器
 
-<http://192.168.8.42:25500/version>
+<http://172.28.8.42:25500/version>
 
 ## 清空缓存
 
-<http://192.168.8.42:25500/flushcache?token=password>
+<http://172.28.8.42:25500/flushcache?token=password>
 
 ## 订阅模板
 
 ```html
-http://192.168.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.githubusercontent.com%2FLujiang0111%2FScripts%2Frefs%2Fheads%2Fmain%2FOpenwrt%2FClash%2Frules_mini.ini&filename=%FILE_NAME%&emoji=true&udp=true
+http://172.28.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.githubusercontent.com%2FLujiang0111%2FScripts%2Frefs%2Fheads%2Fmain%2FOpenwrt%2FClash%2Frules_mini.ini&filename=%FILE_NAME%&emoji=true&udp=true
 ```
 
 ## Unraid 模板
@@ -46,7 +46,7 @@ http://192.168.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.gi
   <Repository>tindy2013/subconverter:latest</Repository>
   <Registry />
   <Network>br0</Network>
-  <MyIP>192.168.8.42,fd08::42</MyIP>
+  <MyIP>172.28.8.42,fd08::42</MyIP>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support />

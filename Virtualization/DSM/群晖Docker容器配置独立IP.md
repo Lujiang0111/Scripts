@@ -21,8 +21,8 @@
 
     ```shell
     sudo docker network create -d macvlan \
-        --subnet=192.168.8.0/24 \
-        --gateway=192.168.8.1 \
+        --subnet=172.28.8.0/24 \
+        --gateway=172.28.8.1 \
         --ipv6 \
         --subnet=fd08::/64 \
         --gateway=fd08::1 \
@@ -39,7 +39,7 @@ sudo docker run -d \
     --name=subconverter \
     --restart=unless-stopped \
     --net=macvlan_ovs_eth0 \
-    --ip=192.168.8.42 \
+    --ip=172.28.8.42 \
     --ip6=fd08::42 \
     tindy2013/subconverter:latest
 ```
@@ -55,7 +55,7 @@ services:
     container_name: subconverter
     networks:
       macvlan_ovs_eth0:
-        ipv4_address: 192.168.8.42
+        ipv4_address: 172.28.8.42
         ipv6_address: fd08::42
 networks:
   macvlan_ovs_eth0:

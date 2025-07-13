@@ -19,16 +19,16 @@
 3. 设定一个dhcp-option的tag，用于批量设置(其中```router```代表网关，```dns-server```代表DNS服务器)
 
     ```dnsmasq
-    dhcp-option=tag:to_op,option:router,192.168.8.5
-    dhcp-option=tag:to_op,option:dns-server,192.168.8.5
+    dhcp-option=tag:to_op,option:router,172.28.8.5
+    dhcp-option=tag:to_op,option:dns-server,172.28.8.5
     ```
 
 4. 绑定不同设备的IP地址，网关与DNS服务器
 
     ```dnsmasq
-    dhcp-host=xx:xx:xx:xx:xx:A1,set:to_op,192.168.8.41,IPhone
-    dhcp-host=xx:xx:xx:xx:xx:B2,set:to_op,192.168.8.42,Notepad
-    dhcp-host=xx:xx:xx:xx:xx:C3,set:to_op,192.168.8.43,PC
+    dhcp-host=xx:xx:xx:xx:xx:A1,set:to_op,172.28.8.41,IPhone
+    dhcp-host=xx:xx:xx:xx:xx:B2,set:to_op,172.28.8.42,Notepad
+    dhcp-host=xx:xx:xx:xx:xx:C3,set:to_op,172.28.8.43,PC
     ```
 
     + 注意：指定IPhone时，需要在对应WIFI设置里**取消勾选**```私有无线局域网地址```，否则每次连接路由的MAC地址是不固定的。
@@ -44,9 +44,9 @@
   + 文件内容：
 
     ```dnsmasq
-    dhcp-option=tag:to_op,option:router,192.168.8.5
-    dhcp-option=tag:to_op,option:dns-server,192.168.8.5
-    dhcp-host=xx:xx:xx:xx:xx:A1,set:to_op,192.168.8.41,IPhone
-    dhcp-host=xx:xx:xx:xx:xx:B2,set:to_op,192.168.8.42,Notepad
-    dhcp-host=xx:xx:xx:xx:xx:C3,set:to_op,192.168.8.43,PC
+    dhcp-option=tag:to_op,option:router,172.28.8.5
+    dhcp-option=tag:to_op,option:dns-server,172.28.8.5
+    dhcp-host=xx:xx:xx:xx:xx:A1,set:to_op,172.28.8.41,IPhone
+    dhcp-host=xx:xx:xx:xx:xx:B2,set:to_op,172.28.8.42,Notepad
+    dhcp-host=xx:xx:xx:xx:xx:C3,set:to_op,172.28.8.43,PC
     ```

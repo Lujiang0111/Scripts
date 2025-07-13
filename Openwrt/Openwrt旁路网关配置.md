@@ -28,9 +28,9 @@
 config interface 'lan'
 	option device 'br-lan'
 	option proto 'static'
-	option ipaddr '192.168.8.21'
+	option ipaddr '172.28.8.21'
 	option netmask '255.255.255.0'
-	option gateway '192.168.8.1'
+	option gateway '172.28.8.1'
 	option ip6assign '64'
 	list dns '123.123.123.123'
 	option ip6ifaceid '::21'
@@ -48,9 +48,9 @@ config interface 'lan'
   + 允许root用户凭密码登录 - ✔
 + 网络 -> 接口 -> LAN：
   + 基本设置
-    + IPv4地址 - `192.168.8.21`
-    + IPv4网关 - `192.168.8.1`
-    + IPv4广播 - `192.168.8.255`
+    + IPv4地址 - `172.28.8.21`
+    + IPv4网关 - `172.28.8.1`
+    + IPv4广播 - `172.28.8.255`
     + DNS服务器 - `123.123.123.123`
     + IPv6分配长度 - `64`
     + IPv6后缀 - `::21`

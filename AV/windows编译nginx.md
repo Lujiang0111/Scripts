@@ -199,8 +199,8 @@
         upstream big_server_com {
             server 127.0.0.3:8000 weight=5;
             server 127.0.0.3:8001 weight=5;
-            server 192.168.0.1:8000;
-            server 192.168.0.1:8001;
+            server 172.28.0.1:8000;
+            server 172.28.0.1:8001;
         }
 
         server {

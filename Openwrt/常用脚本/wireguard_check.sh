@@ -1,6 +1,6 @@
 #!/bin/bash
 wg_interface=Wireguard
-ping_target=192.168.8.1
+ping_target=172.28.8.1
 
 fail_cnt=0
 for i in {1..3}; do

@@ -36,12 +36,12 @@ vim /etc/network/interfaces
 ```plaintext
 allow-hotplug enp6s18
 iface enp6s18 inet static
-	address 192.168.8.13/24
-	gateway 192.168.8.1
-	dns-nameservers 192.168.8.1
+	address 172.28.8.23/24
+	gateway 172.28.8.1
+	dns-nameservers 172.28.8.1
 
 iface enp6s18 inet6 static
-	address fd08::13/64
+	address fd08::23/64
 	gateway fd08::1
 	dns-nameservers fd08::1
 ```

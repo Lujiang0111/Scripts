@@ -47,12 +47,12 @@
         ```ini
         # Generated network settings
         USE_DHCP="no"
-        IPADDR="192.168.8.2"
+        IPADDR="172.28.8.2"
         NETMASK="255.255.255.0"
-        GATEWAY="192.168.8.1"
+        GATEWAY="172.28.8.1"
         BONDING="yes"
         BRIDGING="yes"
-        DNS_SERVER1="192.168.8.1"
+        DNS_SERVER1="172.28.8.1"
         ```
 
 6. 返回U盘根目录，右键点击```make_bootable.bat```文件，选择**以管理员身份运行**。

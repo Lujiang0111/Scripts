@@ -21,17 +21,17 @@ network:
       dhcp6: no
       accept-ra: no
       addresses:
-        - 192.168.8.22/24
-        - "fd08::22/64"
+        - 172.28.8.23/24
+        - "fd08::23/64"
       routes:
         - to: 0.0.0.0/0
-          via: 192.168.8.5
+          via: 172.28.8.21
           on-link: true
         - to: ::/0
-          via: fd08::5
+          via: fd08::21
           on-link: true
       nameservers:
-        addresses: [192.168.8.5, fd08::5]
+        addresses: [172.28.8.21, fd08::21]
         search: []
 ```
 

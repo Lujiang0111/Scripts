@@ -33,7 +33,7 @@ services:
       - /mnt/ssd/download/qbittorrent:/downloads
     networks:
       macvlan_enp6s18:
-        ipv4_address: 192.168.8.41
+        ipv4_address: 172.28.8.41
         ipv6_address: fd08::41
     dns:
       - 123.123.123.123
@@ -47,5 +47,5 @@ networks:
 ## webui地址
 
 ```shell
-http://192.168.8.41:58080
+http://172.28.8.41:58080
 ```
