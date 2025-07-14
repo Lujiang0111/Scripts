@@ -1,5 +1,6 @@
 # TotalCommander配置项
 
++ 配置文件位置：`%APPDATA%\GHISLER`
 + 编码格式：`ANSI`（中文系统为`GBK`）
 
 ## default.bar
