@@ -14,8 +14,8 @@
     	netmask 255.255.255.0
     	gateway 172.28.1.1
     	# 添加、删除静态路由
-    	up ip route add 192.166.0.0/16 via 192.165.52.1
-    	down ip route del 192.166.0.0/16 via 192.165.52.1
+    	up ip route add 10.0.0.0/8 via 192.165.52.1
+    	down ip route del 192.160.0.0/12 via 192.165.52.1
     ```
 
 1. 重启网络服务以应用新配置：
