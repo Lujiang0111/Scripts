@@ -88,7 +88,7 @@ firewall-cmd --permanent --add-service=http #http换成想要开放的service
         <port protocol="tcp" port="59300" />
 
         <!-- custom tcp list -->
-        <port protocol="tcp" port="17000-20000" />
+        <port protocol="tcp" port="33000-35000" />
 
         <!-- all udp port -->
         <port protocol="udp" port="1-65535" />
