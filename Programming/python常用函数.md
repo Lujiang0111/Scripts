@@ -1,17 +1,16 @@
 # python常用函数
 
-## 获取脚本所在目录
-
-```python
-from pathlib import Path
-
-env_dir = Path(__file__).resolve().parent
-```
-
 ## 文件操作
 
 ```python
+import os
 from pathlib import Path
+
+# 获取脚本所在目录
+env_dir = Path(__file__).resolve().parent
+
+# 将当前目录切换到脚本所在目录
+os.chdir(self.__env_dir)
 
 # 创建文件所在的目录
 Path(file_name).parent.mkdir(parents=True, exist_ok=True)
