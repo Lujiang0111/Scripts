@@ -16,7 +16,21 @@
 
 + 如果没有支持，需下载或编译支持硬件加速的FFmpeg版本。
 
-## 基本命令
+## 编码H264
+
+```shell
+ffmpeg -hwaccel cuda -i input.mp4 -c:v h264_nvenc -preset p4 -rc constqp -qp 23 output.mp4
+```
+
+### 参数说明
+
++ `-preset p7`: NVENC 的预设，`p1`（快）到`p7`（高质量），推荐`P4`（平衡）。
++ `-b:v 5000k -maxrate 5000k -bufsize 10000k -rc cbr`：CBR。
++ `-b:v 5000k -maxrate 8000k -bufsize 10000k -rc vbr`：VBR。
++ `-rc constqp -qp 23`：CQ（恒定质量）🌟推荐
++ `-rc vbr_hq -cq 23`：VBR + 质量控制（自动调节）
+
+## 编码H265
 
 ```shell
 ffmpeg -i input.mp4 -c:v hevc_nvenc -preset p7 -rc vbr -b:v 8M -c:a copy output.mp4
