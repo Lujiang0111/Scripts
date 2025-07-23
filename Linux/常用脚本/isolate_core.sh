@@ -98,7 +98,7 @@ if [ "${need_change}" -eq 1 ]; then
         echo "Error: Could not find GRUB update command"
         exit 1
     fi
-    echo -e "\033[33mPlease reboot the system to apply isolate changes\033[0m" >&2
+    echo -e "\033[33mPlease reboot the device to apply isolate changes\033[0m" >&2
 else
     echo -e "\nGrub file no need to change!"
 fi
