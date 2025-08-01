@@ -36,15 +36,18 @@ services:
     volumes:
       - /opt/docker/syncthing/config:/config
       - /mnt/ssd/download/syncthing:/sync_data
-    ports:
-      - 8384:8384
-      - 52000:22000/tcp
-      - 21027:21027/udp
     restart: unless-stopped
+    networks:
+      macvlan_enp6s18:
+        ipv4_address: 172.28.8.44
+        ipv6_address: fd08::44
+networks:
+  macvlan_enp6s18:
+    external: true
 ```
 
 ## web管理页面地址
 
 ```shell
-http://IP:8384/
+http://172.28.8.44:8384/
 ```
