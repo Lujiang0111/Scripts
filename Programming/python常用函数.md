@@ -37,16 +37,13 @@ def find_path_glob(path, pattern: str, recursion: bool) -> list:
 # 删除文件或目录
 def rm_path(file_name) -> None:
     path = Path(file_name)
-    if not path.exists():
-        if path.is_symlink():
-            path.unlink()
+    if path.is_symlink() or path.is_file():
+        path.unlink()
         return
 
     if path.is_dir():
         shutil.rmtree(file_name)
         return
-
-    path.unlink()
 
 # 删除文件或目录，支持通配符
 def rm_path_glob(path_name, pattern: str) -> None:
