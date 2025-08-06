@@ -32,7 +32,7 @@ python3 record_pid_top_stats.py 5515 5
 
 ## 隔离特定CPU核
 
-+ 文件名 : `iisolate_core.sh`
++ 文件名 : `isolate_core.sh`
 + 使用方式：
   + 隔离核：
     + `bash isolate_core.sh install isolate_cores`
@@ -43,3 +43,10 @@ python3 record_pid_top_stats.py 5515 5
 ```shell
 bash isolate_core.sh install 14,15
 ```
+
+## 检测python3是否安装，如果没有则安装
+
++ 文件名 : `check_python3.sh`
++ 使用方式
+  + 需要把python安装包`Python-3.13.5.tgz`放在同一目录上
+  + `bash check_python3.sh`
