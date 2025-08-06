@@ -16,7 +16,7 @@ if ! command -v python3 &>/dev/null; then
 
     # Install python
     cd ${python3_version} || exit
-    ./configure && make clean && make -j"$(nproc)" && make install >/dev/null
+    { ./configure && make clean && make -j"$(nproc)" && make install; } >/dev/null
 
     if ! command -v python3 &>/dev/null; then
         echo -e "Install python3 fail!"
