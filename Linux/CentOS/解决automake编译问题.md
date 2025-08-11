@@ -24,6 +24,12 @@ doc/automake-$(APIVERSION).1: $(automake_script) lib/Automake/Config.pm
     $(AM_V_GEN):; HELP2MAN_NAME="Generate Makefile.in files for configure from Makefile.am"; export HELP2MAN_NAME; $(update_mans) $(automake_script) --no-discard-stderr
 ```
 
+vim查找内容为
+
+```plain
+doc\/automake-\$(APIVERSION
+```
+
 修改后便可正常编译
 
 ```shell
