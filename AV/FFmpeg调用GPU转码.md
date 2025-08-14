@@ -19,7 +19,8 @@
 ## 编码H264
 
 ```shell
-ffmpeg -hwaccel cuda -i input.mp4 -c:v h264_nvenc -preset p4 -rc constqp -qp 23 output.mp4
+# Nvidia Only
+ffmpeg -hwaccel cuda -i input.mp4 -c:v h264_nvenc -pix_fmt yuv420p -preset p4 -rc constqp -qp 23 output.mp4
 ```
 
 ### 参数说明
