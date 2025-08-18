@@ -5,7 +5,7 @@ shell_path=$(
 )
 shell_path=$(realpath "${shell_path}")
 
-project=lccl_test
+project=example_exe
 lib_path=${shell_path}/lib
 
 ulimit -n 65536

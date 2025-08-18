@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(example VERSION 1.0)
+project(example_lib VERSION 1.0)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 # 设置依赖，确保编译顺序
-add_dependencies(example_test_prebuild example)
+add_dependencies(example_lib_test_prebuild example_lib)
 
 # 设置 C++ 标准
 set(CMAKE_CXX_STANDARD 11)
@@ -63,6 +63,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/internal
     ${CMAKE_CURRENT_BINARY_DIR}/dep/include/lccl
+    ${CMAKE_CURRENT_BINARY_DIR}/dep/include/pcap_dump
 )
 
 # 链接库目录
@@ -70,9 +71,11 @@ target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/dep/
 
 # 链接库
 target_link_libraries(${PROJECT_NAME} PRIVATE lccl)
+target_link_libraries(${PROJECT_NAME} PRIVATE pcap_dump)
 
 set(prebuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
-set(prebuild_libs "lccl 1.0")
+set(prebuild_libs "lccl 1.0 \
+    pcap_dump 1.0")
 
 set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 
