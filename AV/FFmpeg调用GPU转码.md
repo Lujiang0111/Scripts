@@ -31,15 +31,6 @@ ffmpeg -hwaccel cuda -i input.mp4 -c:v h264_nvenc -pix_fmt yuv420p -preset p7 -r
 + `-rc constqp -qp 23`：CQ（恒定质量）🌟推荐
 + `-rc vbr_hq -cq 23`：VBR + 质量控制（自动调节）
 
-## 编码H264 720P 25fps GOP大小25 CBR流
-
-```shell
-# Nvidia Only
-ffmpeg -hwaccel cuda -i Summer_Wars.mp4 -c:v h264_nvenc -b:v 4M -maxrate 4M -minrate 4M -bufsize 8M -vf "scale=1280:720" -r 25 -g 25 -c:a aac -b:a 128k -muxrate 5M -muxdelay 2 -mpegts_flags +resend_headers -f mpegts Summer_Wars.ts
-```
-
-+ 注意：fps转换（`-r 25`）可能会让ff提示`More than 1000 frames duplicated`，还没仔细研究。
-
 ## 编码H265
 
 ```shell
