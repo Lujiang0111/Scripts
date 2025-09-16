@@ -11,7 +11,7 @@
   + 其余均为`lan`口。
 
 + 地址分配：
-  + 光猫：地址`192.168.1.1`
+  + 光猫：地址`172.28.100.1`
   + IPv4：ros地址`172.28.8.1`, 自建dns地址`172.28.8.21`，DHCP地址池`172.28.8.100-172.28.8.239`。
   + IPv6：ros地址`fd08::1`，内网地址池`fd08::/64`
 
@@ -306,18 +306,18 @@
 
 ### 设置wan口IP
 
-+ 点击**IP**->**Address**，添加一个wan口IP（注意wab口IP和光猫需在同一网段,例如`192.168.1.2`）：
-  + **Address** - `192.168.1.2/24`
++ 点击**IP**->**Address**，添加一个wan口IP（注意wab口IP和光猫需在同一网段,例如`172.28.100.2`）：
+  + **Address** - `172.28.100.2/24`
   + **Interface** - `ether2-wan`
 
 ```shell
-/ip/address/add address=192.168.1.2/24 interface=ether2-wan
+/ip/address/add address=172.28.100.2/24 interface=ether2-wan
 ```
 
 ### 添加防火墙规则
 
 ```shell
-/ip/firewall/mangle/add action=accept chain=prerouting comment="access to ONU" src-address=172.28.8.0/24 dst-address=192.168.1.0/24
+/ip/firewall/mangle/add action=accept chain=prerouting comment="access to ONU" src-address=172.28.8.0/24 dst-address=172.28.100.0/24
 ```
 
 ## 设置 Endpoint-Independent NAT(仅对UDP生效)
