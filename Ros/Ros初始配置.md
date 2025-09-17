@@ -93,7 +93,7 @@
   + **Time Zone Name** - `Asia/Shanghai`。
 
 ```shell
-/system/clock/set time-zone-name=Asia/Shangha
+/system/clock/set time-zone-name=Asia/Shanghai
 ```
 
 ## 防火墙设置
