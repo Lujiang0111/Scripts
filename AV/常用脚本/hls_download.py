@@ -136,7 +136,7 @@ class HlsDownload:
 
                         print(f"save to {segment_save_path}")
                         segment_save_path.parent.mkdir(parents=True, exist_ok=True)
-                        with open(segment_save_path, "wb", encoding="utf-8") as file:
+                        with open(segment_save_path, "wb") as file:
                             file.write(segment_bytes)
 
                         combined_save_file.write(f"{curr_extinf_line}\n")
