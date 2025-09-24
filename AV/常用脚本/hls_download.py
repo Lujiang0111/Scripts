@@ -63,7 +63,8 @@ class HlsDownload:
                     time.sleep(next_time - curr_time)
                 else:
                     wait_time = self.download_variant(self.__args.input)
-                    print(f"wait time={wait_time}")
+                    if 0 == wait_time:
+                        wait_time = 1
                     next_time = curr_time + wait_time
 
         except KeyboardInterrupt:
@@ -84,7 +85,7 @@ class HlsDownload:
     def download_variant(self, url) -> float:
         url_bytes = request_url(url)
         if not url_bytes:
-            return 1
+            return 3
         url_content = url_bytes.decode(encoding="utf-8")
 
         parsed_url = urllib.parse.urlparse(url)
@@ -130,20 +131,22 @@ class HlsDownload:
                         if segment_save_path.exists():
                             continue
 
+                        print()
                         segment_bytes = request_url(segment_url)
                         if not segment_bytes:
                             continue
 
-                        print(f"save to {segment_save_path}")
-                        segment_save_path.parent.mkdir(parents=True, exist_ok=True)
-                        with open(segment_save_path, "wb") as file:
-                            file.write(segment_bytes)
-
+                        print(f"{curr_extinf_line}")
                         combined_save_file.write(f"{curr_extinf_line}\n")
                         combined_save_file.write(f"{line}\n")
                         match = re.search(r"\d+\.\d+|\d+", curr_extinf_line)
                         if match.group():
                             wait_time = float(match.group())
+
+                        print(f"save to {segment_save_path}")
+                        segment_save_path.parent.mkdir(parents=True, exist_ok=True)
+                        with open(segment_save_path, "wb") as file:
+                            file.write(segment_bytes)
 
         if combined_save_file:
             combined_save_file.close()
