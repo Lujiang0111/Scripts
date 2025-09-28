@@ -2,17 +2,15 @@
 
 ## 禁止系统自动获取IPv6
 
+在`/etc/sysctl.d`路径下创建一个名为`99-disable-ipv6-autoconf.conf`的配置文件：
+
 ```shell
-vim /etc/sysctl.conf
-```
-
-在文件末尾加入(将`enp6s18`改为实际网口名）
-
-```ini
+cat <<- EOF >> /etc/sysctl.d/99-disable-ipv6-autoconf.conf
 # disable ipv6 autoconf
-net.ipv6.conf.enp6s18.autoconf=0
-net.ipv6.conf.enp6s18.accept_ra=0
-net.ipv6.conf.enp6s18.use_tempaddr=0
+net.ipv6.conf.ens18.autoconf=0
+net.ipv6.conf.ens18.accept_ra=0
+net.ipv6.conf.ens18.use_tempaddr=0
+EOF
 ```
 
 重启系统或执行
@@ -34,13 +32,13 @@ vim /etc/network/interfaces
 在文件中添加类似以下的配置（替换成你的实际网络配置）：
 
 ```plaintext
-allow-hotplug enp6s18
-iface enp6s18 inet static
+allow-hotplug ens18
+iface ens18 inet static
 	address 172.28.8.23/24
 	gateway 172.28.8.1
 	dns-nameservers 172.28.8.1
 
-iface enp6s18 inet6 static
+iface ens18 inet6 static
 	address fd08::23/64
 	gateway fd08::1
 	dns-nameservers fd08::1
