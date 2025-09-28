@@ -2,7 +2,9 @@
 
 ## 禁止系统自动获取IPv6
 
-在`/etc/sysctl.d`路径下创建一个名为`99-disable-ipv6-autoconf.conf`的配置文件：
+### debian 13
+
+在`/etc/sysctl.d`路径下创建一个名为`99-disable-ipv6-autoconf.conf`的配置文件（将`ens18`改为实际网口名）：
 
 ```shell
 cat <<- EOF >> /etc/sysctl.d/99-disable-ipv6-autoconf.conf
@@ -12,6 +14,23 @@ net.ipv6.conf.ens18.accept_ra=0
 net.ipv6.conf.ens18.use_tempaddr=0
 EOF
 ```
+
+### debian 12
+
+```shell
+vim /etc/sysctl.conf
+```
+
+在文件末尾加入（将`enp6s18`改为实际网口名）
+
+```ini
+# disable ipv6 autoconf
+net.ipv6.conf.enp6s18.autoconf=0
+net.ipv6.conf.enp6s18.accept_ra=0
+net.ipv6.conf.enp6s18.use_tempaddr=0
+```
+
+### 应用配置
 
 重启系统或执行
 
