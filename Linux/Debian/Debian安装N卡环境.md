@@ -12,33 +12,23 @@ apt install -y linux-headers-$(uname -r)
 
 ## 安装Cuda和Nvida驱动
 
-> 参考资料1：<https://developer.nvidia.com/cuda-downloads>
->
-> 参考资料2：<https://github.com/mexersus/debian-nvidia-drivers/blob/main/README.md>
+> 参考资料：<https://developer.nvidia.com/cuda-downloads>
 
-debian13必须按照*参考资料2*执行，其中`wget`的网址可以通过*参考资料1*获取
+完全按照参考资料的步骤执行，请以参考资料为准
 
-### 添加储存库
++ CUDA Toolkit Installer
 
 ```shell
-# Download and install the CUDA keyring
 wget https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-
-# Update package list and install CUDA drivers
-sudo apt-get update
+dpkg -i cuda-keyring_1.1-1_all.deb
+apt update -y
+apt install -y cuda-toolkit-12-6
 ```
 
-#### 方案1：直接安装cuda-drivers
++ Driver Installer
 
 ```shell
-sudo apt install -y cuda-drivers
-```
-
-#### 方案2：NVIDIA Open Driver
-
-```shell
-sudo apt install -y nvidia-open
+apt install -y nvidia-open
 ```
 
 安装完成后重启系统
