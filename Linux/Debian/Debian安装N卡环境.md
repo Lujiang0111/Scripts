@@ -18,7 +18,7 @@ apt install -y linux-headers-$(uname -r)
 
 debian13必须按照*参考资料2*执行，其中`wget`的网址可以通过*参考资料1*获取
 
-+ CUDA Toolkit Installer
+### 添加储存库
 
 ```shell
 # Download and install the CUDA keyring
@@ -27,10 +27,15 @@ sudo dpkg -i cuda-keyring_1.1-1_all.deb
 
 # Update package list and install CUDA drivers
 sudo apt-get update
+```
+
+#### 方案1：直接安装cuda-drivers
+
+```shell
 sudo apt install -y cuda-drivers
 ```
 
-+ Driver Installer
+#### 方案2：NVIDIA Open Driver
 
 ```shell
 sudo apt install -y nvidia-open
