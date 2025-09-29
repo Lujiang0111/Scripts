@@ -30,7 +30,7 @@ services:
       - RPC_PORT=56800
       - LISTEN_PORT=56888
       - DISK_CACHE=64M
-      - IPV6_MODE=true
+      - IPV6_MODE=false
       - UPDATE_TRACKERS=true
       - TZ=Asia/Shanghai
     volumes:
@@ -39,7 +39,6 @@ services:
     networks:
       macvlan_enp6s18:
         ipv4_address: 172.28.8.43
-        ipv6_address: fd08::43
     restart: unless-stopped
     logging:
       driver: json-file
@@ -48,7 +47,7 @@ services:
   ariang:
     container_name: ariang
     image: p3terx/ariang:latest
-    command: --port 6880 --ipv6
+    command: --port 6880
     ports:
       - 56880:6880
     restart: unless-stopped
