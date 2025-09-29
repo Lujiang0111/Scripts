@@ -27,13 +27,13 @@ sudo dpkg -i cuda-keyring_1.1-1_all.deb
 
 # Update package list and install CUDA drivers
 sudo apt-get update
-sudo apt install cuda-drivers
+sudo apt install -y cuda-drivers
 ```
 
 + Driver Installer
 
 ```shell
-sudo apt install nvidia-open
+sudo apt install -y nvidia-open
 ```
 
 安装完成后重启系统
