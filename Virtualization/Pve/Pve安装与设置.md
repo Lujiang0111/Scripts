@@ -193,21 +193,21 @@ cat /etc/modules
 + AMD GPUs
 
 ```shell
-echo "blacklist amdgpu" >> /etc/modprobe.d/pve-blacklist.conf
-echo "blacklist radeon" >> /etc/modprobe.d/pve-blacklist.conf
+echo "blacklist amdgpu" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist radeon" >> /etc/modprobe.d/blacklist.conf
 ```
 
 + NVIDIA GPUs
 
 ```shell
-echo "blacklist nouveau" >> /etc/modprobe.d/pve-blacklist.conf
-echo "blacklist nvidia*" >> /etc/modprobe.d/pve-blacklist.conf
+echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist nvidia*" >> /etc/modprobe.d/blacklist.conf
 ```
 
 + Intel GPUs(注意直通后可能导致vnc失效)
 
 ```shell
-echo "blacklist i915" >> /etc/modprobe.d/pve-blacklist.conf
+echo "blacklist i915" >> /etc/modprobe.d/blacklist.conf
 ```
 
 ### 应用更改
@@ -225,6 +225,14 @@ reboot
 update-initramfs -u -k all
 reboot
 ```
+
+### 测试直通是否生效
+
+```shell
+dmesg | grep -e DMAR -e IOMMU -e AMD-Vi
+```
+
+如果显示`IOMMU enabled`, `Directed I/O`或`Interrupt Remapping`就代表成功了。
 
 ## 为虚拟机添加PCI设备
 
