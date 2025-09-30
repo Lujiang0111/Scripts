@@ -41,11 +41,19 @@ source /etc/profile
 
 ### 屏蔽原有企业版软件源
 
-```shell
-cd /etc/apt/sources.list.d/
-mkdir -p backup
-mv pve-enterprise.sources backup/
-```
++ pve 8
+
+  ```shell
+  sed -i 's/^/# /' /etc/apt/sources.list.d/pve-enterprise.list
+  ```
+
++ pve 9
+
+  ```shell
+  cd /etc/apt/sources.list.d/
+  mkdir -p backup
+  mv pve-enterprise.sources backup/
+  ```
 
 ### ustc软件源
 
