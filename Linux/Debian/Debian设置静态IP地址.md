@@ -17,17 +17,16 @@ EOF
 
 ### debian 12
 
+在`/etc/sysctl.conf`文件末尾加入以下内容（将`enp6s18`改为实际网口名）：
+
 ```shell
-vim /etc/sysctl.conf
-```
-
-在文件末尾加入（将`enp6s18`改为实际网口名）
-
-```ini
+cat <<- EOF >> /etc/sysctl.conf
 # disable ipv6 autoconf
 net.ipv6.conf.enp6s18.autoconf=0
 net.ipv6.conf.enp6s18.accept_ra=0
 net.ipv6.conf.enp6s18.use_tempaddr=0
+
+EOF
 ```
 
 ### 应用配置
