@@ -4,7 +4,7 @@
 
 + `generate_def.py`
 + 使用方式：
-  + `python3 generate_def.py project include_path`
+  + `python3 generate_def.py project include_dir`
 
 ```shell
 python3 generate_def.py libsvts ../../../../include/

@@ -1,17 +1,17 @@
 #!/bin/bash
-shell_path=$(
+shell_dir=$(
     cd "$(dirname "$0")" || exit
     pwd
 )
-shell_path=$(realpath "${shell_path}")
+shell_dir=$(realpath "${shell_dir}")
 
 project=example_exe
-lib_path=${shell_path}/lib
+lib_dir=${shell_dir}/lib
 
 ulimit -n 65536
-export LD_LIBRARY_PATH=${lib_path}:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${lib_dir}:${LD_LIBRARY_PATH}
 
-cd "${lib_path}" || exit
+cd "${lib_dir}" || exit
 find . -maxdepth 1 -type f -name "*.so.*" -print0 | xargs -0 -P "$(nproc)" -I {} sh -c '
     realname=$(basename {})
     libname=$(echo "${realname}" | sed -E "s/^(.*\.so)(\..*)$/\1/")
@@ -21,7 +21,7 @@ find . -maxdepth 1 -type f -name "*.so.*" -print0 | xargs -0 -P "$(nproc)" -I {}
 '
 ldconfig -n .
 
-cd "${shell_path}" || exit
+cd "${shell_dir}" || exit
 runlog_max_size=10000000
 if [ -f runlog ]; then
     runlog_size=$(stat --format=%s runlog)
@@ -37,7 +37,7 @@ trap TrapSigint 2
 
 echo -e "${project}-memcheck start at $(date +"%Y-%m-%d %H:%M:%S")" >>runlog
 
-cd "${shell_path}" || exit
+cd "${shell_dir}" || exit
 chmod +x ${project}
 valgrind --time-stamp=yes --log-file=${project}_memcheck.log --leak-check=full --show-leak-kinds=all --tool=memcheck ./${project} "$@"
 

@@ -3,18 +3,18 @@ import re
 import sys
 
 
-def extract_functions(file_path):
+def extract_functions(include_dir):
     pattern = r"^[^\S\n]*\w+[\*\&]?\s+[\*\&]?\s*([a-zA-Z]\w+)\s*\("
 
     header_files = [
         f
-        for f in os.listdir(file_path)
-        if os.path.isfile(os.path.join(file_path, f)) and ".h" in f
+        for f in os.listdir(include_dir)
+        if os.path.isfile(os.path.join(include_dir, f)) and ".h" in f
     ]
 
     matches = []
     for header_file in header_files:
-        header_file_path = os.path.join(file_path, header_file)
+        header_file_path = os.path.join(include_dir, header_file)
         with open(header_file_path, "r", encoding="utf-8") as file:
             for line in file:
                 line = line.strip()
@@ -29,13 +29,13 @@ if __name__ == "__main__":
         raise SystemExit("param cnt={} too less".format(param_cnt))
 
     project = sys.argv[1]
-    include_path = sys.argv[2]
+    include_dir = sys.argv[2]
 
     def_file = open(f"{project}.def", "w")
     def_file.write(f"LIBRARY {project}\n")
     def_file.write("EXPORTS\n")
 
-    functions = extract_functions(include_path)
+    functions = extract_functions(include_dir)
     for function_name in functions:
         def_file.write(f"{function_name}\n")
 

@@ -1,11 +1,11 @@
 #!/bin/bash
-shell_path=$(
+shell_dir=$(
     cd "$(dirname "$0")" || exit
     pwd
 )
-shell_path=$(realpath "${shell_path}")
+shell_dir=$(realpath "${shell_dir}")
 
-cd "${shell_path}" || exit
+cd "${shell_dir}" || exit
 if ! command -v python3 &>/dev/null; then
     echo -e "Python3 not found, install python3..."
 

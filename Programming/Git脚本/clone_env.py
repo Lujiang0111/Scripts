@@ -3,8 +3,8 @@ import pathlib
 import shutil
 import subprocess
 
-env_path = pathlib.Path(__file__).resolve().parent
-os.chdir(env_path)
+env_dir = pathlib.Path(__file__).resolve().parent
+os.chdir(env_dir)
 
 repo_url = "https://github.com/Lujiang0111/env.git"
 repo_dir = pathlib.Path(repo_url).stem

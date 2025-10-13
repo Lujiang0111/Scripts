@@ -1,7 +1,9 @@
 #!/bin/bash
-shell_path=$(
+shell_dir=$(
     cd "$(dirname "$0")" || exit
     pwd
 )
-svn revert -R "${shell_path}"
-svn update "${shell_path}"
+shell_dir=$(realpath "${shell_dir}")
+
+svn revert -R "${shell_dir}"
+svn update "${shell_dir}"
