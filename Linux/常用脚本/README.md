@@ -50,3 +50,10 @@ bash isolate_core.sh install 14,15
 + 使用方式
   + 需要把python安装包`Python-3.13.5.tgz`放在同一目录上
   + `bash check_python3.sh`
+
+## 检测硬盘是否停转
+
++ 文件名 : `disk_monitor.sh`
++ 使用方式
+  + 修改脚本中`disk`变量的值
+  + `bash disk_monitor.sh`
