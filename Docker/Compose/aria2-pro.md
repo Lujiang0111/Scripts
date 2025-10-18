@@ -97,8 +97,7 @@ http://IP:56880/
   <Config Name="download dir" Target="/downloads" Default="" Mode="rw" Description="" Type="Path"
     Display="always" Required="true" Mask="false">/mnt/user/download/aria2-pro</Config>
   <Config Name="config dir" Target="/config" Default="/mnt/user/appdata/aria2-pro" Mode="rw"
-    Description="" Type="Path" Display="advanced" Required="true" Mask="false">
-    /mnt/user/appdata/aria2-pro</Config>
+    Description="" Type="Path" Display="advanced" Required="true" Mask="false">/mnt/user/appdata/aria2-pro</Config>
   <Config Name="PUID" Target="PUID" Default="1000" Mode="" Description="" Type="Variable"
     Display="advanced" Required="true" Mask="false">1000</Config>
   <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="" Type="Variable"
