@@ -86,8 +86,7 @@ http://IP:56880/
   <Category />
   <WebUI>http://ariang.mayswind.net/latest</WebUI>
   <TemplateURL />
-  <Icon>
-    https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Icon/AriaNg.ico</Icon>
+  <Icon>https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Icon/AriaNg.ico</Icon>
   <ExtraParams />
   <PostArgs />
   <CPUset />
@@ -140,8 +139,7 @@ http://IP:56880/
   <Category />
   <WebUI>http://[IP]:[PORT:6880]</WebUI>
   <TemplateURL />
-  <Icon>
-    https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Icon/AriaNg.ico</Icon>
+  <Icon>https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Icon/AriaNg.ico</Icon>
   <ExtraParams />
   <PostArgs />
   <CPUset />
