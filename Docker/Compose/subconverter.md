@@ -43,7 +43,7 @@ http://172.28.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.git
 <?xml version="1.0"?>
 <Container version="2">
   <Name>subconverter</Name>
-  <Repository>tindy2013/subconverter:latest</Repository>
+  <Repository>asdlokj1qpi23/subconverter:latest</Repository>
   <Registry />
   <Network>br0</Network>
   <MyIP>172.28.8.42,fd08::42</MyIP>
