@@ -194,28 +194,38 @@ EOF
 cat /etc/modules
 ```
 
-### 将显卡驱动加入黑名单
+### 将设备或驱动驱动加入黑名单
+
+#### 显卡驱动
 
 > 参考资料：<https://pve.proxmox.com/wiki/PCI_Passthrough>
 
 + AMD GPUs
 
 ```shell
-echo "blacklist amdgpu" >> /etc/modprobe.d/blacklist.conf
-echo "blacklist radeon" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist amdgpu" >> /etc/modprobe.d/amd-blacklist.conf
+echo "blacklist radeon" >> /etc/modprobe.d/amd-blacklist.conf
 ```
 
 + NVIDIA GPUs
 
 ```shell
-echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf
-echo "blacklist nvidia*" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist nouveau" >> /etc/modprobe.d/nvidia-blacklist.conf
+echo "blacklist nvidia*" >> /etc/modprobe.d/nvidia-blacklist.conf
 ```
 
 + Intel GPUs(注意直通后可能导致vnc失效)
 
 ```shell
-echo "blacklist i915" >> /etc/modprobe.d/blacklist.conf
+echo "blacklist i915" >> /etc/modprobe.d/intel-blacklist.conf
+```
+
+#### SATA控制器驱动
+
+**注意**：不要将需要在pve直接使用的SATA控制器屏蔽了
+
+```shell
+echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
 ```
 
 ### 应用更改
