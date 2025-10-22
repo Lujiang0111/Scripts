@@ -18,6 +18,8 @@ DOMAIN-SUFFIX,nodenet.cloud
 # Game
 DOMAIN-KEYWORD,sonkwo
 DOMAIN-SUFFIX,steamserver.net
+DOMAIN-SUFFIX,download.epicgames.com
+DOMAIN-SUFFIX,msftncsi.com
 DOMAIN-SUFFIX,patch-dl.ffxiv.com
 PROCESS-NAME,uugamebooster
 
