@@ -10,15 +10,18 @@ Path("doc").mkdir(parents=True, exist_ok=True)
 Path("include").mkdir(parents=True, exist_ok=True)
 Path("src").mkdir(parents=True, exist_ok=True)
 
-main_cpp_context = r"""
-#include <csignal>
-#include <iostream>
+main_cpp_context = r"""#include <csignal>
+#include <fstream>
 #include <memory>
+#include <sstream>
 #include <string>
+#include <thread>
+#include "lccl/oss/fmt.h"
+#include "lccl/oss/json.h"
 
 struct Param
 {
-    std::string input_file;
+    std::string config_file = "config.json";
 };
 
 bool app_running = true;
@@ -33,7 +36,7 @@ static void ShowUsage(char **argv, const std::string &detail)
 {
     if (!detail.empty())
     {
-        std::cerr << "\nerror:" << detail << "\n";
+        fmt::println("\nError: {}", detail);
     }
 
     std::string app_name = argv[0];
@@ -43,11 +46,11 @@ static void ShowUsage(char **argv, const std::string &detail)
         app_name = app_name.substr(pos + 1);
     }
 
-    std::cerr << "\nUsage:\n" << app_name << " -i input_file\n";
+    fmt::println("\nUsage:\n{}\n{}\n", app_name, "\t-c config_file");
     exit(0);
 }
 
-std::shared_ptr<Param> ParseParam(int argc, char **argv)
+static std::shared_ptr<Param> ParseArgs(int argc, char **argv)
 {
     std::shared_ptr<Param> param = std::make_shared<Param>();
     for (int index = 1; index < argc; ++index)
@@ -58,34 +61,51 @@ std::shared_ptr<Param> ParseParam(int argc, char **argv)
         {
             ShowUsage(argv, "");
         }
-
-        if ("-i" == curr_arg)
+        else if ("-c" == curr_arg)
         {
             if (index + 1 >= argc)
             {
-                ShowUsage(argv, "Please specify input file");
+                ShowUsage(argv, "Please specify config file");
             }
 
-            param->input_file = argv[index + 1];
+            param->config_file = argv[index + 1];
             ++index;
         }
     }
 
-    if (param->input_file.empty())
-    {
-        return nullptr;
-    }
     return param;
 }
 
 int main(int argc, char **argv)
 {
     signal(SIGINT, SigIntHandler);
-
-    std::shared_ptr<Param> param = ParseParam(argc, argv);
+    std::shared_ptr<Param> param = ParseArgs(argc, argv);
     if (!param)
     {
         ShowUsage(argv, "");
+    }
+
+    std::ifstream fin(param->config_file.c_str());
+    if (!fin.is_open())
+    {
+        fmt::println("Error: Can not open file {}", param->config_file);
+        return 0;
+    }
+
+    std::string config_json;
+    std::stringstream buffer;
+    buffer << fin.rdbuf();
+    config_json = buffer.str();
+
+    rapidjson::Document config_doc;
+    if (!lccl::ParseStringToJson(config_doc, config_json))
+    {
+        return 0;
+    }
+
+    while (app_running)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     return 0;
@@ -94,3 +114,8 @@ int main(int argc, char **argv)
 
 with open("src/main.cpp", "w", encoding="utf-8") as file:
     file.write(main_cpp_context)
+
+config_json_context = r"""{}"""
+
+with open("conf/config.json", "w", encoding="utf-8") as file:
+    file.write(config_json_context)
