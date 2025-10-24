@@ -10,7 +10,7 @@ from pathlib import Path
 env_dir = Path(__file__).resolve().parent
 
 # 将当前目录切换到脚本所在目录
-os.chdir(self.__env_dir)
+os.chdir(env_dir)
 
 # 创建文件所在的目录
 Path(file_name).parent.mkdir(parents=True, exist_ok=True)
@@ -69,4 +69,8 @@ def copy_path(src_path, dst_path) -> None:
         if dst.exists():
             shutil.rmtree(dst)
         shutil.copytree(src, dst, copy_function=shutil.copy2)
+
+# 读写文件
+with open(save_path, "w", encoding="utf-8") as file:
+    pass
 ```
