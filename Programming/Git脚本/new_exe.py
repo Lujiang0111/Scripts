@@ -43,7 +43,7 @@ static void ShowUsage(char **argv, const std::string &detail)
         app_name = app_name.substr(pos + 1);
     }
 
-    std::cerr << "\nUsage: " << app_name << " -i input_file\n";
+    std::cerr << "\nUsage:\n " << app_name << " -i input_file\n";
     exit(0);
 }
 
