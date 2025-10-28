@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<TriggernometryExport Version="1">
+  <ExportedFolder Id="2d42b6cc-46cb-478e-9ace-8148dc91cff0" Name="自动录制" Enabled="true">
+    <Folders />
+    <Triggers>
+      <Trigger Enabled="true" Sequential="True" Name="结束录制" Id="f27c5918-a4d9-44ec-8088-4305580f44fd" RegularExpression="(21:.{8}:(4000001[02])|(4000000[35]))">
+        <Actions>
+          <Action OrderNumber="1" OBSControlType="StopRecording" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="ObsControl">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="2" UseTTSTextExpression="停止录制" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="UseTTS">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="false" Grouping="Or" />
+      </Trigger>
+      <Trigger Enabled="true" Sequential="True" Name="开始录制" Id="54fc4e73-ff88-4ab0-9998-49bceb2ef720" RegularExpression="距离战斗开始还有15秒">
+        <Actions>
+          <Action OrderNumber="1" UseTTSTextExpression="开始录制" TextAuraFontSize="9" TextAuraFontName="宋体" ActionType="UseTTS">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+          <Action OrderNumber="2" OBSControlType="StartRecording" TextAuraFontSize="9" TextAuraForeground="Red" TextAuraExpression="test" TextAuraXIniExpression="1000" TextAuraYIniExpression="1000" TextAuraFontName="宋体" ActionType="ObsControl" ExecutionDelayExpression="3000">
+            <Condition Enabled="false" Grouping="Or" />
+          </Action>
+        </Actions>
+        <Condition Enabled="false" Grouping="Or" />
+      </Trigger>
+    </Triggers>
+  </ExportedFolder>
+</TriggernometryExport>

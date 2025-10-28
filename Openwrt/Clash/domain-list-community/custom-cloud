@@ -1,0 +1,34 @@
+# CDN companies & Services
+include:akamai
+include:awempire
+include:cdn77
+include:cloudflare
+include:fastly
+include:imgix
+include:limelight
+include:pagecdn
+include:quantil
+include:scaleflex
+include:stackpath
+include:wistia
+
+# File & Image & Video hosting
+include:0x0
+include:casimages
+include:cloudinary
+include:dropbox
+include:gfycat
+include:imagebam
+include:imagecurl
+include:imageshack
+include:imagetwist
+include:imgbb
+include:imgur
+include:mega
+include:onedrive
+include:pikpak
+include:pixhost
+include:postimages
+include:pstorage
+include:rumble
+include:streamable
