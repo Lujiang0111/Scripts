@@ -194,7 +194,7 @@ EOF
 cat /etc/modules
 ```
 
-### 将设备或驱动驱动加入黑名单
+### 屏蔽驱动或设备
 
 #### 显卡驱动
 
@@ -222,11 +222,42 @@ echo "blacklist i915" >> /etc/modprobe.d/intel-blacklist.conf
 
 #### SATA控制器驱动
 
-**注意**：不要将需要在pve直接使用的SATA控制器屏蔽了
+**注意**：会屏蔽掉所有ahci驱动的sata控制器
 
 ```shell
 echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
 ```
+
+#### 单独设备
+
+1. 确认设备信息
+
+    ```shell
+    lspci -nn
+    ```
+
+    例如输出
+
+    ```shell
+    03:00.0 Ethernet controller [0200]: Intel Corporation I350 Gigabit Network Connection [8086:1521] (rev 01)
+    ```
+
+    这里：
+
+    + `03:00.0`是设备的**PCI地址**
+    + `8086:1521`是**厂商ID:设备ID**
+
+1. 屏蔽对应设备
+
+    ```shell
+    echo "options vfio-pci ids=8086:1521" > /etc/modprobe.d/vfio.conf
+    ```
+
+    **注意**：如果要屏蔽多个设备，请一次性传入，因为后面的options会覆盖前面的
+
+    ```shell
+    echo "options vfio-pci ids=8086:1521,8086:10fb" > /etc/modprobe.d/vfio.conf
+    ```
 
 ### 应用更改
 
