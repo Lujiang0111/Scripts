@@ -93,6 +93,8 @@ vim /etc/network/interfaces
 + 为网络接口配置IPv6地址 找到与你的网络接口（如`vmbr0`）相关的配置，然后添加或修改IPv6 配置。
 
 ```config
+# 删除不需要的网卡
+
 auto vmbr0
 iface vmbr0 inet static
 	address 172.28.8.11/24
