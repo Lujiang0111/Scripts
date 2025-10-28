@@ -181,13 +181,14 @@ cat /etc/default/grub | grep GRUB_CMDLINE_LINUX_DEFAULT
 + 修改`/etc/modules`文件
 
 ```shell
-# delete last blank line
-sed -i '${/^$/d;}' /etc/modules
+#check before
+cat /etc/modules
 
 cat <<- EOF >> /etc/modules
 vfio
 vfio_iommu_type1
 vfio_pci
+
 EOF
 
 #check after
@@ -230,6 +231,14 @@ echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
 
 #### 单独设备
 
+> 参考资料：<https://forum.proxmox.com/threads/pci-passthrough-selection-with-identical-devices.63042/#post-287937>
+
+1. 添加`vfio`module到`initramfs`
+
+    ```shell
+    echo "vfio-pci" >> /etc/initramfs-tools/modules
+    ```
+
 1. 确认设备信息
 
     ```shell
@@ -239,24 +248,48 @@ echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
     例如输出
 
     ```shell
-    03:00.0 Ethernet controller [0200]: Intel Corporation I350 Gigabit Network Connection [8086:1521] (rev 01)
+    18:00.0 Ethernet controller [0200]: Intel Corporation Ethernet Controller X710 for 10GbE SFP+ [8086:1572] (rev 02)
+    18:00.1 Ethernet controller [0200]: Intel Corporation Ethernet Controller X710 for 10GbE SFP+ [8086:1572] (rev 02)
     ```
 
     这里：
 
-    + `03:00.0`是设备的**PCI地址**
-    + `8086:1521`是**厂商ID:设备ID**
+    + `18:00.0`是设备的**PCI地址**
+    + `8086:1572`是**厂商ID:设备ID**
 
 1. 屏蔽对应设备
 
     ```shell
-    echo "options vfio-pci ids=8086:1521" > /etc/modprobe.d/vfio.conf
+    mkdir -p /etc/initramfs-tools/scripts/init-top
+    touch /etc/initramfs-tools/scripts/init-top/bind_vfio.sh
+    chmod +x /etc/initramfs-tools/scripts/init-top/bind_vfio.sh
     ```
 
-    **注意**：如果要屏蔽多个设备，请一次性传入，因为后面的options会覆盖前面的
+    修改`bind_vfio.sh`:
 
     ```shell
-    echo "options vfio-pci ids=8086:1521,8086:10fb" > /etc/modprobe.d/vfio.conf
+    vim /etc/initramfs-tools/scripts/init-top/bind_vfio.sh
+    ```
+
+    `DEVS`根据自己需要修改
+
+    ```shell
+    #!/bin/sh
+    DEVS="0000:00:11.5 \
+    0000:00:17.0 \
+    0000:02:00.0 \
+    0000:03:00.0 \
+    0000:18:00.1 \
+    0000:8a:00.0 \
+    0000:8a:00.1 \
+    0000:c3:00.0 \
+    0000:c4:00.0 \
+    0000:c5:00.0"
+    for DEV in $DEVS; do
+        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+    done
+
+    modprobe -i vfio-pci
     ```
 
 ### 应用更改
