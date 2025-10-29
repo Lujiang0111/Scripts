@@ -95,15 +95,27 @@ vim /etc/network/interfaces
 ```config
 # 删除不需要的网卡
 
+auto ens5f0np0
+iface ens5f0np0 inet manual
+
+auto ens5f1np1
+iface ens5f1np1 inet manual
+
+auto bond0
+iface bond0 inet manual
+	bond-slaves ens5f0np0 ens5f1np1
+	bond-miimon 100
+	bond-mode 802.3ad
+	bond-xmit-hash-policy layer3+4
+
 auto vmbr0
 iface vmbr0 inet static
 	address 172.28.8.11/24
 	gateway 172.28.8.1
-	bridge-ports enp8s0
+	bridge-ports bond0
 	bridge-stp off
 	bridge-fd 0
 
-# IPv6 config
 iface vmbr0 inet6 static
 	address fd08::11/64
 	gateway fd08::1
