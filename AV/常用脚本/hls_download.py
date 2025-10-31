@@ -51,7 +51,6 @@ class HlsDownload:
         )
 
         self.__logger = logging.getLogger("hls_downloader")
-        self.__logger.info(f"Log initialized: {log_path}")
 
         try:
             next_time = 0
@@ -81,23 +80,33 @@ class HlsDownload:
         self.__args = parser.parse_args()
 
     def request_url(self, url) -> bytes:
+        self.__logger.info(f"Requesting URL: {url}...")
+        start_time = time.perf_counter()
         retry_times = 0
         while True:
-            self.__logger.info(f"Requesting URL: {url}...")
             try:
                 response = requests.get(url)
             except Exception as e:
                 if retry_times < 5:
                     retry_times += 1
-                    self.__logger.warning(f"Request error: {e}, retry={retry_times}")
+                    self.__logger.warning(
+                        f"Request error: {e}, next retry times={retry_times}"
+                    )
                     continue
-                else:
-                    self.__logger.error(f"Request failed after retries: {e}")
-                    return None
+
+                self.__logger.error(f"Request failed after retries: {e}")
+                return None
             break
 
+        elapsed = time.perf_counter() - start_time
         if retry_times > 0:
-            self.__logger.warning(f"Request succeeded after {retry_times} retries")
+            self.__logger.warning(
+                f"Request succeeded after {retry_times} retries, time used: {elapsed:.2f}s, size: {len(response.content) / 1024:.1f} KB"
+            )
+        else:
+            self.__logger.info(
+                f"Request succeeded, time used: {elapsed:.2f}s, size: {len(response.content) / 1024:.1f} KB"
+            )
 
         return response.content
 
@@ -154,7 +163,9 @@ class HlsDownload:
                         if not segment_bytes:
                             continue
 
-                        self.__logger.info(f"{curr_extinf_line}")
+                        self.__logger.info(
+                            f"Segment {segment_parsed_url.path} {curr_extinf_line}"
+                        )
                         combined_save_file.write(f"{curr_extinf_line}\n")
                         combined_save_file.write(f"{line}\n")
 
