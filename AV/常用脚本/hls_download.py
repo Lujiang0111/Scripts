@@ -35,6 +35,9 @@ def request_url(url) -> bytes:
                 return None
         break
 
+    if retry_times > 0:
+        print(f"request url={url} success, but retry times={retry_times}")
+
     return response.content
 
 
