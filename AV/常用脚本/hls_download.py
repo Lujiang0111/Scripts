@@ -6,6 +6,7 @@ import time
 import urllib.parse
 import requests
 import urllib
+import logging
 
 
 def rm_path(file_name: str) -> None:
@@ -19,32 +20,11 @@ def rm_path(file_name: str) -> None:
         path.unlink()
 
 
-def request_url(url) -> bytes:
-    retry_times = 0
-    while True:
-        print(f"request url={url}...")
-        try:
-            response = requests.get(url)
-        except Exception as e:
-            if retry_times < 5:
-                retry_times += 1
-                print(f"request error: {e}, retry times={retry_times}")
-                continue
-            else:
-                print(f"request error: {e}, ignore")
-                return None
-        break
-
-    if retry_times > 0:
-        print(f"request url={url} success, but retry times={retry_times}")
-
-    return response.content
-
-
 class HlsDownload:
     __env_dir = None
     __args = None
     __save_dir = None
+    __logger = None
 
     def main(self) -> None:
         self.__env_dir = Path(__file__).resolve().parent
@@ -57,6 +37,21 @@ class HlsDownload:
             / f"{Path(parsed_url.path).stem}_{int(time.time())}"
         )
         rm_path(self.__save_dir)
+        self.__save_dir.mkdir(parents=True, exist_ok=True)
+
+        log_path = self.__save_dir / "download.log"
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+            datefmt="%H:%M:%S",
+            handlers=[
+                logging.StreamHandler(),
+                logging.FileHandler(log_path, encoding="utf-8"),
+            ],
+        )
+
+        self.__logger = logging.getLogger("hls_downloader")
+        self.__logger.info(f"Log initialized: {log_path}")
 
         try:
             next_time = 0
@@ -66,27 +61,48 @@ class HlsDownload:
                     time.sleep(next_time - curr_time)
                 else:
                     wait_time = self.download_variant(self.__args.input)
-                    if 0 == wait_time:
+                    if wait_time == 0:
                         wait_time = 1
                     next_time = curr_time + wait_time
 
         except KeyboardInterrupt:
-            print("Download interrupt, exit")
+            self.__logger.info("Download interrupted by user, exiting")
         finally:
-            pass
+            self.__logger.info("Downloader exited cleanly")
 
     def parse_args(self) -> None:
-        parser = argparse.ArgumentParser(description="Download Hls and save to file")
+        parser = argparse.ArgumentParser(description="Download HLS and save to file")
         parser.add_argument(
             "-i",
             "--input",
-            help="Input Hls url",
+            help="Input HLS url",
             required=True,
         )
         self.__args = parser.parse_args()
 
+    def request_url(self, url) -> bytes:
+        retry_times = 0
+        while True:
+            self.__logger.info(f"Requesting URL: {url}...")
+            try:
+                response = requests.get(url)
+            except Exception as e:
+                if retry_times < 5:
+                    retry_times += 1
+                    self.__logger.warning(f"Request error: {e}, retry={retry_times}")
+                    continue
+                else:
+                    self.__logger.error(f"Request failed after retries: {e}")
+                    return None
+            break
+
+        if retry_times > 0:
+            self.__logger.warning(f"Request succeeded after {retry_times} retries")
+
+        return response.content
+
     def download_variant(self, url) -> float:
-        url_bytes = request_url(url)
+        url_bytes = self.request_url(url)
         if not url_bytes:
             return 3
         url_content = url_bytes.decode(encoding="utf-8")
@@ -119,13 +135,13 @@ class HlsDownload:
                     combined_save_file = open(combined_save_path, "a", encoding="utf-8")
             else:
                 if not line.startswith("#"):
-                    if "variant" == curr_type:
+                    if curr_type == "variant":
                         variant_url = urllib.parse.urljoin(url, line)
                         variant_wait_time = self.download_variant(variant_url)
-                        if 0 == wait_time or variant_wait_time < wait_time:
+                        if wait_time == 0 or variant_wait_time < wait_time:
                             wait_time = variant_wait_time
 
-                    elif "segment" == curr_type:
+                    elif curr_type == "segment":
                         segment_url = urllib.parse.urljoin(url, line)
                         segment_parsed_url = urllib.parse.urlparse(segment_url)
                         segment_save_path = (
@@ -134,19 +150,19 @@ class HlsDownload:
                         if segment_save_path.exists():
                             continue
 
-                        print()
-                        segment_bytes = request_url(segment_url)
+                        segment_bytes = self.request_url(segment_url)
                         if not segment_bytes:
                             continue
 
-                        print(f"{curr_extinf_line}")
+                        self.__logger.info(f"{curr_extinf_line}")
                         combined_save_file.write(f"{curr_extinf_line}\n")
                         combined_save_file.write(f"{line}\n")
+
                         match = re.search(r"\d+\.\d+|\d+", curr_extinf_line)
-                        if match.group():
+                        if match and match.group():
                             wait_time = float(match.group())
 
-                        print(f"save to {segment_save_path}")
+                        self.__logger.info(f"Saved segment to {segment_save_path}")
                         segment_save_path.parent.mkdir(parents=True, exist_ok=True)
                         with open(segment_save_path, "wb") as file:
                             file.write(segment_bytes)
