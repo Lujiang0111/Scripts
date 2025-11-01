@@ -172,7 +172,7 @@
     | 追加默认DNS | ❌ |
     | Fallback-Filter | ✔ |
 
-#### 订阅地址配置定时任务，防止拉取订阅超时
+## 订阅地址配置定时任务，防止拉取订阅超时
 
 1. 在`/etc/scripts/`下创建一个名为`proxy_predownload.sh`的脚本。
 
