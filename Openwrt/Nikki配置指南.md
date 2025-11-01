@@ -50,7 +50,7 @@ dns:
     - 123.123.123.124
   nameserver:
     - tls://8.8.8.8#disable-ipv6=true
-    - tls://8.8.4.4#disable-ipv6=true
+    - tls://1.1.1.1#disable-ipv6=true
   nameserver-policy:
     geosite:private,cn:
       - 123.123.123.123
@@ -77,7 +77,7 @@ dns:
 | 名称 | 设置值 |
 | - | - |
 | 启用 | ✔ |
-| TCP 模式 | RRedirect 模式 |
+| TCP 模式 | Redirect 模式 |
 | UDP 模式 | TUN 模式 |
 | IPv4 DNS 劫持 | ✔ |
 | IPv6 DNS 劫持 | ✔ |
