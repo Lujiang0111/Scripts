@@ -172,19 +172,19 @@
     | 追加默认DNS | ❌ |
     | Fallback-Filter | ✔ |
 
-#### OpenClash配置定时任务，防止拉取订阅超时
+#### 订阅地址配置定时任务，防止拉取订阅超时
 
-1. 在`/etc/scripts/`下创建一个名为`openclash_predownload.sh`的脚本。
+1. 在`/etc/scripts/`下创建一个名为`proxy_predownload.sh`的脚本。
 
     ```shell
     mkdir -p /etc/scripts
     cd /etc/scripts
     ```
 
-1. 编辑`openclash_predownload.sh`文件
+1. 编辑`proxy_predownload.sh`文件
 
     ```shell
-    vim /etc/scripts/openclash_predownload.sh
+    vim /etc/scripts/proxy_predownload.sh
     ```
 
     添加以下内容，修改`urls`为自己的url：
@@ -207,13 +207,13 @@
 1. 保存脚本并给它执行权限。
 
     ```shell
-    chmod +x /etc/scripts/openclash_predownload.sh
+    chmod +x /etc/scripts/proxy_predownload.sh
     ```
 
 1. luci界面配置定时任务
 
     ```shell
-    50 3 * * 5 /bin/bash /etc/scripts/openclash_predownload.sh
+    50 3 * * 5 /bin/bash /etc/scripts/proxy_predownload.sh
     ```
 
     完成后，系统会在每周五的3:50自动运行该脚本。
