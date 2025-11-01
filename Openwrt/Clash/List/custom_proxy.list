@@ -1,4 +1,9 @@
 # 内容：自定义代理列表
 
+# DNS
+IP-CIDR,1.1.1.1/32,no-resolve
+IP-CIDR,8.8.4.4/32,no-resolve
+IP-CIDR,8.8.8.8/32,no-resolve
+
 # 设置局域网内全走代理的设备
 # SRC-IP-CIDR,172.28.8.35/32,no-resolve
