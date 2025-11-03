@@ -34,6 +34,30 @@ networks:
 
 ## webui地址
 
-<https://172.28.8.45:631/>
++ <https://172.28.8.45:631/>
+  + 默认用户名/密码：`print`/`print`。
+  + ipp打印机地址一般为`ipp://ip/ipp/print`
 
-+ 默认用户名/密码：`print`/`print`。
+## 打印测试页
+
+```shell
+docker exec cupsd lp -d L6279 /usr/share/cups/data/default-testpage.pdf
+```
+
+将`L6279`改为cpus中设置的打印机名称。
+
+## 添加自动打印任务
+
+编辑`crontab`
+
+```shell
+sudo crontab -e
+```
+
+添加下面这一行
+
+```shell
+0 0 * * 2 /usr/bin/docker exec cupsd lp -d L6279 /usr/share/cups/data/default-testpage.pdf >/dev/null 2>&1
+```
+
+这代表`每周二 00:00`执行一次打印任务。
