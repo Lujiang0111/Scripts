@@ -10,7 +10,6 @@ rm -rf /opt/docker/cupsd/config
 mkdir -p /opt/docker/cupsd/config
 chmod 777 /opt/docker/cupsd/config
 wget https://raw.githubusercontent.com/olbat/dockerfiles/refs/heads/master/cupsd/cupsd.conf -O /opt/docker/cupsd/config/cupsd.conf
-wget https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Other/printer_test_page.pdf -O /opt/docker/cupsd/config/printer_test_page.pdf
 ```
 
 ## Docker compose
