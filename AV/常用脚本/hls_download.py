@@ -85,7 +85,8 @@ class HlsDownload:
         retry_times = 0
         while True:
             try:
-                response = requests.get(url)
+                response = requests.get(url, timeout=10)
+                response.raise_for_status()
             except Exception as e:
                 if retry_times < 5:
                     retry_times += 1
