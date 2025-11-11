@@ -1,14 +1,26 @@
 # Openclash配置指南
 
+## 配置目录
+
++ `clash_meta`：`/etc/openclash/core`
++ `GeoIP.dat` : `/etc/openclash`
++ `GeoSite.dat` : `/etc/openclash`
+
 ## geox地址配置
 
-```yaml
-geox-url:
-  geoip: https://testingcf.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat
-  geosite: https://testingcf.jsdelivr.net/gh/Loyalsoldier/domain-list-custom@release/geosite.dat
-```
++ GeoIP Dat 数据库:
 
-## DNS相关配置
+    ```shell
+    https://testingcf.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat
+    ```
+
++ GeoSite 数据库:
+
+    ```shell
+    https://testingcf.jsdelivr.net/gh/Loyalsoldier/domain-list-custom@release/geosite.dat
+    ```
+
+## dns相关配置
 
 ```yaml
 dns:
