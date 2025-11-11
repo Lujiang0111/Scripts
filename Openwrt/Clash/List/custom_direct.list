@@ -1,11 +1,11 @@
 # 内容：自定义直连列表
 
-# Public dns
+# dns ip
 IP-CIDR,223.5.5.5/32,no-resolve
 IP-CIDR,119.29.29.29/32,no-resolve
 IP-CIDR,114.114.114.114/32,no-resolve
 
-# Beijing unicom dns
+## beijing unicom dns
 IP-CIDR,123.123.123.123/32,no-resolve
 IP-CIDR,123.123.123.124/32,no-resolve
 
@@ -13,7 +13,7 @@ IP-CIDR,123.123.123.124/32,no-resolve
 DOMAIN-SUFFIX,kineticbloom.org
 DOMAIN-SUFFIX,nodenet.cloud
 
-# Game
+# game
 DOMAIN-SUFFIX,steamserver.net
 DOMAIN-SUFFIX,download.epicgames.com
 DOMAIN-SUFFIX,msftncsi.com
@@ -21,5 +21,5 @@ DOMAIN-KEYWORD,sonkwo
 DOMAIN-SUFFIX,patch-dl.ffxiv.com
 PROCESS-NAME,uugamebooster
 
-# Pikpak
+# pikpak
 DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.com$
