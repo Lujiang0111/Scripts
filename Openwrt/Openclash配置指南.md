@@ -22,6 +22,12 @@
 
 ## dns相关配置
 
+| 名称 | 设置值 |
+| - | - |
+| Geodata 数据加载方式 | 标准模式 |
+| 启用 GeoIP Dat 版数据库 | ✔ |
+| 启用进程规则 | 有uu加速器的话可以选择`strict` |
+
 ```yaml
 dns:
   enable: true
