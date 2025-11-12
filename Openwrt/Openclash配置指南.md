@@ -20,13 +20,15 @@
     https://testingcf.jsdelivr.net/gh/Loyalsoldier/domain-list-custom@release/geosite.dat
     ```
 
-## dns相关配置
+## 配置选项
 
 | 名称 | 设置值 |
 | - | - |
+| 启用进程规则 | `strict` |
 | Geodata 数据加载方式 | 标准模式 |
 | 启用 GeoIP Dat 版数据库 | ✔ |
-| 启用进程规则 | 有uu加速器的话可以选择`strict` |
+
+### dns
 
 ```yaml
 dns:
