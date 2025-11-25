@@ -20,10 +20,6 @@
 | - | - |
 | 进程匹配 | strict |
 | IPv6 | 启用 |
-| TCP Keep Alive 空闲 | 600 |
-| TCP Keep Alive 间隔 | 15 |
-
-+ TCP相关设置是为了解决苹果手机耗电问题
 
 ## 混入配置 -> DNS配置
 
@@ -52,7 +48,7 @@ dns:
     - https://8.8.8.8/dns-query#disable-ipv6=true
     - https://1.1.1.1/dns-query#disable-ipv6=true
   nameserver-policy:
-    geosite:private,cn:
+    geosite:cn,private,apple:
       - 123.123.123.123
       - 123.123.123.124
 ```
@@ -64,13 +60,17 @@ dns:
 | 启用 | 启用 |
 | 嗅探 Redir-Host 流量 | ✔ |
 | 嗅探纯 IP 连接 | ✔ |
+| 覆盖按协议嗅探 | ✔ |
 
 ## 混入配置 -> GEOX配置
 
 | 名称 | 设置值 |
 | - | - |
 | GeoIP 格式 | DAT |
+| GeoSite 下载地址 | `https://testingcf.jsdelivr.net/gh/Loyalsoldier/domain-list-custom@release/geosite.dat` |
+| GeoIP(DAT) 下载地址 | `https://testingcf.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat` |
 | 定时更新GeoX文件 | 启用 |
+| GeoX 文件更新间隔 | 24 |
 
 ## 代理配置 -> 代理配置
 
@@ -83,12 +83,6 @@ dns:
 | IPv6 DNS 劫持 | ✔ |
 | IPv4 代理 | ✔ |
 | IPv6 代理 | ✔ |
-
-## 代理配置 -> 路由器代理
-
-| 名称 | 设置值 |
-| - | - |
-| 启用 | ❌ |
 
 ## 代理配置 -> 绕过
 

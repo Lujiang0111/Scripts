@@ -41,7 +41,7 @@
     listen: 0.0.0.0:7874
     respect-rules: true
     nameserver-policy:
-      geosite:cn,private:
+      geosite:cn,private,apple:
         - 123.123.123.123
         - 123.123.123.124
     proxy-server-nameserver:
@@ -112,7 +112,7 @@
           - "+.msftconnecttest.com"
           - "+.msftncsi.com"
       nameserver-policy:
-        geosite:cn,private:
+        geosite:cn,private,apple:
           - 123.123.123.123
           - 123.123.123.124
     ```
