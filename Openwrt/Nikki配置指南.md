@@ -18,7 +18,7 @@
 
 | 名称 | 设置值 |
 | - | - |
-| 进程匹配 | 按需 |
+| 进程匹配 | strict |
 | IPv6 | 启用 |
 | TCP Keep Alive 空闲 | 600 |
 | TCP Keep Alive 间隔 | 15 |
@@ -40,17 +40,17 @@
 ```yaml
 dns:
   enable: true
-  listen: '[::]:1053'
+  listen: "[::]:1053"
   ipv6: true
   enhanced-mode: redir-host
-  fake-ip-range: 198.18.0.1/16
   respect-rules: true
   proxy-server-nameserver:
-    - 123.123.123.123
-    - 123.123.123.124
+    - 223.5.5.5
+    - 114.114.114.114
+    - 119.29.29.29
   nameserver:
-    - tls://8.8.8.8#disable-ipv6=true
-    - tls://1.1.1.1#disable-ipv6=true
+    - https://8.8.8.8/dns-query#disable-ipv6=true
+    - https://1.1.1.1/dns-query#disable-ipv6=true
   nameserver-policy:
     geosite:private,cn:
       - 123.123.123.123
