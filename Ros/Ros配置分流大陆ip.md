@@ -143,7 +143,8 @@ import fqip.rsc
   + 选择**Up**选项卡，设定IP上线时的操作(On Up)：
 
     ```shell
-    /log/info message="172.28.8.21 up!"
+    /log/info message="172.28.8.21 up! delay start"
+    delay 30;
     /ip/route/enable [find where comment="routing to openwrt"]
     /ip/firewall/mangle/enable [find where comment="mark routing !CNIP"]
     /ip/dns/set servers=172.28.8.21
