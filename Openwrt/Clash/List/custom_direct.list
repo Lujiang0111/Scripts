@@ -9,6 +9,9 @@ IP-CIDR,114.114.114.114/32,no-resolve
 IP-CIDR,123.123.123.123/32,no-resolve
 IP-CIDR,123.123.123.124/32,no-resolve
 
+# proxy
+DOMAIN-SUFFIX,foos.one
+
 # game
 DOMAIN-SUFFIX,steamserver.net
 DOMAIN-SUFFIX,download.epicgames.com
