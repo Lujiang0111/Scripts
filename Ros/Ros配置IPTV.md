@@ -43,17 +43,17 @@
 ### 接入网线
 
 + 采用双线接入方式，即INTERNET和IPTV分别用不同网线接入
-  + 光猫`LAN1`(INTERNET)接ROS`ether2`口。
-  + 光猫`LAN2`(IPTV)接ROS`ether3`口。
+  + 光猫`LAN1`(INTERNET)接ROS`ether1`口。
+  + 光猫`LAN2`(IPTV)接ROS`ether2`口。
 
 ### 接口修改
 
 + Bridge
-  + **bridge-lan**网桥去除`ether3`网口
+  + **bridge-lan**网桥去除`ether2`网口
 
 + Interface
   + Interface
-    + 修改**ether3**网口名为`ether3-iptv`
+    + 修改**ether2**网口名为`ether2-iptv`
     + bridge-lan -> General -> **勾选**`IGMP Snooping`
 
 ### 创建VLAN
@@ -64,7 +64,7 @@
       + General
         + Name - `vlan-iptv`
         + VLAN ID - `3964`
-        + Interface - `ether3-iptv`
+        + Interface - `ether2-iptv`
 
 + Interface
   + Interface List

@@ -5,8 +5,7 @@
 ### 规划好网口与地址分配
   
 + 网口分配：
-  + 1号口 - 2.5G，做`lan`口。
-  + 2号口 - 做`wan`口，接光猫。
+  + 1号口 - 2.5G，做`wan`口，接光猫。
   + 8号口 - 做`debug`口，以后连接网线调试用。
   + 其余均为`lan`口。
 
@@ -22,10 +21,9 @@
 
 ### 修改接口名称
 
-点击**Interfaces**，选择**Interface**选项卡，确定wan口、2.5G口、SFP口等，修改网口名称，方便记忆。
+点击**Interfaces**，选择**Interface**选项卡，确定wan口、lan口、SFP口等，修改网口名称，方便记忆。
 
-+ 1号口 - `ether1-2.5g`
-+ 2号口 - `ether2-wan`
++ 1号口 - `ether1-wan`
 + 8号口 - `ether8-debug`
 
 ### 设置LAN网桥
@@ -35,7 +33,7 @@
 + 点击**Bridge**，选择**Ports**选项卡，创建New Bridge Port：
   + **Interface** - `lan网口`
   + **Bridge** - `bridge-lan`
-  依次将1、3、4、5、6...口添加至网桥。
+  依次将lan口添加至网桥。
 
 ### 添加Interface List
 
@@ -51,11 +49,11 @@
 
     | List | Interface |
     | - | - |
-    | ONU | ether2-wan |
+    | ONU | ether1-wan |
     | LAN | bridge-lan |
 
 ```shell
-/interface/list/member/add list=ONU interface=ether2-wan
+/interface/list/member/add list=ONU interface=ether1-wan
 /interface/list/member/add list=LAN interface=bridge-lan
 ```
 
@@ -158,7 +156,7 @@
 + 点击**Interfaces**，选择**Interface**选项卡，点击+号，选择**PPPOE Client**,新建一个PPPOE Client：
   + **General**
     + **Name** - `pppoe-bjlt`
-    + **Interfaces** - `ether2-wan`
+    + **Interfaces** - `ether1-wan`
   + **Dial Out**
     + **User** - pppoe用户名
     + **Password** - pppoe密码
@@ -308,10 +306,10 @@
 
 + 点击**IP**->**Address**，添加一个wan口IP（注意wab口IP和光猫需在同一网段,例如`172.28.100.2`）：
   + **Address** - `172.28.100.2/24`
-  + **Interface** - `ether2-wan`
+  + **Interface** - `ether1-wan`
 
 ```shell
-/ip/address/add address=172.28.100.2/24 interface=ether2-wan
+/ip/address/add address=172.28.100.2/24 interface=ether1-wan
 ```
 
 ### 添加防火墙规则
@@ -341,7 +339,7 @@
 
 + 点击**IP**->**UPnp**，勾选`Enabled`、`Allow To Disable External Interface`、`Show Dummy Rule`。
 
-+ 点击Interfaces，创建一个Upnp，Interface选择wan口(`ether2-wan`)，type选择`external`。
++ 点击Interfaces，创建一个Upnp，Interface选择wan口(`ether1-wan`)，type选择`external`。
 
 + 点击Interfaces，创建一个Upnp，Interface选择`bridge-lan`，type选择`internal`。
 

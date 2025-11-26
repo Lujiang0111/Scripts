@@ -67,14 +67,8 @@ cat <<- EOF > ${fqip_file}
 remove [/ip firewall address-list find list=FQIP]
 EOF
 
-for ((i=2; i<=20; i++))
-do
-    echo -e "add address=172.28.8.${i} list=FQIP" >> ${fqip_file}
-done
-
-# skip 172.28.8.21
-
-for ((i=22; i<=239; i++))
+# 2-239
+for ((i=2; i<=239; i++))
 do
     echo -e "add address=172.28.8.${i} list=FQIP" >> ${fqip_file}
 done
@@ -90,6 +84,21 @@ bash generate_fqip.sh
 
 ```shell
 import fqip.rsc
+```
+
+### 配置不需要通过旁路由翻墙的IP（如旁路由本身）
+
++ 假设`8.21`、`8.22`、`8.33`、`8.41`是不需要经过旁路由的IP
+
+```shell
+/ip/firewall/address-list set [find address="172.28.8.21" list=
+"FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.22" list=
+"FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.35" list=
+"FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.41" list=
+"FQIP"] disabled=yes
 ```
 
 ### 配置分流路由表
