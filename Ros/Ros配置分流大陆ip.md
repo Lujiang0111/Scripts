@@ -91,14 +91,10 @@ import fqip.rsc
 + 假设`8.21`、`8.22`、`8.33`、`8.41`是不需要经过旁路由的IP
 
 ```shell
-/ip/firewall/address-list set [find address="172.28.8.21" list=
-"FQIP"] disabled=yes
-/ip/firewall/address-list set [find address="172.28.8.22" list=
-"FQIP"] disabled=yes
-/ip/firewall/address-list set [find address="172.28.8.35" list=
-"FQIP"] disabled=yes
-/ip/firewall/address-list set [find address="172.28.8.41" list=
-"FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.21" list="FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.22" list="FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.35" list="FQIP"] disabled=yes
+/ip/firewall/address-list set [find address="172.28.8.41" list="FQIP"] disabled=yes
 ```
 
 ### 配置分流路由表
