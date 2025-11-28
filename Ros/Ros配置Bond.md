@@ -17,8 +17,7 @@
 1. 创建bond接口。
 
     ```shell
-    /interface/bonding/add name=bonding1 slaves=sfp-sfpplus2,sfp-sf
-    pplus3 mode=802.3ad transmit-hash-policy=layer-3-and-4 lacp-rate=30secs
+    /interface/bonding/add name=bonding1 slaves=sfp-sfpplus2,sfp-sfpplus3 mode=802.3ad transmit-hash-policy=layer-3-and-4 lacp-rate=30secs
     ```
 
 1. 把bond接口加入bridge。
