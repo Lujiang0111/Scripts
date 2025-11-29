@@ -55,7 +55,7 @@ http://172.28.8.42:25500/sub?target=clash&url=%URL%&config=https%3A%2F%2Fraw.git
   <Category />
   <WebUI>http://[IP]:[PORT:25500]/flushcache?token=password</WebUI>
   <TemplateURL />
-  <Icon>https://raw.githubusercontent.com/Lujiang0111/Scripts/35ce7b8e2ba4f850b8a61195acf83aafcc368686/Resource/Icon/subconverter-icon.png</Icon>
+  <Icon>https://raw.githubusercontent.com/Lujiang0111/Scripts/main/Resource/Icon/subconverter-icon.png</Icon>
   <ExtraParams />
   <PostArgs />
   <CPUset />
