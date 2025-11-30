@@ -3,7 +3,6 @@
 ## 安装前准备
 
 + 阅读[官方FAQ](https://github.com/nikkinikki-org/OpenWrt-nikki/wiki/FAQ)。
-+ 在[meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)提前下载好`GeoIP.dat`和`GeoSite.dat`，放入`/etc/nikki/run`中。
 
 ## 插件配置
 
