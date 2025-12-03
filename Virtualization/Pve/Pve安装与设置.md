@@ -227,7 +227,7 @@ echo "blacklist radeon" >> /etc/modprobe.d/amd-blacklist.conf
 ```shell
 echo "blacklist nouveau" >> /etc/modprobe.d/nvidia-blacklist.conf
 echo "blacklist nvidia*" >> /etc/modprobe.d/nvidia-blacklist.conf
-echo "blacklist snd_hda_intel" > /etc/modprobe.d/nvidia-blacklist.conf
+echo "blacklist snd_hda_intel" >> /etc/modprobe.d/nvidia-blacklist.conf
 ```
 
 + Intel GPUs(注意直通后可能导致vnc失效)
