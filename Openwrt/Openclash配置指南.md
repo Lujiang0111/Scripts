@@ -111,8 +111,4 @@
           - "+.googlevideo.com"
           - "+.msftconnecttest.com"
           - "+.msftncsi.com"
-      nameserver-policy:
-        geosite:cn,private,apple:
-          - 123.123.123.123
-          - 123.123.123.124
     ```
