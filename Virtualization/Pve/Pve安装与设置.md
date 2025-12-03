@@ -222,11 +222,12 @@ echo "blacklist amdgpu" >> /etc/modprobe.d/amd-blacklist.conf
 echo "blacklist radeon" >> /etc/modprobe.d/amd-blacklist.conf
 ```
 
-+ NVIDIA GPUs
++ NVIDIA GPUs(`snd_hda_intel`是声音模块)
 
 ```shell
 echo "blacklist nouveau" >> /etc/modprobe.d/nvidia-blacklist.conf
 echo "blacklist nvidia*" >> /etc/modprobe.d/nvidia-blacklist.conf
+echo "blacklist snd_hda_intel" >> /etc/modprobe.d/nvidia-blacklist.conf
 ```
 
 + Intel GPUs(注意直通后可能导致vnc失效)
@@ -241,6 +242,14 @@ echo "blacklist i915" >> /etc/modprobe.d/intel-blacklist.conf
 
 ```shell
 echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
+```
+
+#### 网卡驱动
+
+**注意**：会屏蔽掉所有igb的网卡
+
+```shell
+echo "blacklist igb" >> /etc/modprobe.d/eth-blacklist.conf
 ```
 
 #### 单独设备

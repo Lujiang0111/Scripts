@@ -10,8 +10,8 @@
 1. 移除物理接口出bridge。
 
     ```shell
-    /interface/bridge/port/remove [find interface=sfp-sfpplus2]
-    /interface/bridge/port/remove [find interface=sfp-sfpplus3]
+    /interface/bridge/port/set [find interface=sfp-sfpplus2] disabled=yes
+    /interface/bridge/port/set [find interface=sfp-sfpplus3] disabled=yes
     ```
 
 1. 创建bond接口。
