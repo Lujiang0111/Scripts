@@ -244,6 +244,14 @@ echo "blacklist i915" >> /etc/modprobe.d/intel-blacklist.conf
 echo "blacklist ahci" >> /etc/modprobe.d/sata-blacklist.conf
 ```
 
+#### 网卡驱动
+
+**注意**：会屏蔽掉所有igb的网卡
+
+```shell
+echo "blacklist igb" >> /etc/modprobe.d/eth-blacklist.conf
+```
+
 #### 单独设备
 
 > 参考资料：<https://forum.proxmox.com/threads/pci-passthrough-selection-with-identical-devices.63042/#post-287937>
