@@ -92,7 +92,6 @@ import fqip.rsc
 
 ```shell
 /ip/firewall/address-list set [find address="172.28.8.21" list="FQIP"] disabled=yes
-/ip/firewall/address-list set [find address="172.28.8.22" list="FQIP"] disabled=yes
 /ip/firewall/address-list set [find address="172.28.8.35" list="FQIP"] disabled=yes
 /ip/firewall/address-list set [find address="172.28.8.41" list="FQIP"] disabled=yes
 ```
