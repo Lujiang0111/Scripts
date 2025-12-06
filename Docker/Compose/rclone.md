@@ -1,5 +1,7 @@
 # rclone
 
++ **还不完善**
+
 ## 创建目录
 
 ```shell
@@ -20,13 +22,10 @@ services:
   rclone:
     container_name: rclone
     image: rclone/rclone:latest
-    environment:
-      - UID=1000
-      - GID=1000
-      - TZ=Asia/Shanghai
     volumes:
       - /opt/docker/rclone/config:/config/rclone
       - /mnt/ssd/download/rclone:/data
+    command: rcd --rc-web-gui --rc-addr 0.0.0.0:5572 --rc-user #user --rc-pass #password
     networks:
       macvlan_enp6s18:
         ipv4_address: 172.28.8.46
@@ -38,4 +37,4 @@ networks:
 
 ## webui地址
 
-<http://172.28.8.46:8080>
+<http://172.28.8.46:5572>
