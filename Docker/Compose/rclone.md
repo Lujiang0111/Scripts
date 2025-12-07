@@ -34,7 +34,7 @@ services:
     command: rcd --rc-web-gui --rc-addr 0.0.0.0:5572 --rc-user #username --rc-pass #password
     networks:
       macvlan_enp6s18:
-        ipv4_address: 172.28.8.46
+        ipv4_address: 172.28.8.47
     restart: unless-stopped
 networks:
   macvlan_enp6s18:
@@ -43,4 +43,4 @@ networks:
 
 ## webui地址
 
-<http://172.28.8.46:5572>
+<http://172.28.8.47:5572>
