@@ -30,7 +30,7 @@ services:
       - RPC_PORT=56800
       - LISTEN_PORT=56888
       - DISK_CACHE=64M
-      - IPV6_MODE=false
+      - IPV6_MODE=true
       - UPDATE_TRACKERS=true
       - TZ=Asia/Shanghai
     volumes:
