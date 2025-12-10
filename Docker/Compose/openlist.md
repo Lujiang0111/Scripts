@@ -28,7 +28,7 @@ services:
       - UMASK=022
     volumes:
       - /opt/docker/openlist/config:/opt/openlist/data
-      - /mnt/ssd/download/openlist:/share
+      - /mnt/ssd/download/openlist:/downloads
     networks:
       macvlan_enp6s18:
         ipv4_address: 172.28.8.46
