@@ -58,7 +58,7 @@ if [[ "${os_version}" == "centos7.1" ]]; then
 	gcc_major=${gcc_version%%.*}
 	if [ "${gcc_major}" -le 4 ]; then
 		source /opt/rh/devtoolset-8/enable
-		echo -e "switch to devtoolset-8"
+		echo -e "\033[34mswitch to devtoolset-8\033[0m"
 	fi
 fi
 
