@@ -89,6 +89,7 @@ echo -e "done!"
 echo -e "\n\033[33m============= installing =============\033[0m\n"
 
 cd "${src_dir}" || exit
+
 chmod +x configure
 ./configure \
 	--prefix=${install_version_dir} \
