@@ -52,6 +52,17 @@ src_dir=${shell_dir}/../../../../src
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
+# switch to devtoolset-8
+if [[ "${os_version}" == "centos7.1" ]]; then
+	gcc_version=$(gcc -dumpversion)
+	gcc_major=${gcc_version%%.*}
+
+	if [ "${gcc_major}" -le 4 ]; then
+		source /opt/rh/devtoolset-8/enable
+		echo -e "switch to devtoolset-8"
+	fi
+fi
+
 mkdir -p ${install_project_dir}
 rm -rf ${install_version_dir}
 
