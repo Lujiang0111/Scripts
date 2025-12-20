@@ -24,7 +24,7 @@ networks:
 + <https://172.28.8.45:631/>
   + 默认用户名/密码：`print`/`print`。
   + ipp打印机地址一般为`ipp://ip/ipp/print`
-  + ipp地址的打印机可以选择驱动为`Generic`->`IPP Everywhere(en)`
+  + ipp地址的打印机可以选择驱动为`Generic`->`IPP Everywhere(tm)`
 
 ## 打印测试页
 
