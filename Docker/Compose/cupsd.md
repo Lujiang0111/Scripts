@@ -2,16 +2,6 @@
 
 > 参考资料：<https://hub.docker.com/r/olbat/cupsd>
 
-## 创建目录
-
-```shell
-# config dir
-rm -rf /opt/docker/cupsd/config
-mkdir -p /opt/docker/cupsd/config
-chmod 777 /opt/docker/cupsd/config
-wget https://raw.githubusercontent.com/olbat/dockerfiles/refs/heads/master/cupsd/cupsd.conf -O /opt/docker/cupsd/config/cupsd.conf
-```
-
 ## Docker compose
 
 ```yml
@@ -19,9 +9,6 @@ services:
   cupsd:
     container_name: cupsd
     image: olbat/cupsd:stable
-    volumes:
-      - /opt/docker/cupsd/config/cupsd.conf:/etc/cups/cupsd.conf
-      - /opt/docker/cupsd/config/printer_test_page.pdf:/printer_test_page.pdf
     networks:
       macvlan_enp6s18:
         ipv4_address: 172.28.8.45
@@ -37,11 +24,12 @@ networks:
 + <https://172.28.8.45:631/>
   + 默认用户名/密码：`print`/`print`。
   + ipp打印机地址一般为`ipp://ip/ipp/print`
+  + ipp地址的打印机可以选择驱动为`Generic`->`IPP Everywhere(en)`
 
 ## 打印测试页
 
 ```shell
-docker exec cupsd lp -d L6279 /usr/share/cups/data/default-testpage.pdf
+docker exec cupsd lp -d L6279 /usr/share/cups/data/testprint
 ```
 
 将`L6279`改为cpus中设置的打印机名称。
@@ -57,7 +45,43 @@ sudo crontab -e
 添加下面这一行
 
 ```shell
-0 0 * * 2 /usr/bin/docker exec cupsd lp -d L6279 /usr/share/cups/data/default-testpage.pdf >/dev/null 2>&1
+0 0 * * 2 /usr/bin/docker exec cupsd lp -d L6279 /usr/share/cups/data/testprint >/dev/null 2>&1
 ```
 
 这代表`每周二 00:00`执行一次打印任务。
+
+## Unraid 模板
+
++ `my-cupsd.xml`
+
+```xml
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>cupsd</Name>
+  <Repository>olbat/cupsd:stable</Repository>
+  <Registry>https://hub.docker.com/r/olbat/cupsd</Registry>
+  <Network>br0</Network>
+  <MyIP>172.28.8.45,fd08::45</MyIP>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support/>
+  <Project/>
+  <Overview/>
+  <Category/>
+  <WebUI>http://[IP]:[PORT:631]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/Lujiang0111/Scripts/refs/heads/main/Resource/Icon/cupsd.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled>1766244489</DateInstalled>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <TailscaleStateDir/>
+</Container>
+```
+
+## Unraid计划任务
+
+使用`User Scripts`插件完成
