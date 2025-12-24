@@ -62,25 +62,6 @@ if [[ "${os_version}" == "centos7.1" ]]; then
 	fi
 fi
 
-function CreateSoLinker() {
-	cd "$1" || exit
-	for file in *.so.*; do
-		if [ -f "${file}" ]; then
-			realname=$(echo "${file}" | rev | cut -d '/' -f 1 | rev)
-			libname=$(echo "${realname}" | cut -d '.' -f 1)
-			if [ ! -f "${libname}".so ]; then
-				ln -sf "${realname}" "${libname}".so
-			fi
-		fi
-	done
-	cd - >/dev/null || exit
-}
-
-openssl_include_dir=${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8/linux/${os_version}/${os_arch}/include
-openssl_lib_dir=${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8/linux/${os_version}/${os_arch}/lib
-
-CreateSoLinker "${openssl_lib_dir}"
-
 mkdir -p ${install_project_dir}
 rm -rf ${install_version_dir}
 

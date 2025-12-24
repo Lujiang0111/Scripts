@@ -62,24 +62,58 @@ if [[ "${os_version}" == "centos7.1" ]]; then
 	fi
 fi
 
-function CreateSoLinker() {
-	cd "$1" || exit
-	for file in *.so.*; do
-		if [ -f "${file}" ]; then
-			realname=$(echo "${file}" | rev | cut -d '/' -f 1 | rev)
-			libname=$(echo "${realname}" | cut -d '.' -f 1)
-			if [ ! -f "${libname}".so ]; then
-				ln -sf "${realname}" "${libname}".so
+dep_dir=${shell_dir}/dep
+rm -rf "${dep_dir}"
+mkdir -p "${dep_dir}"
+
+function PrepareSoDep() {
+	mkdir -p "${dep_dir}/$1"
+	if [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+		\cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
+	elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
+		\cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
+	else
+		echo -e "Could not find $1"
+		return
+	fi
+
+	if [ -d "${dep_dir}/$1/lib" ]; then
+		cd "${dep_dir}/$1/lib" || exit
+		rm -rf ./*.a*
+		for file in *.so.*; do
+			if [ -f "${file}" ]; then
+				realname=$(echo "${file}" | rev | cut -d '/' -f 1 | rev)
+				libname=$(echo "${realname}" | cut -d '.' -f 1)
+				if [ ! -f "${libname}".so ]; then
+					ln -sf "${realname}" "${libname}".so
+				fi
 			fi
-		fi
-	done
-	cd - >/dev/null || exit
+		done
+		cd - >/dev/null || exit
+	fi
 }
 
-openssl_include_dir=${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8/linux/${os_version}/${os_arch}/include
-openssl_lib_dir=${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8/linux/${os_version}/${os_arch}/lib
+function PrepareADep() {
+	mkdir -p "${dep_dir}/$1"
+	if [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+		\cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
+	elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
+		\cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
+	else
+		echo -e "Could not find $1"
+		return
+	fi
 
-CreateSoLinker "${openssl_lib_dir}"
+	if [ -d "${dep_dir}/$1/lib" ]; then
+		cd "${dep_dir}/$1/lib" || exit
+		rm -rf ./*.so*
+		cd - >/dev/null || exit
+	fi
+}
+
+PrepareSoDep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8/"
+
+export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
 
 mkdir -p ${install_project_dir}
 rm -rf ${install_version_dir}
@@ -96,16 +130,18 @@ chmod +x configure
 	--disable-static \
 	--enable-debug=0 \
 	--use-openssl-pc=OFF \
-	--openssl-crypto-library="${openssl_lib_dir}"libcrypto.so \
-	--openssl-include-dir="${openssl_include_dir}" \
-	--openssl-ssl-library="${openssl_lib_dir}"libssl.so
+	--openssl-include-dir="${dep_dir}/openssl/include" \
+	--openssl-crypto-library="${dep_dir}/openssl/lib/libcrypto.so" \
+	--openssl-ssl-library="${dep_dir}/openssl/lib/libssl.so"
 
 make clean && make V=1 -j"$(nproc)" && make install
 
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
 
-cd ${install_version_dir}/lib64 || exit
+# \cp -r "${dep_dir}"/*/lib/*.so* ${install_version_dir}/lib
+
+cd ${install_version_dir}/lib || exit
 for src_file in *.so*; do
 	if [ -f "${src_file}" ]; then
 		dst_file=$(readlink "${src_file}")
