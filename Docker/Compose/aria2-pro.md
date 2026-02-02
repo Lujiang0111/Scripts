@@ -37,7 +37,7 @@ services:
       - /opt/docker/aria2-pro/config:/config
       - /mnt/ssd/download/aria2-pro:/downloads
     networks:
-      macvlan_enp6s18:
+      macvlan_ens18:
         ipv4_address: 172.28.8.43
     restart: unless-stopped
     logging:
@@ -56,7 +56,7 @@ services:
       options:
         max-size: 1m
 networks:
-  macvlan_enp6s18:
+  macvlan_ens18:
     external: true
 ```
 
