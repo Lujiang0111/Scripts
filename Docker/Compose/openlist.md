@@ -30,11 +30,11 @@ services:
       - /opt/docker/openlist/config:/opt/openlist/data
       - /mnt/ssd/download/openlist:/downloads
     networks:
-      macvlan_enp6s18:
+      macvlan_ens18:
         ipv4_address: 172.28.8.46
     restart: unless-stopped
 networks:
-  macvlan_enp6s18:
+  macvlan_ens18:
     external: true
 ```
 
