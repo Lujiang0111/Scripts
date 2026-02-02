@@ -13,11 +13,11 @@ services:
     image: asdlokj1qpi23/subconverter:latest
     container_name: subconverter
     networks:
-      macvlan_enp6s18:
+      macvlan_ens18:
         ipv4_address: 172.28.8.42
         ipv6_address: fd08::42
 networks:
-  macvlan_enp6s18:
+  macvlan_ens18:
     external: true
 ```
 
