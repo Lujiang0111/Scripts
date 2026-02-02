@@ -38,11 +38,11 @@ services:
       - /mnt/ssd/download/syncthing:/sync_data
     restart: unless-stopped
     networks:
-      macvlan_enp6s18:
+      macvlan_ens18:
         ipv4_address: 172.28.8.44
         ipv6_address: fd08::44
 networks:
-  macvlan_enp6s18:
+  macvlan_ens18:
     external: true
 ```
 
