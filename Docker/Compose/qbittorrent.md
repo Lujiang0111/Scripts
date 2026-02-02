@@ -32,7 +32,7 @@ services:
       - /opt/docker/qbittorrent/config:/config
       - /mnt/ssd/download/qbittorrent:/downloads
     networks:
-      macvlan_enp6s18:
+      macvlan_ens18:
         ipv4_address: 172.28.8.41
         ipv6_address: fd08::41
     dns:
@@ -40,7 +40,7 @@ services:
       - 123.123.123.124
     restart: unless-stopped
 networks:
-  macvlan_enp6s18:
+  macvlan_ens18:
     external: true
 ```
 
