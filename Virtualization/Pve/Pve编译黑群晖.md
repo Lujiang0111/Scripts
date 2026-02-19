@@ -63,7 +63,7 @@
 1. 运行如下命令，将img镜像导入虚拟机
 
 ```shell
-qm importdisk 123 rr.img local-lvm
+qm importdisk 126 rr.img local-lvm
 ```
 
 1. 点击**对应虚拟机** -> **硬件**，双击`未使用的磁盘0`，总线改为`SATA`，点击添加。
