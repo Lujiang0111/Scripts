@@ -61,6 +61,12 @@
 
 + 如果要设置多个peer，必须要保证`Allowed Address`不重复。
 
++ 如果要访问peer的内网网段，需要添加对应静态路由（平常可以disable）
+
+```shell
+/ip/route/add dst-address=192.165.0.0/16 gateway=wireguard-lan comment="Routing to wireguard-peer"
+```
+
 ## 客户端配置
 
 + 不同的客户端配置方法是大同小异的，我就以刚刚Windows生成的继续往下配置了，名称填写`wireguard-peer`。
