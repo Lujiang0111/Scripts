@@ -2,7 +2,8 @@
 
 > 参考资料：<https://www.truenasscale.com/2022/04/30/1032.html>
 
-+ 内网网段：`172.28.8.0/24`
++ Host内网网段：`172.28.8.0/24`
++ Peer内网网段：`192.165.0.0/16`
 + WireGuard网段：`172.28.9.0/24`
 
 ## 生成Peer公钥
@@ -65,6 +66,24 @@
 
 ```shell
 /ip/route/add dst-address=192.165.0.0/16 gateway=wireguard-lan comment="Routing to wireguard-peer"
+```
+
+### 配置访问peer网段
+
++ 添加address-list
+
+```shell
+/ip/firewall/address-list/remove [/ip/firewall/address-list/find list=WGIP]
+/ip/firewall/address-list/add address=192.165.0.0/16 list=WGIP comment="wireguard peer ip"
+```
+
++ 添加routing-table及mangle规则
+  + 注意mangle规则的顺序，不想用时禁用mangle规则即可
+
+```shell
+/routing/table/add name="rtab-wireguard-lan" fib
+/ip/route/add dst-address=0.0.0.0/0 routing-table="rtab-wireguard-lan" gateway=wireguard-lan comment="routing to wireguard-lan"
+/ip/firewall/mangle/add chain=prerouting dst-address-list=WGIP dst-address-type=!local action=mark-routing new-routing-mark=rtab-wireguard-lan passthrough=no comment="mark routing wireguard peer ip"
 ```
 
 ## 客户端配置
