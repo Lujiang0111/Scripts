@@ -32,3 +32,8 @@ python3 request_cyclically.py http://192.165.153.207:5656/v0.0/combination '{"2"
 
 + `trim_file.py`
   + 使用方式：见脚本说明
+
+## 为当前目录（及子目录下）所有c/c++文件添加bom
+
++ `generate_bom.py`
+  + 使用方式：拷贝到目标目录运行
