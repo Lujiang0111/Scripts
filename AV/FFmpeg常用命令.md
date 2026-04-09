@@ -57,6 +57,22 @@ ffmpeg -re -i input_file -c copy -f flv rtmp://your-rtmp-server/live/stream_key
 ffmpeg -i rtp://239.3.1.241:8000 -f null -
 ```
 
+## 解复用
+
++ 先用ffprobe查看音频信息
+
+```shell
+ffmpeg -i input.ts -map 0:a:0 -c copy output.aac
+```
+
+## 解码
+
++ 先用ffprobe查看音频信息
+
+```shell
+ffmpeg -i input.ts -map 0:a:0 -c:a pcm_s16le output.pcm
+```
+
 ## 编码H.264 CBR码流（libx264）
 
 > 参考资料：<https://trac.ffmpeg.org/wiki/Encode/H.264>
