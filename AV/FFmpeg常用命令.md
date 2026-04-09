@@ -69,6 +69,14 @@ ffmpeg -i input.ts -map 0:a:0 -c copy output.aac
 
 + 先用ffprobe查看音频信息
 
+    | sample format | 对应编码器 |
+    | - | - |
+    | s16 / s16p | pcm_s16le |
+    | s32 / s32p | pcm_s32le |
+    | flt / fltp | pcm_f32le |
+    | dbl / dblp | pcm_f64le |
+
+
 ```shell
 ffmpeg -i input.ts -map 0:a:0 -c:a pcm_s16le output.pcm
 ```
