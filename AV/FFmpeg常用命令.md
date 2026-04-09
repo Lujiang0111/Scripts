@@ -37,6 +37,12 @@
     ./build.sh win64 nonfree
     ```
 
+## 只接收不输出
+
+```shell
+ffmpeg -i rtp://239.3.1.241:8000 -f null -
+```
+
 ## 转封装
 
 + 输出udp-ts流
@@ -49,12 +55,6 @@ ffmpeg -re -i input_file -c copy -f mpegts udp://ip:port?pkt_size=1316
 
 ```shell
 ffmpeg -re -i input_file -c copy -f flv rtmp://your-rtmp-server/live/stream_key
-```
-
-## 只接收不输出
-
-```shell
-ffmpeg -i rtp://239.3.1.241:8000 -f null -
 ```
 
 ## 解复用
