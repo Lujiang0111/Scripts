@@ -35,14 +35,21 @@ def find_path_glob(path, pattern: str, recursion: bool) -> list:
     return results
 
 # 删除文件或目录
-def rm_path(file_name) -> None:
+def rm_path(file_name, retries=3) -> None:
     path = Path(file_name)
     if path.is_symlink() or path.is_file():
         path.unlink()
         return
 
     if path.is_dir():
-        shutil.rmtree(file_name)
+        for i in range(retries):
+            try:
+                shutil.rmtree(file_name)
+                return
+            except OSError:
+                if i == retries - 1:
+                    raise
+                time.sleep(1)
         return
 
 # 删除文件或目录，支持通配符
@@ -62,12 +69,15 @@ def copy_path(src_path, dst_path) -> None:
     if not src.exists():
         return
 
+    dst.parent.mkdir(parents=True, exist_ok=True)
+
+    if dst.is_dir():
+        dst = dst / src.name
+    rm_path(str(dst))
+
     if src.is_file():
-        dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
     elif src.is_dir():
-        if dst.exists():
-            shutil.rmtree(dst)
         shutil.copytree(src, dst, copy_function=shutil.copy2)
 
 # 读写文件

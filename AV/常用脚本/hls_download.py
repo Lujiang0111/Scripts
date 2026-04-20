@@ -9,15 +9,22 @@ import urllib
 import logging
 
 
-def rm_path(file_name: str) -> None:
+def rm_path(file_name, retries=3) -> None:
     path = Path(file_name)
-    if not path.exists():
+    if path.is_symlink() or path.is_file():
+        path.unlink()
         return
 
     if path.is_dir():
-        shutil.rmtree(file_name)
-    else:
-        path.unlink()
+        for i in range(retries):
+            try:
+                shutil.rmtree(file_name)
+                return
+            except OSError:
+                if i == retries - 1:
+                    raise
+                time.sleep(1)
+        return
 
 
 class HlsDownload:
