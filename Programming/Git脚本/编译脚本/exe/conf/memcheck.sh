@@ -16,13 +16,13 @@ ulimit -n 65536
 export LD_LIBRARY_PATH=${lib_dir}:${LD_LIBRARY_PATH}
 
 cd "${lib_dir}" || exit
-find . -maxdepth 1 -type f -name "*.so.*" -print0 | xargs -0 -P "$(nproc)" -I {} sh -c '
-    realname=$(basename {})
-    libname=$(echo "${realname}" | sed -E "s/^(.*\.so)(\..*)$/\1/")
-    if [ ! -f "${libname}" ]; then
-        ln -sf "${realname}" "${libname}"
-    fi
-'
+for file in ./*.so.*; do
+    [ -f "${file}" ] || continue
+
+    realname=${file#./}
+    libname=${realname%%.so.*}.so
+    [ -e "${libname}" ] || ln -sf "${realname}" "${libname}"
+done
 ldconfig -n .
 
 cd "${shell_dir}" || exit
