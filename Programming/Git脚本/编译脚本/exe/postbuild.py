@@ -166,5 +166,5 @@ class Postbuild:
 
 # 程序入口
 if __name__ == "__main__":
-    prebuild = Postbuild()
-    prebuild.main(sys.argv)
+    postbuild = Postbuild()
+    postbuild.main(sys.argv)

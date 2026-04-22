@@ -69,5 +69,5 @@ class Rebuild:
 
 
 if __name__ == "__main__":
-    prebuild = Rebuild()
-    prebuild.main(sys.argv)
+    rebuild = Rebuild()
+    rebuild.main(sys.argv)
