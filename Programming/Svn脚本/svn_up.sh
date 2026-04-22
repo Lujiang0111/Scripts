@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
+
 shell_dir=$(
     cd "$(dirname "$0")" || exit
     pwd

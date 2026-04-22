@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
 
 sleep_duration=30
 if [ $# -ge 1 ]; then

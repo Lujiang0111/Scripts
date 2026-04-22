@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
+
 if [ $# -lt 3 ]; then
     echo -e "\033[33mUsage:\033[0m"
     echo -e "Args:\t\tsh cycle_run_stop.sh exe_file run_duration(s) stop_duration(s)"

@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
 
 # Check if running with root privileges
 if [ "${EUID}" -ne 0 ]; then

@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
+
 shell_dir=$(
     cd "$(dirname "$0")" || exit
     pwd
@@ -6,7 +11,7 @@ shell_dir=$(
 shell_dir=$(realpath "${shell_dir}")
 
 # 定义变量
-target_dir="/path/to/target"      # 目标路径
+target_dir="/path/to/target"     # 目标路径
 source_dir="${shell_dir}/source" # 替换文件所在路径
 backup_dir="${shell_dir}/backup" # 备份路径
 
