@@ -157,6 +157,8 @@ for src_file in *.so*; do
 	fi
 done
 
+rm -rf "${dep_dir}"
+
 echo -e "done!"
 echo -e "\n\033[33m========= install successful =========\033[0m\n"
 
