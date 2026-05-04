@@ -85,6 +85,14 @@ def copy_path(src_path, dst_path) -> None:
     elif src.is_dir():
         shutil.copytree(src, dst, copy_function=shutil.copy2)
 
+def copy_path_glob(src_dir, dst_dir, pattern: str) -> None:
+    paths = find_path_glob(src_dir, pattern, False)
+    if not paths:
+        return
+
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    for path in paths:
+        copy_path(path, dst_dir)
 
 # 获取系统名称和架构
 def get_os_info() -> None:
