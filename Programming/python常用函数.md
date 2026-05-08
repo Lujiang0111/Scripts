@@ -153,12 +153,22 @@ class ExampleClass:
             "-v", "--version", help="指定版本号(形如x.y.z)", default="1.0.0"
         )
 
+        # 可选数字参数
+        parser.add_argument(
+            "-t",
+            "--timeout",
+            help="timeout per probe in seconds, default: 10",
+            type=int,
+            default=10,
+        )
+
         # 解析参数
         self.__args = parser.parse_args()
 
         # 处理参数
         self.__product = self.__args.product
         self.__version = self.__args.version
+        self.__timeout = self.__args.timeout
 
 
 if __name__ == "__main__":
