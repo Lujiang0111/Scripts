@@ -36,21 +36,25 @@
 ```yaml
 dns:
   enable: true
-  listen: "[::]:1053"
   ipv6: true
   enhanced-mode: redir-host
   respect-rules: true
-  proxy-server-nameserver:
+  default-nameserver:
     - 223.5.5.5
-    - 114.114.114.114
-    - 119.29.29.29
+    - 223.6.6.6
+  proxy-server-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
   nameserver:
+    - 123.123.123.123
+    - 123.123.123.124
+  fallback:
     - https://8.8.8.8/dns-query#disable-ipv6=true
     - https://1.1.1.1/dns-query#disable-ipv6=true
   nameserver-policy:
-    geosite:cn,private,apple:
-      - 123.123.123.123
-      - 123.123.123.124
+    +.google.com,+.facebook.com,+.youtube.com:
+      - https://8.8.8.8/dns-query#disable-ipv6=true
+      - https://1.1.1.1/dns-query#disable-ipv6=true
 ```
 
 ## 混入配置 -> 嗅探器配置
