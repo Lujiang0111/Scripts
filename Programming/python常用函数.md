@@ -5,7 +5,6 @@ import argparse
 import os
 from pathlib import Path
 import shutil
-import sys
 
 file_name = ""
 
@@ -38,61 +37,62 @@ def find_path_glob(path, pattern: str, recursion: bool) -> list:
 
 
 # 删除文件或目录
-def rm_path(file_name, retries=3) -> None:
+def rm_path(file_name, retries=3) -> bool:
     path = Path(file_name)
     if path.is_symlink() or path.is_file():
         path.unlink()
-        return
+        return True
 
     if path.is_dir():
         for i in range(retries):
             try:
                 shutil.rmtree(file_name)
-                return
+                return True
             except OSError:
                 if i == retries - 1:
-                    raise
+                    return False
                 time.sleep(1)
-        return
+        return False
+
+    return False
 
 
 # 删除文件或目录，支持通配符
-def rm_path_glob(path_name, pattern: str) -> None:
+def rm_path_glob(path_name, pattern: str) -> bool:
     paths = find_path_glob(path_name, pattern, False)
     if not paths:
-        return
+        return True
 
     for path in paths:
-        rm_path(path)
+        if not rm_path(path):
+            return False
+    return True
 
 
 # 拷贝文件或目录
-def copy_path(src_path, dst_path) -> None:
+def copy_path(src_path, dst_path) -> bool:
     src = Path(src_path)
     dst = Path(dst_path)
 
     if not src.exists():
-        return
+        return True
 
     dst.parent.mkdir(parents=True, exist_ok=True)
 
-    if dst.is_dir():
-        dst = dst / src.name
-    rm_path(str(dst))
+    if src.is_dir():
+        if dst.exists():
+            if dst.is_dir():
+                for p in src.iterdir():
+                    if not copy_path(p, dst / p.name):
+                        return False
+                return True
+            return False
 
-    if src.is_file():
-        shutil.copy2(src, dst)
-    elif src.is_dir():
-        shutil.copytree(src, dst, copy_function=shutil.copy2)
+        shutil.copytree(src, dst)
+        return True
 
-def copy_path_glob(src_dir, dst_dir, pattern: str) -> None:
-    paths = find_path_glob(src_dir, pattern, False)
-    if not paths:
-        return
-
-    dst_dir.mkdir(parents=True, exist_ok=True)
-    for path in paths:
-        copy_path(path, dst_dir)
+    shutil.copy2(src, dst)
+    return True
 
 # 获取系统名称和架构
 def get_os_info() -> None:
@@ -132,7 +132,7 @@ class ExampleClass:
     __env_dir = None
     __args = None
 
-    def main(self, args) -> None:
+    def main(self) -> None:
         # 获取脚本所在目录
         self.__env_dir = Path(__file__).resolve().parent
 
@@ -162,6 +162,20 @@ class ExampleClass:
             default=10,
         )
 
+        # 可选限制参数
+        parser.add_argument(
+            "-t",
+            "--build_type",
+            help="指定编译类型",
+            default="debug",
+            choices=["debug", "release"],
+            type=str,
+            required=False,
+        )
+
+        # 可选单独参数(默认False，出现了-m就是True)
+        parser.add_argument("-m", action="store_true")
+
         # 解析参数
         self.__args = parser.parse_args()
 
@@ -173,5 +187,5 @@ class ExampleClass:
 
 if __name__ == "__main__":
     h = ExampleClass()
-    h.main(sys.argv)
+    h.main()
 ```

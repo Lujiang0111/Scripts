@@ -1,13 +1,13 @@
 import os
-import pathlib
+from pathlib import Path
 import shutil
 import subprocess
 
-env_dir = pathlib.Path(__file__).resolve().parent
+env_dir = Path(__file__).resolve().parent
 os.chdir(env_dir)
 
 repo_url = "https://github.com/Lujiang0111/env.git"
-repo_dir = pathlib.Path(repo_url).stem
+repo_dir = Path(repo_url).stem
 
 if os.path.exists(repo_dir):
     shutil.rmtree(repo_dir)

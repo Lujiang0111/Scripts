@@ -5,7 +5,6 @@ import re
 import shutil
 import socket
 import subprocess
-import sys
 from typing import List, Tuple
 import urllib.parse
 
@@ -34,7 +33,7 @@ class ExampleClass:
 
     __openssl = None
 
-    def main(self, args) -> None:
+    def main(self) -> None:
         self.parse_args()
 
         if not self.prepare_openssl():
@@ -742,4 +741,4 @@ class ExampleClass:
 
 if __name__ == "__main__":
     h = ExampleClass()
-    h.main(sys.argv)
+    h.main()

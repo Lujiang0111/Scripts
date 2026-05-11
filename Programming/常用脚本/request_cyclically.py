@@ -8,7 +8,7 @@ def StrIsJson(str):
     try:
         json.loads(str)
         return True
-    except ValueError as e:
+    except ValueError:
         return False
 
 
