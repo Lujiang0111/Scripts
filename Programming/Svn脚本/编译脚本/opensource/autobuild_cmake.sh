@@ -66,7 +66,7 @@ if [[ "${os_version}" == "centos7.1" ]]; then
 	fi
 fi
 
-mkdir -p ${install_project_dir}
+mkdir -p ${install_version_dir}
 rm -rf ${install_version_dir}
 
 echo -e "done!"

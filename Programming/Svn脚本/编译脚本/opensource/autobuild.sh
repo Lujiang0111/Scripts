@@ -121,7 +121,7 @@ PrepareSoDep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/op
 
 export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-mkdir -p ${install_project_dir}
+mkdir -p ${install_version_dir}
 rm -rf ${install_version_dir}
 
 echo -e "done!"
