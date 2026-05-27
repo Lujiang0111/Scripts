@@ -76,7 +76,6 @@ ffmpeg -i input.ts -map 0:a:0 -c copy output.aac
     | flt / fltp | pcm_f32le |
     | dbl / dblp | pcm_f64le |
 
-
 ```shell
 ffmpeg -i input.ts -map 0:a:0 -c:a pcm_s16le output.pcm
 ```
