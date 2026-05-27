@@ -145,17 +145,24 @@ make clean && make V=1 -j"$(nproc)" && make install
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
 
-# \cp -r "${dep_dir}"/*/lib/*.so* ${install_version_dir}/lib
+lib_dir=
+if [ -d "${install_version_dir}/lib64" ]; then
+	lib_dir=${install_version_dir}/lib64
+elif [ -d "${install_version_dir}/lib" ]; then
+	lib_dir=${install_version_dir}/lib
+fi
 
-cd ${install_version_dir}/lib || exit
-for src_file in *.so*; do
-	if [ -f "${src_file}" ]; then
-		dst_file=$(readlink "${src_file}")
-		if [ -f "${dst_file}" ]; then
-			rm -f "${src_file}"
+if [ -n "${lib_dir}" ]; then
+	cd ${lib_dir} || exit
+	for src_file in *.so*; do
+		if [ -f "${src_file}" ]; then
+			dst_file=$(readlink "${src_file}")
+			if [ -f "${dst_file}" ]; then
+				rm -f "${src_file}"
+			fi
 		fi
-	fi
-done
+	done
+fi
 
 rm -rf "${dep_dir}"
 
