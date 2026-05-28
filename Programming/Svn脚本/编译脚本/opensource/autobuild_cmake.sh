@@ -77,8 +77,20 @@ rm -rf "build/${os_version}"
 mkdir -p "build/${os_version}"
 
 cd "build/${os_version}" || exit
-cmake -DCMAKE_INSTALL_PREFIX=${install_version_dir} ../..
-make clean && make V=1 -j"$(nproc)" && make install
+cmake -DCMAKE_INSTALL_PREFIX=${install_version_dir} ../.. || {
+    echo "cmake failed"
+    exit 1
+}
+
+make clean
+make V=1 -j"$(nproc)" || {
+    echo "make failed"
+    exit 1
+}
+make install || {
+    echo "make install failed"
+    exit 1
+}
 
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"

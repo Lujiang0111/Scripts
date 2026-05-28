@@ -74,16 +74,30 @@ echo -e "\n\033[33m============= installing =============\033[0m\n"
 
 cd "${src_dir}" || exit
 
-autoreconf -f
+autoreconf -f -i || {
+    echo "autoreconf failed"
+    exit 1
+}
 
 chmod +x configure
 ./configure \
     --prefix=${install_version_dir} \
     --enable-build-type=release \
     --enable-shared \
-    --disable-static
+    --disable-static || {
+    echo "configure failed"
+    exit 1
+}
 
-make clean && make V=1 -j"$(nproc)" && make install
+make clean
+make V=1 -j"$(nproc)" || {
+    echo "make failed"
+    exit 1
+}
+make install || {
+    echo "make install failed"
+    exit 1
+}
 
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"

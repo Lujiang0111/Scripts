@@ -138,9 +138,20 @@ chmod +x configure
     --use-openssl-pc=OFF \
     --openssl-include-dir="${dep_dir}/openssl/include" \
     --openssl-crypto-library="${dep_dir}/openssl/lib/libcrypto.so" \
-    --openssl-ssl-library="${dep_dir}/openssl/lib/libssl.so"
+    --openssl-ssl-library="${dep_dir}/openssl/lib/libssl.so" || {
+    echo "configure failed"
+    exit 1
+}
 
-make clean && make V=1 -j"$(nproc)" && make install
+make clean
+make V=1 -j"$(nproc)" || {
+    echo "make failed"
+    exit 1
+}
+make install || {
+    echo "make install failed"
+    exit 1
+}
 
 echo -e "done!"
 echo -e "\n\033[33m========== do some cleaning ==========\033[0m\n"
