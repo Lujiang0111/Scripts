@@ -57,13 +57,13 @@ src_dir=${shell_dir}/../../../../src
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
 if [[ "${os_version}" == "centos7.1" ]]; then
-    # switch to devtoolset-8
+    # switch to devtoolset-4
     gcc_version=$(gcc -dumpversion)
     gcc_major=${gcc_version%%.*}
     if [ "${gcc_major}" -le 4 ]; then
-        if [ -r "/opt/rh/devtoolset-8/enable" ]; then
-            source /opt/rh/devtoolset-8/enable
-            echo -e "\033[34mswitch to devtoolset-8\033[0m"
+        if [ -r "/opt/rh/devtoolset-4/enable" ]; then
+            source /opt/rh/devtoolset-4/enable
+            echo -e "\033[34mswitch to devtoolset-4\033[0m"
         fi
     fi
 fi
