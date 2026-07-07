@@ -86,7 +86,7 @@ class HlsDownload:
         )
         self.__args = parser.parse_args()
 
-    def request_url(self, url) -> bytes:
+    def request_url(self, url) -> requests.Response:
         self.__logger.info(f"Requesting URL: {url}...")
         start_time = time.perf_counter()
         retry_times = 0
@@ -116,13 +116,14 @@ class HlsDownload:
                 f"Request succeeded, time used: {elapsed:.2f}s, size: {len(response.content) / 1024:.1f} KB"
             )
 
-        return response.content
+        return response
 
     def download_variant(self, url) -> float:
-        url_bytes = self.request_url(url)
-        if not url_bytes:
+        url_response = self.request_url(url)
+        if not url_response:
             return 3
-        url_content = url_bytes.decode(encoding="utf-8")
+        url_content = url_response.content.decode(encoding="utf-8")
+        url = url_response.url
 
         parsed_url = urllib.parse.urlparse(url)
         save_path = self.__save_dir / f".{parsed_url.path}"
@@ -167,8 +168,8 @@ class HlsDownload:
                         if segment_save_path.exists():
                             continue
 
-                        segment_bytes = self.request_url(segment_url)
-                        if not segment_bytes:
+                        segment_response = self.request_url(segment_url)
+                        if not segment_response:
                             continue
 
                         self.__logger.info(
@@ -184,7 +185,7 @@ class HlsDownload:
                         self.__logger.info(f"Saved segment to {segment_save_path}")
                         segment_save_path.parent.mkdir(parents=True, exist_ok=True)
                         with open(segment_save_path, "wb") as file:
-                            file.write(segment_bytes)
+                            file.write(segment_response.content)
 
         if combined_save_file:
             combined_save_file.close()
