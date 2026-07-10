@@ -40,10 +40,12 @@ dns:
   respect-rules: true
   default-nameserver:
     - 223.5.5.5
-    - 223.6.6.6
+    - 119.29.29.29
+    - 114.114.114.114
   proxy-server-nameserver:
-    - https://223.5.5.5/dns-query
-    - https://223.6.6.6/dns-query
+    - 223.5.5.5
+    - 119.29.29.29
+    - 114.114.114.114
   nameserver:
     - 123.123.123.123
     - 123.123.123.124
