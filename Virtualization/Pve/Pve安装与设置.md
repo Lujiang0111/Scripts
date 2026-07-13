@@ -297,7 +297,7 @@ echo "blacklist igb" >> /etc/modprobe.d/eth-blacklist.conf
     `DEVS`根据自己需要修改
 
     ```shell
-    #!/bin/sh
+    #!/bin/bash
     DEVS="0000:00:11.5 \
     0000:00:17.0 \
     0000:02:00.0 \

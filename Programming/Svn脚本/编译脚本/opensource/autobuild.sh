@@ -17,38 +17,50 @@ install_root_dir=/home/install
 install_project_dir=${install_root_dir}/${project}
 install_version_dir=${install_project_dir}/${full_version}
 
-#$1: os version
+os_release_file="/etc/os-release"
+if [ ! -r "${os_release_file}" ]; then
+    echo "can not read ${os_release_file}"
+    exit 1
+fi
+
 os_version_default=centos7.1
 os_version=
-if [ -n "$1" ]; then
-    os_version=$1
+if grep "Ubuntu" ${os_release_file}; then
+    os_version=ubuntu22.04
+elif grep "Kylin" ${os_release_file}; then
+    os_version=KylinV10
+elif grep "openEuler" ${os_release_file}; then
+    os_version=openeuler22.03
 else
-    if grep "Ubuntu" /etc/os-release; then
-        os_version=ubuntu22.04
-    elif grep "Kylin" /etc/os-release; then
-        os_version=KylinV10
-    elif grep "openEuler" /etc/os-release; then
-        os_version=openeuler22.03
-    else
-        os_version=${os_version_default}
-    fi
+    os_version=${os_version_default}
 fi
 echo -e "os_version=\033[34m${os_version}\033[0m"
 
-#$2: os arch
-os_arch_default=x64
+# get id and version_id form /etc/os-release
+os_id=$(
+    (
+        . "${os_release_file}"
+        printf '%s' "${ID:-}"
+    )
+)
+os_version_id=$(
+    (
+        . "${os_release_file}"
+        printf '%s' "${VERSION_ID:-}"
+    )
+)
+echo -e "os_id=\033[34m${os_id}\033[0m,os_version_id=\033[34m${os_version_id}\033[0m"
+
+#os arch
 os_arch=
-if [ -n "$2" ]; then
-    os_arch=$2
+uname_ret=$(uname -a)
+if [[ ${uname_ret} == *"x86_64"* ]]; then
+    os_arch=x64
+elif [[ ${uname_ret} == *"aarch64"* ]]; then
+    os_arch=aarch64
 else
-    uname_ret=$(uname -a)
-    if [[ ${uname_ret} == *"x86_64"* ]]; then
-        os_arch=x64
-    elif [[ ${uname_ret} == *"aarch64"* ]]; then
-        os_arch=aarch64
-    else
-        os_arch=${os_arch_default}
-    fi
+    echo "unsupported os arch"
+    exit 1
 fi
 echo -e "os_arch=\033[34m${os_arch}\033[0m"
 
@@ -56,7 +68,7 @@ src_dir=${shell_dir}/../../../../src
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
-if [[ "${os_version}" == "centos7.1" ]]; then
+if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
     # switch to devtoolset-6
     gcc_version=$(gcc -dumpversion)
     gcc_major=${gcc_version%%.*}
