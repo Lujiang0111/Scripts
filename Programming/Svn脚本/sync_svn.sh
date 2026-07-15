@@ -31,5 +31,6 @@ else
     echo "Clear and checkout ${svn_checkout_url} to ${svn_checkout_dir}"
 
     rm "${svn_checkout_dir}" -rf
-    svn checkout "${svn_checkout_url}" "${svn_checkout_dir}" "${svn_auth_code}"
+    # shellcheck disable=SC2086
+    svn checkout "${svn_checkout_url}" "${svn_checkout_dir}" ${svn_auth_code}
 fi
