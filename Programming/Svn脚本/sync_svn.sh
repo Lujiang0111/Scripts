@@ -26,7 +26,8 @@ if svn info . >/dev/null 2>&1; then
 
     #rm ./* -rf
     svn revert -R .
-    svn up "${svn_auth_code}"
+    # shellcheck disable=SC2086
+    svn up ${svn_auth_code}
 else
     echo "Clear and checkout ${svn_checkout_url} to ${svn_checkout_dir}"
 
