@@ -39,12 +39,14 @@ echo -e "os_version=\033[34m${os_version}\033[0m"
 # get id and version_id form /etc/os-release
 os_id=$(
     (
+        # shellcheck disable=SC1090
         . "${os_release_file}"
         printf '%s' "${ID:-}"
     )
 )
 os_version_id=$(
     (
+        # shellcheck disable=SC1090
         . "${os_release_file}"
         printf '%s' "${VERSION_ID:-}"
     )
@@ -74,6 +76,7 @@ if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
     gcc_major=${gcc_version%%.*}
     if [ "${gcc_major}" -le 4 ]; then
         if [ -r "/opt/rh/devtoolset-6/enable" ]; then
+            # shellcheck disable=SC1091
             source /opt/rh/devtoolset-6/enable
             echo -e "\033[34mswitch to devtoolset-6\033[0m"
         fi
