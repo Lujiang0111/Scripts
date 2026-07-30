@@ -9,8 +9,8 @@ shell_dir=$(
 )
 shell_dir=$(realpath "${shell_dir}")
 
-project=srt
-version=1.5.3
+project=xStreamNginx
+version=1.31.3
 full_version=v${version}-release
 
 install_root_dir=/home/install
@@ -23,7 +23,8 @@ if [ ! -r "${os_release_file}" ]; then
     exit 1
 fi
 
-os_version_default=centos7.1
+x86_os_version_default=centos7.1
+aarch64_os_version_default=KylinV10
 os_version=
 if grep "Ubuntu" ${os_release_file}; then
     os_version=ubuntu22.04
@@ -32,7 +33,7 @@ elif grep "Kylin" ${os_release_file}; then
 elif grep "openEuler" ${os_release_file}; then
     os_version=openeuler22.03
 else
-    os_version=${os_version_default}
+    os_version=centos7.1
 fi
 echo -e "os_version=\033[34m${os_version}\033[0m"
 
@@ -58,8 +59,10 @@ os_arch=
 uname_ret=$(uname -a)
 if [[ ${uname_ret} == *"x86_64"* ]]; then
     os_arch=x64
+    os_version_default=${x86_os_version_default}
 elif [[ ${uname_ret} == *"aarch64"* ]]; then
     os_arch=aarch64
+    os_version_default=${aarch64_os_version_default}
 else
     echo "unsupported os arch"
     exit 1
@@ -89,7 +92,9 @@ mkdir -p "${dep_dir}"
 
 function PrepareSoDep() {
     mkdir -p "${dep_dir}/$1"
-    if [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+    if [ -d "$2/linux/${os_id}${os_version_id}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_id}${os_version_id}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version}/${os_arch}" ]; then
         \cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
     elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
         \cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
@@ -116,7 +121,9 @@ function PrepareSoDep() {
 
 function PrepareADep() {
     mkdir -p "${dep_dir}/$1"
-    if [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+    if [ -d "$2/linux/${os_id}${os_version_id}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_id}${os_version_id}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version}/${os_arch}" ]; then
         \cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
     elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
         \cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
@@ -132,9 +139,18 @@ function PrepareADep() {
     fi
 }
 
-PrepareSoDep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.0.8"
+http_flv_module_dir=${shell_dir}/../../../../module/nginx-http-flv-module-1.2.14
+dav_ext_module_dir=${shell_dir}/../../../../module/nginx-dav-ext-module-3.0.0
+headers_more_module_dir=${shell_dir}/../../../../module/headers-more-nginx-module-0.40
 
-export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
+if [[ "${os_id}" == "ubuntu" && "${os_version_id}" == "26.04" ]] ||
+    [[ "${os_id}" == "openEuler" && "${os_version_id}" == "24.03" ]]; then
+    openssl_configure_cmd="--with-http_ssl_module"
+else
+    PrepareADep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
+    export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
+    openssl_configure_cmd="--with-openssl=${dep_dir}/openssl --with-http_ssl_module"
+fi
 
 mkdir -p ${install_version_dir}
 rm -rf ${install_version_dir}
@@ -145,18 +161,18 @@ echo -e "\n\033[33m============= installing =============\033[0m\n"
 cd "${src_dir}" || exit
 
 chmod +x configure
+# shellcheck disable=SC2086
 ./configure \
     --prefix=${install_version_dir} \
-    --enable-shared \
-    --disable-static \
-    --enable-debug=0 \
-    --use-openssl-pc=OFF \
-    --openssl-include-dir="${dep_dir}/openssl/include" \
-    --openssl-crypto-library="${dep_dir}/openssl/lib/libcrypto.so" \
-    --openssl-ssl-library="${dep_dir}/openssl/lib/libssl.so" || {
-    echo "configure failed"
-    exit 1
-}
+    --with-cc-opt='-fPIE -fstack-protector-all' \
+    --with-ld-opt='-Wl,-z,relro,-z,now,-z,noexecstack -pie -s' \
+    ${openssl_configure_cmd} \
+    --add-module="${http_flv_module_dir}" \
+    --with-http_dav_module \
+    --add-module="${dav_ext_module_dir}" \
+    --with-http_auth_request_module \
+    --add-module="${headers_more_module_dir}" \
+    --with-stream
 
 make clean
 make V=1 -j"$(nproc)" || {
