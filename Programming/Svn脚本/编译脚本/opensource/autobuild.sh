@@ -172,7 +172,10 @@ chmod +x configure
     --add-module="${dav_ext_module_dir}" \
     --with-http_auth_request_module \
     --add-module="${headers_more_module_dir}" \
-    --with-stream
+    --with-stream || {
+    echo "configure failed"
+    exit 1
+}
 
 make clean
 make V=1 -j"$(nproc)" || {
