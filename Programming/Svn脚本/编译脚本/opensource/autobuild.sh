@@ -197,6 +197,13 @@ elif [ -d "${install_version_dir}/lib" ]; then
     lib_dir=${install_version_dir}/lib
 fi
 
+copy_dep_so_file=false
+if [ "${copy_dep_so_file}" = "true" ]; then
+    find "${dep_dir}" -type f -name "*.so*" | while read -r so_file; do
+        cp -f "${so_file}" "${lib_dir}/"
+    done
+fi
+
 if [ -n "${lib_dir}" ]; then
     cd ${lib_dir} || exit
     for src_file in *.so*; do
