@@ -31,6 +31,8 @@ os_id=$(
         printf '%s' "${ID:-}"
     )
 )
+os_id="${os_id,,}"
+
 os_version_id=$(
     (
         # shellcheck disable=SC1090

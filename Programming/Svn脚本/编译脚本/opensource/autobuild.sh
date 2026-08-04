@@ -45,6 +45,9 @@ os_id=$(
         printf '%s' "${ID:-}"
     )
 )
+# trans to lower case
+os_id="${os_id,,}"
+
 os_version_id=$(
     (
         # shellcheck disable=SC1090
@@ -144,7 +147,7 @@ dav_ext_module_dir=${shell_dir}/../../../../module/nginx-dav-ext-module-3.0.0
 headers_more_module_dir=${shell_dir}/../../../../module/headers-more-nginx-module-0.40
 
 if [[ "${os_id}" == "ubuntu" && "${os_version_id}" == "26.04" ]] ||
-    [[ "${os_id}" == "openEuler" && "${os_version_id}" == "24.03" ]]; then
+    [[ "${os_id}" == "openeuler" && "${os_version_id}" == "24.03" ]]; then
     openssl_configure_cmd="--with-http_ssl_module"
 else
     PrepareADep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
