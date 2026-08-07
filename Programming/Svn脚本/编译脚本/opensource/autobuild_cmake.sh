@@ -204,6 +204,8 @@ if [ -n "${lib_dir}" ]; then
     done
 fi
 
+rm -rf "${dep_dir}"
+
 echo -e "done!"
 echo -e "\n\033[33m========= install successful =========\033[0m\n"
 
