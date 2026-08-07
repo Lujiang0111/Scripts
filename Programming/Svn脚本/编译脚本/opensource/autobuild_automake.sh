@@ -31,6 +31,7 @@ os_id=$(
         printf '%s' "${ID:-}"
     )
 )
+# trans to lower case
 os_id="${os_id,,}"
 
 os_version_id=$(

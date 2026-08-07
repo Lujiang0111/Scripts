@@ -23,6 +23,20 @@ if [ ! -r "${os_release_file}" ]; then
     exit 1
 fi
 
+x86_os_version_default=centos7.1
+aarch64_os_version_default=KylinV10
+os_version=
+if grep "Ubuntu" ${os_release_file}; then
+    os_version=ubuntu22.04
+elif grep "Kylin" ${os_release_file}; then
+    os_version=KylinV10
+elif grep "openEuler" ${os_release_file}; then
+    os_version=openeuler22.03
+else
+    os_version=centos7.1
+fi
+echo -e "os_version=\033[34m${os_version}\033[0m"
+
 # get id and version_id form /etc/os-release
 os_id=$(
     (
@@ -31,6 +45,7 @@ os_id=$(
         printf '%s' "${ID:-}"
     )
 )
+# trans to lower case
 os_id="${os_id,,}"
 
 os_version_id=$(
@@ -47,8 +62,10 @@ os_arch=
 uname_ret=$(uname -a)
 if [[ ${uname_ret} == *"x86_64"* ]]; then
     os_arch=x64
+    os_version_default=${x86_os_version_default}
 elif [[ ${uname_ret} == *"aarch64"* ]]; then
     os_arch=aarch64
+    os_version_default=${aarch64_os_version_default}
 else
     echo "unsupported os arch"
     exit 1
@@ -72,6 +89,68 @@ if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
     fi
 fi
 
+dep_dir=${shell_dir}/dep
+rm -rf "${dep_dir}"
+mkdir -p "${dep_dir}"
+
+function PrepareSoDep() {
+    mkdir -p "${dep_dir}/$1"
+    if [ -d "$2/linux/${os_id}${os_version_id}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_id}${os_version_id}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
+    else
+        echo -e "Could not find $1"
+        return
+    fi
+
+    if [ -d "${dep_dir}/$1/lib" ]; then
+        cd "${dep_dir}/$1/lib" || exit
+        rm -rf ./*.a*
+        for file in *.so.*; do
+            if [ -f "${file}" ]; then
+                realname=$(echo "${file}" | rev | cut -d '/' -f 1 | rev)
+                libname=$(echo "${realname}" | cut -d '.' -f 1)
+                if [ ! -f "${libname}".so ]; then
+                    ln -sf "${realname}" "${libname}".so
+                fi
+            fi
+        done
+        cd - >/dev/null || exit
+    fi
+}
+
+function PrepareADep() {
+    mkdir -p "${dep_dir}/$1"
+    if [ -d "$2/linux/${os_id}${os_version_id}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_id}${os_version_id}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_version}/${os_arch}"/* "${dep_dir}/$1"
+    elif [ -d "$2/linux/${os_version_default}/${os_arch}" ]; then
+        \cp -r "$2/linux/${os_version_default}/${os_arch}"/* "${dep_dir}/$1"
+    else
+        echo -e "Could not find $1"
+        return
+    fi
+
+    if [ -d "${dep_dir}/$1/lib" ]; then
+        cd "${dep_dir}/$1/lib" || exit
+        rm -rf ./*.so*
+        cd - >/dev/null || exit
+    fi
+}
+
+if [[ "${os_id}" == "ubuntu" && "${os_version_id}" == "26.04" ]] ||
+    [[ "${os_id}" == "openeuler" && "${os_version_id}" == "24.03" ]]; then
+    openssl_cmake_cmd=""
+else
+    PrepareADep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
+    export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
+    openssl_cmake_cmd="-DOPENSSL_INCLUDE_DIR=${dep_dir}/openssl/include -DOPENSSL_LIB_DIR=${dep_dir}/openssl/lib"
+fi
+
 mkdir -p ${install_version_dir}
 rm -rf ${install_version_dir}
 
@@ -84,7 +163,11 @@ rm -rf "${build_dir}"
 mkdir -p "${build_dir}"
 
 cd "${build_dir}" || exit
-cmake -DCMAKE_INSTALL_PREFIX=${install_version_dir} ../.. || {
+# shellcheck disable=SC2086
+cmake \
+    -DCMAKE_INSTALL_PREFIX=${install_version_dir} \
+    ../.. \
+    ${openssl_cmake_cmd} || {
     echo "cmake failed"
     exit 1
 }
