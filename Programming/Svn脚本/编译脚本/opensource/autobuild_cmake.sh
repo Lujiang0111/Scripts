@@ -23,20 +23,6 @@ if [ ! -r "${os_release_file}" ]; then
     exit 1
 fi
 
-x86_os_version_default=centos7.1
-aarch64_os_version_default=KylinV10
-os_version=
-if grep "Ubuntu" ${os_release_file}; then
-    os_version=ubuntu22.04
-elif grep "Kylin" ${os_release_file}; then
-    os_version=KylinV10
-elif grep "openEuler" ${os_release_file}; then
-    os_version=openeuler22.03
-else
-    os_version=centos7.1
-fi
-echo -e "os_version=\033[34m${os_version}\033[0m"
-
 # get id and version_id form /etc/os-release
 os_id=$(
     (
@@ -57,8 +43,22 @@ os_version_id=$(
 )
 echo -e "os_id=\033[34m${os_id}\033[0m,os_version_id=\033[34m${os_version_id}\033[0m"
 
-#os arch
-os_arch=
+# os_version
+x86_os_version_default=centos7.1
+aarch64_os_version_default=KylinV10
+os_version=
+if grep "Ubuntu" ${os_release_file}; then
+    os_version=ubuntu22.04
+elif grep "Kylin" ${os_release_file}; then
+    os_version=KylinV10
+elif grep "openEuler" ${os_release_file}; then
+    os_version=openeuler22.03
+else
+    os_version=centos7.1
+fi
+echo -e "os_version=\033[34m${os_version}\033[0m"
+
+# os_arch=
 uname_ret=$(uname -a)
 if [[ ${uname_ret} == *"x86_64"* ]]; then
     os_arch=x64
@@ -76,6 +76,7 @@ src_dir=${shell_dir}/../../../../src
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
+: <<'COMMENT'
 if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
     # switch to devtoolset-6
     gcc_version=$(gcc -dumpversion)
@@ -88,6 +89,7 @@ if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
         fi
     fi
 fi
+COMMENT
 
 dep_dir=${shell_dir}/dep
 rm -rf "${dep_dir}"
