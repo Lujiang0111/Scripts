@@ -22,3 +22,7 @@ DOMAIN-KEYWORD,sonkwo
 # pikpak
 DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.com$
 DOMAIN-REGEX,^dl-\w+-\w+\.mypikpak\.net$
+
+# ntp
+DOMAIN-SUFFIX,ntp.ubuntu.com
+DOMAIN,ntp-bootstrap.ubuntu.com
