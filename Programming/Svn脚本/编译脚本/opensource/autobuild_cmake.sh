@@ -166,9 +166,8 @@ mkdir -p "${build_dir}"
 
 cd "${build_dir}" || exit
 # shellcheck disable=SC2086
-cmake \
+cmake ../.. \
     -DCMAKE_INSTALL_PREFIX=${install_version_dir} \
-    ../.. \
     ${openssl_cmake_cmd} || {
     echo "cmake failed"
     exit 1
