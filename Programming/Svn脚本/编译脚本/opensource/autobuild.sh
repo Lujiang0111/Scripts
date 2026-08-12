@@ -58,7 +58,8 @@ else
 fi
 echo -e "os_version=\033[34m${os_version}\033[0m"
 
-# os_arch=
+# os_arch
+os_arch=
 uname_ret=$(uname -a)
 if [[ ${uname_ret} == *"x86_64"* ]]; then
     os_arch=x64
