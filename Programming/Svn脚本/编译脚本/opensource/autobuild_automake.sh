@@ -43,35 +43,6 @@ os_version_id=$(
 )
 echo -e "os_id=\033[34m${os_id}\033[0m,os_version_id=\033[34m${os_version_id}\033[0m"
 
-# os_version
-x86_os_version_default=centos7.1
-aarch64_os_version_default=KylinV10
-os_version=
-if grep "Ubuntu" ${os_release_file}; then
-    os_version=ubuntu22.04
-elif grep "Kylin" ${os_release_file}; then
-    os_version=KylinV10
-elif grep "openEuler" ${os_release_file}; then
-    os_version=openeuler22.03
-else
-    os_version=centos7.1
-fi
-echo -e "os_version=\033[34m${os_version}\033[0m"
-
-# os_arch=
-uname_ret=$(uname -a)
-if [[ ${uname_ret} == *"x86_64"* ]]; then
-    os_arch=x64
-    os_version_default=${x86_os_version_default}
-elif [[ ${uname_ret} == *"aarch64"* ]]; then
-    os_arch=aarch64
-    os_version_default=${aarch64_os_version_default}
-else
-    echo "unsupported os arch"
-    exit 1
-fi
-echo -e "os_arch=\033[34m${os_arch}\033[0m"
-
 src_dir=${shell_dir}/../../../../src
 
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
