@@ -1,11 +1,15 @@
 // ==UserScript==
-// @name         Add universalis link to wiki
-// @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Add universalis link to wiki page
+// @name         Add Universalis link to wiki
+// @namespace    https://github.com/Lujiang0111/Scripts
+// @version      1.0.0
+// @description  Add Universalis link to FF14 HuijiWiki page
 // @author       lujiang0111
 // @match        https://ff14.huijiwiki.com/wiki/*
 // @icon         https://universalis.app/favicon.png
+// @homepageURL  https://github.com/Lujiang0111/Scripts
+// @source       https://github.com/Lujiang0111/Scripts
+// @updateURL    https://raw.githubusercontent.com/Lujiang0111/Scripts/main/FFXIV/Script/add_universalis_link_to_wiki/add_universalis_link_to_wiki.user.js
+// @downloadURL  https://raw.githubusercontent.com/Lujiang0111/Scripts/main/FFXIV/Script/add_universalis_link_to_wiki/add_universalis_link_to_wiki.user.js
 // @grant        none
 // ==/UserScript==
 
