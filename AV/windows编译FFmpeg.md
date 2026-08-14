@@ -128,7 +128,6 @@
         add_compat strtod.o strtod=avpriv_strtod
         ;;
     msvcrt)
-    # modify by sumavision
     #        add_compat strtod.o strtod=avpriv_strtod
     #        add_compat msvcrt/snprintf.o snprintf=avpriv_snprintf   \
     #                                     _snprintf=avpriv_snprintf  \
