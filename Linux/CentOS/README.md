@@ -28,22 +28,38 @@ echo 3 > /proc/sys/vm/drop_caches
 
 ## 解决ssh连接慢的问题
 
-1. 打开ssh配置文件
+打开ssh配置文件
 
-    ```shell
-    vim /etc/ssh/sshd_config
-    ```
+```shell
+vim /etc/ssh/sshd_config
+```
 
-2. 修改```#UseDNS yes```为```UseDNS no```
+修改`#UseDNS yes`为`UseDNS no`
 
 ## 最小化安装后网络设置
 
-1. 输入```nmcli d```命令快速查看网卡列表以及连接情况。
-2. 输入```nmtui```命令进入图形化网络设置界面，选择对应网卡，设置Ip（x.x.x.x/xx格式），网关，dns，dhcp。
-3. 输入```service network restart```重启网络。
+1. 输入`nmcli d`命令快速查看网卡列表以及连接情况。
+1. 输入`nmtui`命令进入图形化网络设置界面，选择对应网卡，设置Ip（x.x.x.x/xx格式），网关，dns，dhcp。
+1. 输入`service network restart`重启网络。
 
 ## 安装C/C++帮助手册
 
 ```shell
 yum install -y man-pages libstdc++-docs
 ```
+
+## 为yum配置代理服务器
+
+打开yum配置文件
+
+```shell
+vim /etc/yum.conf
+```
+
+在该文件尾部添加如下一行
+
+```shell
+proxy=http://ip:port
+```
+
+**注意**：设置`http_proxy`环境变量，并不能达到让yum能连外网。
