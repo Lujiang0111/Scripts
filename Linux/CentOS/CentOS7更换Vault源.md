@@ -28,7 +28,7 @@ yum clean all
 yum makecache
 ```
 
-如果提示ssl错误可以尝试用http的版本
+**注意**：如果提示ssl错误可以尝试用`http://`的版本：
 
 ```shell
 #!/bin/bash
