@@ -40,7 +40,8 @@ config interface 'lan'
 
 + 系统 -> 系统
   + 设置时区
-  + 设置NTP服务器地址。
+  + 设置NTP服务器地址
+    + ntp.ntsc.ac.cn
 + 系统 -> 管理权 -> 路由器密码：
   + 设置密码
 + 系统 -> 管理权 -> SSH访问：
