@@ -56,6 +56,9 @@ dns:
     +.google.com,+.facebook.com,+.youtube.com:
       - https://8.8.8.8/dns-query#disable-ipv6=true
       - https://1.1.1.1/dns-query#disable-ipv6=true
+    +.foos.one:
+      - 123.123.123.123
+      - 123.123.123.124
 ```
 
 ## 混入配置 -> 嗅探器配置

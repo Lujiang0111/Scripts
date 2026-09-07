@@ -33,32 +33,6 @@
 ### dns
 
 + SmartDns：见smartdns在IPv6环境下分流设置
-+ nameserver-policy：
-
-  ```yaml
-  dns:
-    enable: true
-    ipv6: true
-    enhanced-mode: redir-host
-    listen: 0.0.0.0:7874
-    respect-rules: true
-    nameserver-policy:
-      geosite:cn,private,apple:
-        - 123.123.123.123
-        - 123.123.123.124
-    proxy-server-nameserver:
-      - 114.114.114.114
-      - 119.29.29.29
-      - 223.5.5.5
-    nameserver:
-      - https://8.8.8.8/dns-query#disable-ipv6=true
-      - https://1.1.1.1/dns-query#disable-ipv6=true
-    default-nameserver:
-      - 114.114.114.114
-      - 119.29.29.29
-      - 223.5.5.5
-  ```
-
 + fallback:
 
     ```yaml
@@ -75,6 +49,10 @@
       nameserver:
         - 123.123.123.123
         - 123.123.123.124
+      nameserver-policy:
+        "+.foos.one":
+          - 123.123.123.123
+          - 123.123.123.124
       fallback:
         - https://8.8.8.8/dns-query#disable-ipv6=true
         - https://1.1.1.1/dns-query#disable-ipv6=true
