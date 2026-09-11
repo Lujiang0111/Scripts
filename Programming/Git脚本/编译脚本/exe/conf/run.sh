@@ -10,20 +10,23 @@ shell_dir=$(
 shell_dir=$(realpath "${shell_dir}")
 
 project=example_exe
+
 lib_dir=${shell_dir}/lib
+if [ -d ${lib_dir} ]; then
+    export LD_LIBRARY_PATH=${lib_dir}:${LD_LIBRARY_PATH}
+
+    cd "${lib_dir}" || exit
+    for file in ./*.so.*; do
+        [ -f "${file}" ] || continue
+
+        realname=${file#./}
+        libname=${realname%%.so.*}.so
+        [ -e "${libname}" ] || ln -sf "${realname}" "${libname}"
+    done
+    ldconfig -n .
+fi
 
 ulimit -n 65536
-export LD_LIBRARY_PATH=${lib_dir}:${LD_LIBRARY_PATH}
-
-cd "${lib_dir}" || exit
-for file in ./*.so.*; do
-    [ -f "${file}" ] || continue
-
-    realname=${file#./}
-    libname=${realname%%.so.*}.so
-    [ -e "${libname}" ] || ln -sf "${realname}" "${libname}"
-done
-ldconfig -n .
 
 cd "${shell_dir}" || exit
 runlog_max_size=10000000
@@ -39,9 +42,9 @@ function TrapSigint() {
 }
 trap TrapSigint 2
 
+cd "${shell_dir}" || exit
 echo -e "${project} start at $(date +"%Y-%m-%d %H:%M:%S")" >>runlog
 
-cd "${shell_dir}" || exit
 chmod +x ${project}
 ./${project} "$@"
 
