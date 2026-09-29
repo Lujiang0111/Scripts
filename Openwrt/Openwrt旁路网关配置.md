@@ -28,11 +28,11 @@
 config interface 'lan'
 	option device 'br-lan'
 	option proto 'static'
-	option ipaddr '172.28.8.21'
-	option netmask '255.255.255.0'
-	option gateway '172.28.8.1'
+	list ipaddr '172.28.8.21/24'
 	option ip6assign '64'
+	option gateway '172.28.8.1'
 	list dns '123.123.123.123'
+	list dns '123.123.123.124'
 	option ip6ifaceid '::21'
 ```
 
