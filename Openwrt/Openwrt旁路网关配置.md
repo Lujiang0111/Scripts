@@ -75,11 +75,11 @@ config interface 'lan'
 > 参考资料：<https://openwrt.org/zh/docs/guide-user/base-system/cron>
 
 ```shell
-# 每周一上午6:30执行重启
+# 每周5上午6:30执行重启
 # 注意: 为了防止循环重启的怪圈，需要推迟70秒钟执行重启
 # 在/etc目录下touch修改一个文件的时间属性，并且设置
 # 为上午6:31然后再执行cron的重启任务.
-30 6 * * 1 sleep 70 && touch /etc/banner && reboot
+30 6 * * 5 sleep 70 && touch /etc/banner && reboot
 ```
 
 ## 订阅地址配置定时任务，防止拉取订阅超时
