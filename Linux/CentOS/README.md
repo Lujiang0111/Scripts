@@ -62,4 +62,4 @@ vim /etc/yum.conf
 proxy=http://ip:port
 ```
 
-**注意**：设置`http_proxy`环境变量，并不能达到让yum能连外网。
+**注意**：在shell中设置全局`http_proxy`环境变量，对`yum`是无效的。
