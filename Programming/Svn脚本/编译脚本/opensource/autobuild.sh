@@ -9,8 +9,12 @@ shell_dir=$(
 )
 shell_dir=$(realpath "${shell_dir}")
 
-project=xStreamNginx
-version=1.31.3
+function VersionGe() {
+    printf '%s\n' "$2" "$1" | LC_ALL=C sort -V -C
+}
+
+project=ffmpeg
+version=8.1.2
 full_version=v${version}-release
 
 install_root_dir=/home/install
@@ -78,7 +82,7 @@ src_dir=${shell_dir}/../../../../src
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
 : <<'COMMENT'
-if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
+if [[ "${os_id}" == "centos" ]] && ! VersionGe "${os_version_id}" "8"; then
     # switch to devtoolset-6
     gcc_version=$(gcc -dumpversion)
     gcc_major=${gcc_version%%.*}
@@ -145,17 +149,43 @@ function PrepareADep() {
     fi
 }
 
-http_flv_module_dir=${shell_dir}/../../../../module/nginx-http-flv-module-1.2.14
-dav_ext_module_dir=${shell_dir}/../../../../module/nginx-dav-ext-module-3.0.0
-headers_more_module_dir=${shell_dir}/../../../../module/headers-more-nginx-module-0.40
+PrepareSoDep "zimg" "${shell_dir}/../../../../../../../../Versions/Baselib/zimg/v3.0.6"
+PrepareSoDep "opencv" "${shell_dir}/../../../../../../../../Versions/Baselib/opencv/v4.13.0"
+PrepareSoDep "davs2" "${shell_dir}/../../../../../../../../Versions/Baselib/davs2/v1.7.0"
+PrepareSoDep "uavs3d" "${shell_dir}/../../../../../../../../Versions/Baselib/uavs3d/v1.2"
+PrepareSoDep "opencore-amr" "${shell_dir}/../../../../../../../../Versions/Baselib/opencore-amr/v0.1.3"
+PrepareSoDep "vo-amrwbenc" "${shell_dir}/../../../../../../../../Versions/Baselib/vo-amrwbenc/v0.1.3"
+PrepareSoDep "opus" "${shell_dir}/../../../../../../../../Versions/Baselib/opus/v1.6.1"
+PrepareSoDep "zvbi" "${shell_dir}/../../../../../../../../Versions/Baselib/zvbi/v0.2.45"
 
-if [[ "${os_id}" == "ubuntu" && "${os_version_id}" == "26.04" ]] ||
-    [[ "${os_id}" == "openeuler" && "${os_version_id}" == "24.03" ]]; then
-    openssl_configure_cmd="--with-http_ssl_module"
+export PKG_CONFIG_PATH=${dep_dir}/zimg/lib/pkgconfig:${dep_dir}/opencv/lib/pkgconfig:${dep_dir}/davs2/lib/pkgconfig:${dep_dir}/uavs3d/lib/pkgconfig:${dep_dir}/opencore-amr/lib/pkgconfig:${dep_dir}/vo-amrwbenc/lib/pkgconfig:${dep_dir}/opus/lib/pkgconfig:${dep_dir}/zvbi/lib/pkgconfig:${PKG_CONFIG_PATH}
+
+config_cflags="-I${dep_dir}/zimg/include -I${dep_dir}/opencv/include/opencv4 -I${dep_dir}/davs2/include -I${dep_dir}/uavs3d/include -I${dep_dir}/opencore-amr/include -I${dep_dir}/vo-amrwbenc/include -I${dep_dir}/opus/include/opus -I${dep_dir}/zvbi/include"
+config_ldflags="-L${dep_dir}/zimg/lib -L${dep_dir}/opencv/lib -L${dep_dir}/davs2/lib -L${dep_dir}/uavs3d/lib -L${dep_dir}/opencore-amr/lib -L${dep_dir}/vo-amrwbenc/lib -L${dep_dir}/opus/lib -L${dep_dir}/zvbi/lib"
+
+if { [[ "${os_id}" == "ubuntu" ]] && VersionGe "${os_version_id}" "26"; } ||
+    { [[ "${os_id}" == "openEuler" ]] && VersionGe "${os_version_id}" "24"; }; then
+    :
 else
-    PrepareADep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
+    PrepareSoDep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
     export PKG_CONFIG_PATH=${dep_dir}/openssl/lib/pkgconfig:${PKG_CONFIG_PATH}
-    openssl_configure_cmd="--with-openssl=${dep_dir}/openssl --with-http_ssl_module"
+
+    config_cflags="-I${dep_dir}/openssl/include "${config_cflags}
+    config_ldflags="-L${dep_dir}/openssl/lib "${config_ldflags}
+fi
+
+config_external_libs="--disable-iconv --enable-zlib --enable-libxml2 --enable-openssl \
+--enable-libzimg --enable-libopencv --enable-libdavs2 --enable-libuavs3d \
+--enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-libopus \
+--enable-libzvbi"
+
+if [[ "${os_id}" == "ubuntu" ]]; then
+    config_external_libs="--enable-alsa "${config_external_libs}
+fi
+
+config_extra_libs=""
+if [[ "${os_id}" == "centos" ]]; then
+    config_extra_libs="-lm "${config_extra_libs}
 fi
 
 mkdir -p ${install_version_dir}
@@ -167,21 +197,20 @@ echo -e "\n\033[33m============= installing =============\033[0m\n"
 cd "${src_dir}" || exit
 
 chmod +x configure
+chmod +x ffbuild/*.sh
 # shellcheck disable=SC2086
 ./configure \
     --prefix=${install_version_dir} \
-    --with-cc-opt='-fPIE -fstack-protector-all' \
-    --with-ld-opt='-Wl,-z,relro,-z,now,-z,noexecstack -pie -s' \
-    ${openssl_configure_cmd} \
-    --add-module="${http_flv_module_dir}" \
-    --with-http_dav_module \
-    --add-module="${dav_ext_module_dir}" \
-    --with-http_auth_request_module \
-    --add-module="${headers_more_module_dir}" \
-    --with-stream || {
-    echo "configure failed"
-    exit 1
-}
+    --enable-shared --disable-static --disable-doc --disable-autodetect \
+    --enable-gpl --enable-version3 --enable-pic --enable-nonfree \
+    ${config_external_libs} \
+    --extra-cflags="${config_cflags}" \
+    --extra-ldflags="${config_ldflags}" \
+    --extra-libs="${config_extra_libs}" ||
+    {
+        echo "configure failed"
+        exit 1
+    }
 
 make clean
 make V=1 -j"$(nproc)" || {

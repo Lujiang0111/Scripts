@@ -9,6 +9,10 @@ shell_dir=$(
 )
 shell_dir=$(realpath "${shell_dir}")
 
+function VersionGe() {
+    printf '%s\n' "$2" "$1" | LC_ALL=C sort -V -C
+}
+
 project=libmicrohttpd
 version=1.0.1
 full_version=v${version}-release
@@ -48,7 +52,7 @@ src_dir=${shell_dir}/../../../../src
 echo -e "\n\033[33m============= preparing =============\033[0m\n"
 
 : <<'COMMENT'
-if [[ "${os_id}" == "centos" ]] && [[ "${os_version_id}" == "7" ]]; then
+if [[ "${os_id}" == "centos" ]] && ! VersionGe "${os_version_id}" "8"; then
     # switch to devtoolset-6
     gcc_version=$(gcc -dumpversion)
     gcc_major=${gcc_version%%.*}
