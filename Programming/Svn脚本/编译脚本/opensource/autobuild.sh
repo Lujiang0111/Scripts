@@ -164,7 +164,7 @@ config_cflags="-I${dep_dir}/zimg/include -I${dep_dir}/opencv/include/opencv4 -I$
 config_ldflags="-L${dep_dir}/zimg/lib -L${dep_dir}/opencv/lib -L${dep_dir}/davs2/lib -L${dep_dir}/uavs3d/lib -L${dep_dir}/opencore-amr/lib -L${dep_dir}/vo-amrwbenc/lib -L${dep_dir}/opus/lib -L${dep_dir}/zvbi/lib"
 
 if { [[ "${os_id}" == "ubuntu" ]] && VersionGe "${os_version_id}" "26"; } ||
-    { [[ "${os_id}" == "openEuler" ]] && VersionGe "${os_version_id}" "24"; }; then
+    { [[ "${os_id}" == "openeuler" ]] && VersionGe "${os_version_id}" "24"; }; then
     :
 else
     PrepareSoDep "openssl" "${shell_dir}/../../../../../../../../Versions/Baselib/openssl/v3.5.5"
