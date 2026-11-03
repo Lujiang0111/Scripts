@@ -10,6 +10,9 @@
     "local_port": "int, 0",
     "trans_mode": "enum, {receiver, transmitter}",
     "conn_mode": "enum, {caller, listener, rendezvous}",
+    "[caller]": {},
+    "[listener]": {},
+    "[rendezvous]": {},
     "weight": "int, 100",
     "conn_timeout_ms": "int, 3000",
     "passphrase": "str, """,
@@ -35,3 +38,4 @@
 ```
 
 + `"键": "类型, 默认值, 额外说明"`：有默认值的情况下为可选值
++ `[]`：可选
