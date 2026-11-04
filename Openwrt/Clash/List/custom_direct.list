@@ -10,6 +10,9 @@ IP-CIDR,123.123.123.123/32,no-resolve
 IP-CIDR,123.123.123.124/32,no-resolve
 
 # proxy
+## nex
+DOMAIN-SUFFIX,kineticbloom.org
+## foo
 DOMAIN-SUFFIX,foos.one
 
 # game
