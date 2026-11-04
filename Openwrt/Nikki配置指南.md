@@ -67,6 +67,7 @@ dns:
 | 名称 | 设置值 |
 | - | - |
 | GeoIP 格式 | DAT |
+| GeoData 加载器 | 标准加载器 |
 | GeoSite 下载地址 | `https://testingcf.jsdelivr.net/gh/Loyalsoldier/domain-list-custom@release/geosite.dat` |
 | GeoIP(DAT) 下载地址 | `https://testingcf.jsdelivr.net/gh/Loyalsoldier/geoip@release/geoip.dat` |
 | 定时更新GeoX文件 | 启用 |
