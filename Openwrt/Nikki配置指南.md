@@ -53,19 +53,14 @@ dns:
     - https://8.8.8.8/dns-query#disable-ipv6=true
     - https://1.1.1.1/dns-query#disable-ipv6=true
   nameserver-policy:
-    +.kineticbloom.org,+.foos.one:
+    +.foos.one:
       - 123.123.123.123
       - 123.123.123.124
+    # 多个的情况示例
+    # +.foos.one,+.other.website:
+    #   - 123.123.123.123
+    #   - 123.123.123.124
 ```
-
-## 混入配置 -> 嗅探器配置
-
-| 名称 | 设置值 |
-| - | - |
-| 启用 | 启用 |
-| 嗅探 Redir-Host 流量 | ✔ |
-| 嗅探纯 IP 连接 | ✔ |
-| 覆盖按协议嗅探 | ✔ |
 
 ## 混入配置 -> GEOX配置
 
