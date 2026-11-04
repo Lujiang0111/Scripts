@@ -7,19 +7,19 @@
   + `iso`目录下：
 
     ```shell
-    qm importdisk 121 /var/lib/vz/template/iso/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
+    qm importdisk 121 /var/lib/vz/template/iso/openwrt-x86-64-generic-ext4-combined-efi.img local-lvm
     ```
 
   + `root`目录下
 
     ```shell
-    qm importdisk 121 /root/openwrt-x86-64-generic-squashfs-combined-efi.img local-lvm
+    qm importdisk 121 /root/openwrt-x86-64-generic-ext4-combined-efi.img local-lvm
     ```
 
 + `qcow2`镜像：
 
   ```shell
-  qm importdisk 121 /root/openwrt-x86-64-generic-squashfs-combined-efi.qcow2 local-lvm
+  qm importdisk 121 /root/openwrt-x86-64-generic-ext4-combined-efi.qcow2 local-lvm
   ```
 
 ## /etc/config/network配置示例
