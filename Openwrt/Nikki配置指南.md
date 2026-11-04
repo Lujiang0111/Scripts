@@ -53,10 +53,7 @@ dns:
     - https://8.8.8.8/dns-query#disable-ipv6=true
     - https://1.1.1.1/dns-query#disable-ipv6=true
   nameserver-policy:
-    +.google.com,+.facebook.com,+.youtube.com:
-      - https://8.8.8.8/dns-query#disable-ipv6=true
-      - https://1.1.1.1/dns-query#disable-ipv6=true
-    +.foos.one:
+    +.kineticbloom.org,+.foos.one:
       - 123.123.123.123
       - 123.123.123.124
 ```
