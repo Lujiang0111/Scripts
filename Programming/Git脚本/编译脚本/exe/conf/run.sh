@@ -12,7 +12,7 @@ shell_dir=$(realpath "${shell_dir}")
 project=example_exe
 
 lib_dir=${shell_dir}/lib
-if [ -d ${lib_dir} ]; then
+if [ -d "${lib_dir}" ]; then
     export LD_LIBRARY_PATH=${lib_dir}:${LD_LIBRARY_PATH}
 
     cd "${lib_dir}" || exit

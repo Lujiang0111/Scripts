@@ -1,8 +1,8 @@
 import argparse
-from pathlib import Path
 import shutil
 import subprocess
 import time
+from pathlib import Path
 
 
 def rm_path(file_name, retries=3) -> bool:
@@ -136,6 +136,7 @@ class PostbuildClass:
             rm_path(dep_lib_dir / link_name)
             subprocess.run(
                 f"cd {dir} && ln -sf {so_file_name} {link_name}",
+                check=False,
                 shell=True,
             )
 
