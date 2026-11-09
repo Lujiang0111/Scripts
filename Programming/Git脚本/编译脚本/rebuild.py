@@ -1,10 +1,10 @@
 import argparse
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 
 def rm_path(file_name, retries=3) -> bool:
