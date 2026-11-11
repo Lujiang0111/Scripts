@@ -1,70 +1,4 @@
-# Imgui框架
-
-## win32 + dx11
-
-+ 见`ts_parser`项目，以下为代码存档
-  + 需要链接`d3d11.lib`
-
-+ `win32_dx11_app.h`
-
-```c++
-#ifndef IMGUI_WIN32_DX11_APP_H_
-#define IMGUI_WIN32_DX11_APP_H_
-
-#include <windows.h>
-#include <d3d11.h>
-
-class Application
-{
-public:
-    Application();
-    virtual ~Application();
-
-    bool Init(const wchar_t *title, int width = 1280, int height = 800);
-    void Deinit();
-
-    // 处理 Windows 消息；返回 false 表示窗口已关闭。
-    bool ProcessMessages();
-
-    // 每帧开始前调用一次。
-    void BeginFrame();
-
-    // 每帧 UI 绘制完成后调用一次。
-    void EndFrame();
-
-private:
-    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
-    LRESULT HandleMessage(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
-
-    bool CreateDevice();
-    bool CreateRenderTarget();
-    void DestroyRenderTarget();
-    void DestroyDevice();
-
-private:
-    HWND hwnd_;
-    HINSTANCE hinstance_;
-
-    bool running_;
-    bool minimized_;
-    bool class_registered_;
-
-    bool imgui_win32_inited_;
-    bool imgui_dx11_inited_;
-
-    ID3D11Device *device_;
-    ID3D11DeviceContext *context_;
-    IDXGISwapChain *swap_chain_;
-    ID3D11RenderTargetView *render_target_;
-};
-
-#endif // !IMGUI_WIN32_DX11_APP_H_
-
-```
-
-+ `win32_dx11_app.cpp`
-
-```c++
+﻿#include <vector>
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -73,6 +7,49 @@ private:
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
 
 constexpr wchar_t *kWindowClassName = L"SimpleImGuiDx11Window";
+
+static std::string Utf16ToUtf8(const std::wstring &utf16)
+{
+    if (utf16.empty())
+    {
+        return "";
+    }
+
+    // 计算 UTF-8 所需字节数
+    int size = WideCharToMultiByte(
+        CP_UTF8,
+        WC_ERR_INVALID_CHARS,
+        utf16.data(),
+        static_cast<int>(utf16.size()),
+        nullptr,
+        0,
+        nullptr,
+        nullptr);
+
+    if (size <= 0)
+    {
+        return "";
+    }
+
+    // 分配空间
+    std::vector<char> utf8(size + 1, 0);
+
+    // 执行转换
+    if (0 == WideCharToMultiByte(
+        CP_UTF8,
+        WC_ERR_INVALID_CHARS,
+        utf16.data(),
+        static_cast<int>(utf16.size()),
+        utf8.data(),
+        size,
+        nullptr,
+        nullptr))
+    {
+        return "";
+    }
+
+    return utf8.data();
+}
 
 Application::Application()
     : hwnd_(nullptr),
@@ -249,6 +226,26 @@ void Application::EndFrame()
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
     swap_chain_->Present(1, 0);
+}
+
+std::string Application::OpenFileDialog()
+{
+    wchar_t filename[MAX_PATH] = {};
+
+    OPENFILENAMEW ofn = {};
+    ofn.lStructSize = sizeof(ofn);
+    ofn.lpstrFile = filename;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.lpstrFilter = L"所有文件\0*.*\0";
+    ofn.nFilterIndex = 1;
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+    if (GetOpenFileNameW(&ofn))
+    {
+        return Utf16ToUtf8(filename);
+    }
+
+    return "";
 }
 
 bool Application::CreateDevice()
@@ -438,64 +435,3 @@ LRESULT Application::HandleMessage(HWND hwnd, UINT message, WPARAM w_param, LPAR
 
     return DefWindowProcW(hwnd, message, w_param, l_param);
 }
-```
-
-+ `main.cpp`
-
-```c++
-#include <memory>
-#include "imgui.h"
-#include "win32_dx11_app.h"
-
-bool app_running = true;
-
-int main(int argc, char **argv)
-{
-    std::shared_ptr<Application> app = std::make_shared<Application>();
-
-    if (!app->Init(L"My ImGui Tool", 1280, 800))
-    {
-        return 1;
-    }
-
-    while (app->ProcessMessages())
-    {
-        app->BeginFrame();
-
-        // 获取 Win32 窗口对应的 ImGui 主视口
-        ImGuiViewport *viewport = ImGui::GetMainViewport();
-
-        // 让 ImGui 窗口覆盖整个客户区
-        ImGui::SetNextWindowPos(viewport->WorkPos);
-        ImGui::SetNextWindowSize(viewport->WorkSize);
-
-        ImGuiWindowFlags flags =
-            ImGuiWindowFlags_NoTitleBar |
-            ImGuiWindowFlags_NoResize |
-            ImGuiWindowFlags_NoMove |
-            ImGuiWindowFlags_NoCollapse |
-            ImGuiWindowFlags_NoBringToFrontOnFocus;
-
-        // 以后开发具体工具，主要修改这里和自己的业务模块。
-        ImGui::Begin("MainWindow", nullptr, flags);
-
-        ImGui::Text("Win32 + DirectX 11 + Dear ImGui");
-
-        static int counter = 0;
-        if (ImGui::Button("点击我"))
-        {
-            ++counter;
-        }
-
-        ImGui::SameLine();
-        ImGui::Text("Counter: %d", counter);
-
-        ImGui::End();
-
-        app->EndFrame();
-    }
-
-    app = nullptr;
-    return 0;
-}
-```
