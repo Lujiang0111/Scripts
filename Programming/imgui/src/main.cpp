@@ -4,16 +4,22 @@
 
 bool app_running = true;
 
+struct MainParam
+{
+    std::wstring file_name_w;
+    std::string file_name;
+};
+
 int main(int argc, char **argv)
 {
-    std::shared_ptr<Application> app = std::make_shared<Application>();
+    std::shared_ptr<MainParam> param = std::make_shared<MainParam>();
 
-    if (!app->Init(L"My ImGui Tool", 1280, 800))
+    std::shared_ptr<Application> app = std::make_shared<Application>();
+    if (!app->Init(L"Ts Parser", 800, 600))
     {
         return 1;
     }
 
-    std::string file_name;
     while (app->ProcessMessages())
     {
         app->BeginFrame();
@@ -37,12 +43,13 @@ int main(int argc, char **argv)
 
         if (ImGui::Button("打开文件"))
         {
-            file_name = app->OpenFileDialog();
+            param->file_name_w = app->OpenFileDialog();
+            param->file_name = app->Utf16ToUtf8(param->file_name_w);
         }
 
         ImGui::SameLine();
 
-        ImGui::Text("%s", file_name.c_str());
+        ImGui::Text("%s", param->file_name.c_str());
 
         // ImGui窗口定义结束
         ImGui::End();
