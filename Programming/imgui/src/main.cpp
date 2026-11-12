@@ -1,20 +1,45 @@
 ﻿#include <memory>
 #include "imgui.h"
-#include "win32_dx11_app.h"
+#include "app/utils.h"
+#include "app/win32_dx11_app.h"
 
 bool app_running = true;
 
-struct MainParam
+struct MainCtx
 {
-    std::wstring file_name_w;
+    struct Gui
+    {
+        enum class PageTypes
+        {
+            kInfo,
+            kPacket,
+        };
+
+        PageTypes page_type = PageTypes::kInfo;
+    };
+
+    Gui gui;
+
+    std::wstring file_path_w;
     std::string file_name;
 };
 
+static std::string GetFileName(const std::string &file_path)
+{
+    size_t pos = file_path.find_last_of("/\\");
+    if (std::string::npos == pos)
+    {
+        return file_path;
+    }
+
+    return file_path.substr(pos + 1);
+}
+
 int main(int argc, char **argv)
 {
-    std::shared_ptr<MainParam> param = std::make_shared<MainParam>();
+    std::shared_ptr<MainCtx> ctx = std::make_shared<MainCtx>();
 
-    std::shared_ptr<Application> app = std::make_shared<Application>();
+    std::shared_ptr<app::Application> app = std::make_shared<app::Application>();
     if (!app->Init(L"Ts Parser", 800, 600))
     {
         return 1;
@@ -43,13 +68,49 @@ int main(int argc, char **argv)
 
         if (ImGui::Button("打开文件"))
         {
-            param->file_name_w = app->OpenFileDialog();
-            param->file_name = app->Utf16ToUtf8(param->file_name_w);
+            ctx->file_path_w = app->OpenFileDialog();
+            ctx->file_name = GetFileName(app->Utf16ToUtf8(ctx->file_path_w));
         }
 
         ImGui::SameLine();
 
-        ImGui::Text("%s", param->file_name.c_str());
+        app::ImGuiTextFmt("{}", ctx->file_name);
+
+        // 左侧导航菜单
+        ImGui::BeginChild("Sidebar", ImVec2(180, 0), true);
+
+        if (ImGui::Selectable("文件信息", MainCtx::Gui::PageTypes::kInfo == ctx->gui.page_type))
+        {
+            ctx->gui.page_type = MainCtx::Gui::PageTypes::kInfo;
+        }
+
+        if (ImGui::Selectable("包信息", MainCtx::Gui::PageTypes::kPacket == ctx->gui.page_type))
+        {
+            ctx->gui.page_type = MainCtx::Gui::PageTypes::kPacket;
+        }
+
+        ImGui::EndChild();
+
+        ImGui::SameLine();
+
+        // 右侧子页面
+        ImGui::BeginChild("Content", ImVec2(0, 0), true);
+
+        switch (ctx->gui.page_type)
+        {
+        case MainCtx::Gui::PageTypes::kInfo:
+            ImGui::Text("显示设置页面");
+            break;
+
+        case MainCtx::Gui::PageTypes::kPacket:
+            ImGui::Text("声音设置页面");
+            break;
+
+        default:
+            break;
+        }
+
+        ImGui::EndChild();
 
         // ImGui窗口定义结束
         ImGui::End();
