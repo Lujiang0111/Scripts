@@ -7,6 +7,8 @@
 namespace app
 {
 
+std::string Utf16ToUtf8(const std::wstring &utf16);
+
 template<typename... Args>
 inline void ImGuiTextFmt(fmt::format_string<Args...> fmt, Args &&... args)
 {

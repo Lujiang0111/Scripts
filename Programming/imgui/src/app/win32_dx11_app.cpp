@@ -1,7 +1,8 @@
 ﻿#include <vector>
+#include "app/utils.h"
+#include "app/win32_dx11_app.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
-#include "app/win32_dx11_app.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param);
 
@@ -204,49 +205,6 @@ std::wstring Application::OpenFileDialog()
     }
 
     return L"";
-}
-
-std::string Application::Utf16ToUtf8(const std::wstring &utf16)
-{
-    if (utf16.empty())
-    {
-        return "";
-    }
-
-    // 计算 UTF-8 所需字节数
-    int size = WideCharToMultiByte(
-        CP_UTF8,
-        WC_ERR_INVALID_CHARS,
-        utf16.data(),
-        static_cast<int>(utf16.size()),
-        nullptr,
-        0,
-        nullptr,
-        nullptr);
-
-    if (size <= 0)
-    {
-        return "";
-    }
-
-    // 分配空间
-    std::vector<char> utf8(size + 1, 0);
-
-    // 执行转换
-    if (0 == WideCharToMultiByte(
-        CP_UTF8,
-        WC_ERR_INVALID_CHARS,
-        utf16.data(),
-        static_cast<int>(utf16.size()),
-        utf8.data(),
-        size,
-        nullptr,
-        nullptr))
-    {
-        return "";
-    }
-
-    return utf8.data();
 }
 
 bool Application::CreateDevice()

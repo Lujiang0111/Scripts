@@ -69,7 +69,7 @@ int main(int argc, char **argv)
         if (ImGui::Button("打开文件"))
         {
             ctx->file_path_w = app->OpenFileDialog();
-            ctx->file_name = GetFileName(app->Utf16ToUtf8(ctx->file_path_w));
+            ctx->file_name = GetFileName(app::Utf16ToUtf8(ctx->file_path_w));
         }
 
         ImGui::SameLine();
