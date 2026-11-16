@@ -22,7 +22,7 @@ file(GLOB_RECURSE srcs "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 option(STATIC_LIB "Build as static library" OFF)
 
 # 创建库文件
-if (STATIC_LIB)
+if(STATIC_LIB)
     add_library(${PROJECT_NAME} STATIC ${srcs})
 else()
     add_library(${PROJECT_NAME} SHARED ${srcs})
