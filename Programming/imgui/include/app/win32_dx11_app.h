@@ -29,6 +29,8 @@ public:
     //打开文件封装
     std::wstring OpenFileDialog();
 
+    std::wstring SaveFileDialog(const std::wstring &default_name = L"data");
+
 private:
     static LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
     LRESULT HandleMessage(HWND hwnd, UINT message, WPARAM w_param, LPARAM l_param);
